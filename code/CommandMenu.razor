@@ -2,76 +2,68 @@
 @using Sandbox;
 @using Sandbox.UI;
 @using TacticsRPG;
-@inherits PanelComponent
+@inherits Panel
 @namespace Sandbox
 
 <root>
-	@if(!Initialized) return;
-	@if((BattleManager.Instance.CurrentBattleState == BattleState.WaitForCommands) && (PlayerMaster.Instance.Mode == FocusMode.Menu))
-	{
-		
-		<img class="pointer" @ref="ImgPanel" src="ui/triangle.png" />
-		
-
-		<div class="menu" @ref="Menu">
+	@if(!IsActive) return;
+		<div class="@(IsGrey ? "menu grey-out" : "menu")" @ref="Menu">
 
 			@foreach(CommandItem com in BattleManager.Instance.ActiveUnit.Turn.CommandItems)
 			{
-				if(com.Active)
+				if(IsGrey || !com.Active)
+				{
+					<div class="button" style ="background-color: gray">
+						<h1 class="button-text">@com.Text</h1>
+					</div>	
+								
+				}
+				else if(com.Active)
 				{
 					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>
 				}
-				else if(!com.Active)
-				{
-					<div class="button" style ="background-color: gray">
-						<h1 class="button-text">@com.Text</h1>
-					</div>					
-				}
 
 			}
 		</div>
-		
-		<AbilityMenu @ref="AMenu" />
-
-		<ItemMenu @ref="IMenu" />
-	}
-
-
-
 </root>
 
 @code
 {
-	[Property] public bool Initialized {get; set;} = false;
-	[Property] public List<string> Commands {get; set;}
+	[Property] public bool IsActive {get; set;} = true;
+	[Property] public bool IsGrey {get; set;} = false;
+	public int MenuDepth = 0;
 	[Property] public int SelectedIndex {get; set;} = 0;
 	[Property] SoundEvent SelectSound {get; set;}
 	[Property] SoundEvent PressSound {get; set;}
-	private Panel Menu {get; set;}
-	private Image ImgPanel {get; set;}
-	private AbilityMenu AMenu {get; set;}
-	private ItemMenu IMenu {get; set;}
+	public Panel Menu;
 
-	protected override void OnAwake()
+	protected override void OnAfterTreeRender(bool firstTime)
 	{
-		SetCommandList();
+		if(!firstTime) return;
 	}
 
-	protected override void OnUpdate()
+	public void Activate()
 	{
-		if(!Initialized) return;
-		if(!Menu.IsVisible || !ImgPanel.IsVisible) return;
-		var MenuPos = Menu.Box.Rect.Position / Panel.ScaleToScreen;
-
-		ImgPanel.Style.Top = MenuPos.y + (34 * SelectedIndex);
-		ImgPanel.Style.Left = MenuPos.x -20 ;
-
+		IsActive = true;
 	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+	}
+
+	public void SetTransform(int Level)
+	{
+		var transform = new PanelTransform();
+		transform.AddTranslateX(Length.Pixels(-130*Level));
+		Menu.Style.Transform = transform;
+	}
+
 	public void IncreaseIndex()
 	{
-		if(SelectedIndex == Commands.Count() - 1)
+		if(SelectedIndex == BattleManager.Instance.ActiveUnit.Turn.CommandItems.Count() - 1)
 		{
 			Log.Info("Out Of Range");
 			return;
@@ -97,20 +89,10 @@
 
 	public void SelectCommand()
 	{
-		Log.Info($"Selecting {Commands[SelectedIndex]} Command");
+		Log.Info($"Selecting {BattleManager.Instance.ActiveUnit.Turn.CommandItems[SelectedIndex].Text} Command");
 		Sound.Play(PressSound);
-		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(Commands[SelectedIndex]));
+		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(BattleManager.Instance.ActiveUnit.Turn.CommandItems[SelectedIndex].Text));
 
-	}
-
-	public void SetCommandList()
-	{
-		Log.Info("Setting Command List");
-		var arr = Enum.GetValues(typeof(CommandType));
-		foreach(CommandType command in arr)
-		{
-			Commands.Add(GetStringFromCommand(command));
-		}
 	}
 
 	public string GetStringFromCommand(CommandType command)

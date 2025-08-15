@@ -46,7 +46,6 @@ public class EffectSequence
 			if(elapsed >= step.StartTime && !step.IsComplete(elapsed))
 			{
 				step.Update(deltatime);
-				Log.Info("Updating Sequence");
 			}
 			if(step.IsComplete(elapsed))
 			{
@@ -189,7 +188,6 @@ public class CameraSpiralInStep : IEffectStep
 		finalPosition = FinalOffset;
 
 		startPosition = center + (Vector3.Up * HeightStart);
-		Log.Info($"Start Position {startPosition}");
 
 		CameraManager.Instance.EffectOverride = true;
 		CameraManager.Instance.WorldPosition = startPosition;
@@ -204,14 +202,11 @@ public class CameraSpiralInStep : IEffectStep
 		float easedT = Ease.InOutSine(t);
 
 		float radius = Vector3.DistanceBetween(startPosition, finalPosition) * easedT;
-		Log.Info($"EasedT {easedT}");
-		Log.Info($"Radius {radius}");
 		float angle = (float)Math.Tau * easedT;
 		Vector3 offset = new Vector3((float)Math.Cos(angle), (float)Math.Sin(angle), 0f) * radius;
 
 		Vector3 spiralPos = center + offset + MathX.Lerp(HeightStart, FinalOffset.z, easedT);
 		CameraManager.Instance.WorldPosition = spiralPos;
-		Log.Info(spiralPos);
 		CameraManager.Instance.LocalRotation = Rotation.LookAt(center - spiralPos);
 	}
 
@@ -254,14 +249,10 @@ public class BetterCameraSpiralInStep : IEffectStep
 	{
 		elapsed = 0f;
 		startPosition = new Vector3(FocusTarget.WorldPosition.x, FocusTarget.WorldPosition.y, HeightStart);
-		Log.Info($"Start Position: {startPosition}");
 		Vector3 flatVecEnd = (endPosition - FocusTarget.WorldPosition).WithZ(0);
 		initialDistance = Vector3.DistanceBetween(startPosition.WithZ(0), FocusTarget.WorldPosition.WithZ(0));
-		Log.Info($"Initial Distance: {initialDistance}");
 		finalDistance = Vector3.DistanceBetween(FocusTarget.WorldPosition.WithZ(0), endPosition.WithZ(0));
-		Log.Info($"Final Distance: {finalDistance}");
 		finalAngle = MathF.Atan2(flatVecEnd.x, flatVecEnd.y);
-		Log.Info($"Final Angle: {finalAngle}");
 		initialAngle = finalAngle + ((float)Math.PI * 2f * Revolutions);
 		CameraManager.Instance.EffectOverride = true;
 		CameraManager.Instance.WorldPosition = startPosition;
@@ -273,16 +264,11 @@ public class BetterCameraSpiralInStep : IEffectStep
 		elapsed += delta;
 		float t = MathX.Clamp(elapsed / Duration, 0, 1f);
 		float easedT = Ease.InOutSine(t);
-		Log.Info($"EasedT: {easedT}");
 		float currentDistance = MathX.Lerp(initialDistance, finalDistance, easedT);
-		Log.Info($"Current Distance: {currentDistance}");
 		float currentAngle = MathX.Lerp(initialAngle, finalAngle, easedT);
-		Log.Info($"CurrentAngle: {currentAngle}");
 		float x = (float)Math.Sin(currentAngle) * currentDistance;
 		float y = (float)Math.Cos(currentAngle) * currentDistance;
-		Log.Info($"XY Pos {x}, {y}");
 		float z = MathX.Lerp(startPosition.z, endPosition.z, easedT);
-		Log.Info($"Z Pos: {z}");
 
 		Vector3 newPos = new Vector3(x,y,z);
 

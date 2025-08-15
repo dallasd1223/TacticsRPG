@@ -1,0 +1,190 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	@if(!IsActive)return;
+	@if((BattleManager.Instance.CurrentBattleState == BattleState.WaitForCommands) && (PlayerMaster.Instance.Mode == FocusMode.Menu))
+	{
+		<img class="pointer" @ref="ImgPanel" src="ui/triangle.png" />
+		<CommandMenu @ref="CMenu" />
+		<AbilityMenu @ref="AMenu" />
+		<ItemMenu @ref="IMenu" />
+	}
+
+</root>
+
+@code
+{
+	public bool IsActive {get; set;} = true;
+	public MenuState? State {get; set;} = MenuState.Action;
+	public MenuState? LastState {get; set;} = null;
+	private int MenuLevel {get; set;} = 0;
+	public CommandMenu CMenu {get; set;}
+	public AbilityMenu AMenu {get; set;}
+	public ItemMenu IMenu {get; set;}
+	[Property] SoundEvent SelectSound {get; set;}
+	[Property] SoundEvent PressSound {get; set;}
+	[Property] SoundEvent BackSound {get; set;}
+
+	private Image ImgPanel;
+
+	protected override void OnUpdate()
+	{
+		if(!IsActive) return;
+		switch(State)
+		{
+			case MenuState.Action:
+				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
+				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
+				ImgPanel.Style.Left = CMenuPos.x -20 ;
+
+				break;
+			case MenuState.Ability:
+				var AMenuPos = AMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
+				ImgPanel.Style.Top = AMenuPos.y + (34 * AMenu.SelectedIndex);
+				ImgPanel.Style.Left = AMenuPos.x -20 ;
+				break;
+			case MenuState.Item:
+				var IMenuPos = IMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
+				ImgPanel.Style.Top = IMenuPos.y + (34 * IMenu.SelectedIndex);
+				ImgPanel.Style.Left = IMenuPos.x -20 ;
+	
+				break;			
+		}
+
+	}
+
+	public void ChangeMenuState(MenuState? state)
+	{
+		switch(state)
+		{
+			case MenuState.Action:
+				break;
+			case MenuState.Ability:
+				if(State == MenuState.Action)
+				{
+
+					LastState = State;
+					State = state;
+					NextMenuState();
+					CMenu.IsGrey = true;
+					CMenu.SetTransform(MenuLevel);
+					AMenu.Activate();			
+				}
+				break;
+			case MenuState.Item:
+				if(State == MenuState.Ability)
+				{
+					LastState = State;
+					State = state;
+					NextMenuState();
+					AMenu.IsGrey = true;
+					AMenu.SetTransform(MenuLevel);
+					CMenu.SetTransform(MenuLevel);
+					IMenu.Activate();
+				}
+				break;
+			case MenuState.Magic:
+				break;
+		}
+	}
+
+	public void LastMenuState()
+	{
+		switch(State)
+		{
+			case MenuState.Ability:
+				State = MenuState.Action;
+				Log.Info(State);
+				AMenu.Deactivate();
+				BackMenuState();
+				CMenu.IsGrey = false;
+				CMenu.SetTransform(0);
+				Sound.Play(BackSound);
+				break;
+			case MenuState.Item:
+				State = MenuState.Ability;
+				Log.Info(State);
+				IMenu.Deactivate();
+				BackMenuState();
+				AMenu.IsGrey = false;
+				AMenu.ZeroTransform();
+				CMenu.SetTransform(MenuLevel);
+				Sound.Play(BackSound);
+				break;
+		}
+	}
+	public void NextMenuState()
+	{
+		MenuLevel++;
+	}
+
+	public void BackMenuState()
+	{
+		MenuLevel--;
+	}
+
+	public void IncreaseIndex()
+	{
+		switch(State)
+		{
+			case MenuState.Action:
+				CMenu.IncreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Ability:
+				AMenu.IncreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Item:
+				IMenu.IncreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+		}
+	}
+
+	public void DecreaseIndex()
+	{
+		switch(State)
+		{
+			case MenuState.Action:
+				CMenu.DecreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Ability:
+				AMenu.DecreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Item:
+				IMenu.DecreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+		}
+	}
+
+	public void SelectItem()
+	{
+		switch(State)
+		{
+			case MenuState.Action:
+				CMenu.SelectCommand();
+				Sound.Play(PressSound);
+				break;
+			case MenuState.Ability:
+				AMenu.SelectMenuItem();
+				Sound.Play(PressSound);
+				break;
+			case MenuState.Item:
+				IMenu.SelectMenuItem();
+				Sound.Play(PressSound);
+				break;
+		}
+	}
+
+
+	
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

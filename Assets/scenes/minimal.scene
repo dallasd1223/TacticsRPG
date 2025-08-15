@@ -12512,9 +12512,9 @@
           "LastMode": null,
           "Menu": {
             "_type": "component",
-            "component_id": "9a9347d6-4bcf-48ae-a1a5-d137ca8be977",
-            "go": "5ce980c3-19c4-49c7-a8b7-3ced173eeacd",
-            "component_type": "CommandMenu"
+            "component_id": "9f06951c-14fe-4429-b186-610ed82ba9d6",
+            "go": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
+            "component_type": "ActionMenu"
           },
           "Mode": "NA",
           "OnComponentDestroy": null,
@@ -12600,10 +12600,10 @@
       "Children": []
     },
     {
-      "__guid": "5ce980c3-19c4-49c7-a8b7-3ced173eeacd",
+      "__guid": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
       "__version": 1,
       "Flags": 0,
-      "Name": "Menus",
+      "Name": "ActionMenu",
       "Position": "-58.50172,-226.0571,184.5299",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
@@ -12615,11 +12615,10 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "Sandbox.CommandMenu",
-          "__guid": "9a9347d6-4bcf-48ae-a1a5-d137ca8be977",
+          "__type": "Sandbox.ActionMenu",
+          "__guid": "9f06951c-14fe-4429-b186-610ed82ba9d6",
           "__enabled": true,
-          "Commands": [],
-          "Initialized": false,
+          "BackSound": "sounds/ui-sound-18.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -12627,12 +12626,11 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "PressSound": "sounds/ui-sound4.sound",
-          "SelectedIndex": 0,
           "SelectSound": "sounds/ui-sound2.sound"
         },
         {
           "__type": "Sandbox.ScreenPanel",
-          "__guid": "c455af38-e331-40af-b1ec-9c8537cf734d",
+          "__guid": "726c8007-77be-47c5-9753-b922dfc6c766",
           "__enabled": true,
           "AutoScreenScale": true,
           "OnComponentDestroy": null,
@@ -13255,20 +13253,7 @@
           "__guid": "1a16d17e-872e-43b0-a410-d1635692edfb",
           "__enabled": true,
           "AbilityCommands": [],
-          "CommandItems": [
-            {
-              "Text": "MOVE"
-            },
-            {
-              "Text": "ATTACK"
-            },
-            {
-              "Text": "ABILITY"
-            },
-            {
-              "Text": "WAIT"
-            }
-          ],
+          "CommandItems": [],
           "HasActed": false,
           "HasMoved": false,
           "InitialCommands": [
@@ -13552,17 +13537,7 @@
           "__guid": "4f790c17-55c6-4164-afa3-84c0259155fb",
           "__enabled": true,
           "AbilityCommands": [],
-          "CommandItems": [
-            {
-              "Text": "MOVE"
-            },
-            {
-              "Text": "ATTACK"
-            },
-            {
-              "Text": "WAIT"
-            }
-          ],
+          "CommandItems": [],
           "HasActed": false,
           "HasMoved": false,
           "InitialCommands": [

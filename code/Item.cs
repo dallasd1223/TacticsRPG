@@ -72,7 +72,9 @@ public enum Effect
 	Heal,
 	Hurt,
 	Revive,
+	Cleanse,
 	Item,
+	Magic,
 }
 
 

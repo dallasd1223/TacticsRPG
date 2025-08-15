@@ -74,7 +74,6 @@ public sealed class BattleManager : Component
 	{
 		if(Initialized)
 		{
-			Log.Info("Already Initialized.");
 			return;
 		}
 		var units = Scene.GetAll<Unit>();
@@ -127,7 +126,7 @@ public sealed class BattleManager : Component
 		{
 			PlayerMaster.Instance.CurrentUnit = ActiveUnit;
 			PlayerMaster.Instance.Mode = FocusMode.Menu;
-			PlayerMaster.Instance.Menu.Initialized = true;
+			PlayerMaster.Instance.Menu.IsActive = true;
 		}
 
 		CameraManager.Instance.DirectCameraFocus(ActiveUnit);

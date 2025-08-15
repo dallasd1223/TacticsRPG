@@ -5,7 +5,8 @@ namespace TacticsRPG;
 
 public class BattleReward
 {
-	public int GoldEarned;
+	public int Gold;
 	public int BonusEXP;
 	public List<Item> ItemsFound = new();
+	
 }

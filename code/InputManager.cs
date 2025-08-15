@@ -60,8 +60,15 @@ public sealed class InputManager : Component
 				{
 					if(Input.Pressed("Back"))
 					{
+						if(PlayerMaster.Instance.Menu.State == MenuState.Action)
+						{
+							PlayerMaster.Instance.SwitchFocusMode();
+						}
+						else
+						{
+							PlayerMaster.Instance.Menu.LastMenuState();
+						}
 						Log.Info("Back Pressed");
-						PlayerMaster.Instance.SwitchFocusMode();
 					}
 				}
 				if(PlayerMaster.Instance.Mode == FocusMode.ConfirmMenu)
@@ -98,7 +105,7 @@ public sealed class InputManager : Component
 					}
 					if(Input.Pressed("Chat"))
 					{
-						PlayerMaster.Instance.Menu.SelectCommand();
+						PlayerMaster.Instance.Menu.SelectItem();
 						return;
 					}
 				}

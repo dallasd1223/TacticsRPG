@@ -11,7 +11,7 @@ public sealed class PlayerMaster : Component
 	[Property] public CommandMode? LastcMode {get; set;} = null;
 	[Property] public CommandMode? cMode {get; set;} = CommandMode.NA;
 	[Property] public CommandType? CurrentSelectedCommand {get; set;} = null;
-	[Property] public CommandMenu Menu {get; set;}
+	[Property] public ActionMenu Menu {get; set;}
 	[Property] public ConfirmUI ConfirmMenu {get; set;}
 	[Property] public SoundEvent Error {get; set;}
 	[Property] public SoundEvent ConfirmSound {get; set;}
@@ -79,6 +79,12 @@ public sealed class PlayerMaster : Component
 					Sound.Play(Error);
 				}
 				break;
+			case CommandType.Ability:
+				if(CurrentUnit.Turn.CommandIsActive("ABILITY"))
+				{
+					Menu.ChangeMenuState(MenuState.Ability);
+				}				
+				break;
 			case CommandType.Wait:
 				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
 				{
@@ -94,6 +100,19 @@ public sealed class PlayerMaster : Component
 				break;
 			case null:
 				Log.Info("Error With Command");
+				break;
+		}
+	}
+
+	public void AbilityMenuSelect(string text)
+	{
+		switch(text)
+		{
+			case "Item":
+				Menu.ChangeMenuState(MenuState.Item);
+				break;
+			case "Magic":
+				Menu.ChangeMenuState(MenuState.Magic);
 				break;
 		}
 	}

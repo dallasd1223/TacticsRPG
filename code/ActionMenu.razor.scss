@@ -1,0 +1,87 @@
+ActionMenu
+{
+
+	.menu
+	{
+		position: absolute;
+		top: 370px;
+		left: 1100px;
+		flex-direction: column;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;
+		transform: translateX(0);
+		transition: transform 0.5s ease-in-out;
+
+
+	}
+
+
+
+	.ability-menu
+	{
+		position: absolute;
+		top: 370px;
+		left: 1100px;
+		flex-direction: column;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;
+		transform: translateX(0);
+		transition: transform 0.5s ease-in-out;
+	}
+
+	.item-menu
+	{
+		position: absolute;
+		top: 370px;
+		left: 1100px;
+		flex-direction: column;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.button
+	{
+		justify-content: center;
+		align-items: center;
+		background-color: blue;
+		width: 100px;
+		height: 25px;
+	}
+	
+	.button-text
+	{
+		font-size: 15px;
+		color: white;
+	}
+
+	.pointer
+	{
+		position: absolute;
+		width: 12px;
+		height: auto;
+		z-index: 99;
+		opacity: 1;
+		animation-name: wow;
+		animation-duration: 0.5s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+	}
+
+	.pointer-container
+	{
+		position: relative;
+	}
+
+}
+
+@keyframes wow {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
