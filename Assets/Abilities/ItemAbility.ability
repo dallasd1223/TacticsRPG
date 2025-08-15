@@ -1,0 +1,13 @@
+{
+  "Name": "Item",
+  "Description": "Gives Unit Access To Inventory",
+  "EffectID": 0,
+  "EffectType": "Item",
+  "IsPassive": true,
+  "MPCost": 0,
+  "IsCharge": false,
+  "TurnCost": 0,
+  "Value": 0,
+  "__references": [],
+  "__version": 0
+}

@@ -1,0 +1,55 @@
+using Sandbox;
+
+namespace TacticsRPG;
+public sealed class Unit : Component
+{
+	[Property] public int StartTileIndex {get; set;}
+	[Property] Vector2 CurrentTileXY {get; set;} = new Vector2(0,0);
+	[Property] public bool isAIControlled = false;
+	[Property] int MoveRange {get; set;} = 6;
+	[Property] int AttackRange {get; set;} = 1;
+	[Property] int JumpRange {get; set;} = 3;
+	[Property] public FaceDirectionType FaceDirection = FaceDirectionType.North;
+	[Property] public UnitTurn Turn {get; set;}
+	[Property] public UnitMove Move {get; set;}
+	[Property] public UnitAttack Attack {get; set;}
+	[Property] public UnitData Data {get; set;}
+	[Property] public UnitAbilities UAbility {get; set;}
+	[Property] public UnitAnimator Animator {get; set;}
+	[Property] public UnitBattle Battle {get; set;}
+	[Property] public UnitAI AI {get; set;}
+	[Property] public TeamType Team {get; set;}
+	[Property] public bool IsTurn {get; set;} = false;
+	[Property] Vector3 UnitPosition {get; set;}
+
+	protected override void OnAwake()
+	{
+		Battle = GetComponent<UnitBattle>();
+		Move = GetComponent<UnitMove>();
+		Animator = GetComponent<UnitAnimator>();
+		Turn = GetComponent<UnitTurn>();
+		UAbility = GetComponent<UnitAbilities>();
+		UAbility.OnAbilityAdded += AbilityAdded;
+	}
+
+	protected override void OnStart()
+	{
+		TileData tile = TileMapManager.Instance.FindTileFromIndex(StartTileIndex);
+		GameObject.WorldPosition = tile.GameObject.WorldPosition + new Vector3(0,0,3.5f);
+		CurrentTileXY = new Vector2(tile.XIndex, tile.YIndex);
+		UnitPosition = WorldPosition;
+	}
+
+	public void AbilityAdded(Ability a)
+	{
+		Log.Info($"{Data.Name} Learned Ability {a.Data.Name}");
+	}
+}
+
+public enum FaceDirectionType
+{
+	North,
+	South,
+	East,
+	West,
+}

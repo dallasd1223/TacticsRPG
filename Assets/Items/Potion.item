@@ -1,0 +1,10 @@
+{
+  "Name": "Potion",
+  "Description": "Heals Unit 10 Points",
+  "ItemEffect": "Heal",
+  "EffectID": 1,
+  "MaxStack": 99,
+  "Value": 10,
+  "__references": [],
+  "__version": 0
+}

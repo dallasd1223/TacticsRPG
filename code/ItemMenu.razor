@@ -1,0 +1,37 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+		<div class="item-menu" >
+
+			@foreach(CommandItem com in BattleManager.Instance.ActiveUnit.Turn.ItemCommands)
+			{
+				if(com.Active)
+				{
+					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.ItemCommands.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+						<h1 class="button-text">@com.Text</h1>
+					</div>
+				}
+				else if(!com.Active)
+				{
+					<div class="button" style ="background-color: gray">
+						<h1 class="button-text">@com.Text</h1>
+					</div>					
+				}
+
+			}
+		</div>	
+</root>
+
+@code
+{
+	[Property] public int SelectedIndex {get; set;} = 0;
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -1,0 +1,88 @@
+TestUI
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	justify-content: center;
+	align-items: center;
+
+	.container
+	{
+		position: relative;
+		width: auto;
+		height: auto;
+		flex-direction: column;
+		gap: 50px;
+	}
+
+	.stack
+	{
+		position: relative;	
+		width: auto;
+		height: auto;	
+	}
+	.boxcover
+	{
+		image-rendering: pixelated;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100px;
+		height: 20px;
+		z-index: 20;	
+	}
+	.boxfill
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100px;
+		height: 20px;
+		image-rendering: pixelated;
+		background-color: red;
+		mask-image: url("ui/bar_fillmask.png");
+		mask-size: 100%;
+		mask-mode: alpha;
+		mask-size: cover;
+	}
+
+	.boxfill1
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100px;
+		height: 20px;
+		image-rendering: pixelated;
+		background-color: blue;
+		mask-image: url("ui/bar_fillmask.png");
+		mask-size: 100%;
+		mask-mode: alpha;
+		mask-size: cover;
+	}
+
+	.texttest
+	{
+		image-rendering: pixelated;
+		position: absolute;
+		top: 495;
+		width: 40px;
+		height: 40px;
+		z-index: 10;
+	}
+
+	.texttest2
+	{
+		image-rendering: pixelated;
+		position: absolute;
+		top: 540px;
+		font-family: "Super Mario Bros. NES";
+		font-size: 20px;
+		font-smooth: never;
+		color: white;
+		z-index: 10;
+	}
+
+}

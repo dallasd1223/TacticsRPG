@@ -1,0 +1,30 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<p class="texttest2">36</p>
+	<img class="texttest" src="ui/36.png" />
+	<div class="container">
+		<div class="stack">
+			<img class="boxcover" src="ui/ui_bar.png"/>
+			<div class="boxfill"></div>
+		</div>
+		<div class ="stack">
+			<img class="boxcover" src="ui/ui_bar.png"/>
+			<div class="boxfill1"></div>
+		</div>
+	</div>
+
+
+
+</root>
+
+@code
+{
+
+
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

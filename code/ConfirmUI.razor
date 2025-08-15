@@ -1,0 +1,83 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	@if(IsActive)
+	{
+		<div class="container">
+			<div class = "dialog-box">
+				<h1 class= "dialog-text">Confirm Command?</h1>
+			</div>
+			<div class="button-container">
+			@for(int i = 0; i < ChooseList.Count(); i++)
+			{
+				<div class="button" style ="@(i == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<h1 class="button-text">@ChooseList[i]</h1>	
+				</div>
+			}
+			</div>
+		</div>
+	}
+
+</root>
+
+@code
+{
+	[Property] public bool IsActive {get; set;} = false;
+	[Property] public List<string> ChooseList {get; set;} = new List<string>{"YES", "NO"};
+	[Property] int SelectedIndex {get; set;} = 0;
+	[Property] SoundEvent SelectSound {get; set;}
+	[Property] SoundEvent ActivateSound {get; set;}
+
+	public void Activate()
+	{
+		IsActive = true;
+		SelectedIndex = 0;
+		Sound.Play(ActivateSound);
+	}
+	
+	public void IncreaseIndex()
+	{
+		if(SelectedIndex == ChooseList.Count() - 1)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}
+		SelectedIndex += 1;
+		Sound.Play(SelectSound);
+		StateHasChanged();
+		Log.Info($"ConfirmUI Index Set To {SelectedIndex}");
+	}
+
+	public void DecreaseIndex()
+	{
+		if(SelectedIndex == 0)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}		
+		SelectedIndex -= 1;
+		Sound.Play(SelectSound);
+		StateHasChanged();
+		Log.Info($"ConfirmUI Index Set To {SelectedIndex}");
+	}
+
+	public void SelectOption()
+	{
+		Log.Info($"Selecting Option {ChooseList[SelectedIndex]}");
+
+		if(ChooseList[SelectedIndex] == "YES")
+		{
+			PlayerMaster.Instance.Confirm();
+		}
+		else if(ChooseList[SelectedIndex] == "NO")
+		{
+			PlayerMaster.Instance.Cancel();
+		}
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

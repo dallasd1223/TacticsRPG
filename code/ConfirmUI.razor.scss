@@ -1,0 +1,58 @@
+ConfirmUI
+{
+
+
+	.container
+	{
+		position: absolute;
+		height: auto;
+		width: auto;
+		top: -200;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.dialog-box
+	{
+		justify-content: center;
+		align-items: center;
+		background-color: blue;
+		width: 210px;
+		height: 25px;
+	}
+
+	.dialog-text
+	{
+		font-size: 15px;
+		color: white;
+	}
+
+	.button-container
+	{
+		height: auto;
+		width: auto;
+		flex-direction: row;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;		
+	}
+	.button
+	{
+		justify-content: center;
+		align-items: center;
+		background-color: blue;
+		width: 100px;
+		height: 25px;
+	}
+
+	.button-text
+	{
+		font-size: 15px;
+		color: white;
+	}
+}

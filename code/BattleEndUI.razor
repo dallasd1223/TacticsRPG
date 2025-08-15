@@ -1,0 +1,75 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	@if(IsActive)
+	{
+		<div class="screen">
+			<h1 class="text">YOU WIN</h1>
+			@if(SubTextActive)
+			{
+				<p class="sub-text">ALPHA TEAM VICTORY</p>
+			}
+			@if(GoldActive)
+			{
+				<p class="coin">🪙 Gold Earned: @goldcurrent </p>
+			}
+		</div>
+	}
+
+</root>
+
+@code
+{
+	[Property] public bool IsActive {get; set;} = false;
+	[Property] public bool SubTextActive {get; set;} = false;
+	[Property] public bool GoldActive {get; set;} = false;
+	[Property] public float stepTime {get; set;} = 2f;
+	[Property] public float stepTime2 {get; set;} = 5f;
+	[Property] public float buffertarget {get; set;} = 0.2f;
+	[Property] public float buffer {get; set;} = 0f;
+	[Property] public int GoldEarned {get; set;} = 500;
+	[Property] public SoundEvent GoldSound {get; set;}
+	public int goldcurrent = 0;
+	
+	private float elapsed = 0f;
+
+	public void ActivateUI()
+	{
+		IsActive = true;
+		elapsed = 0;
+	}
+	protected override void OnUpdate()
+	{
+		if(!IsActive) return;
+		elapsed += Time.Delta;
+		if(elapsed >= stepTime && !SubTextActive)
+		{
+			SubTextActive = true;
+		}
+		if(elapsed >= stepTime2 && !GoldActive)
+		{
+			GoldActive = true;
+		}
+		if(GoldActive && goldcurrent < GoldEarned)
+		{
+			if(buffer < buffertarget)
+			{
+				buffer += Time.Delta;
+			}
+			if(buffer >= buffertarget)
+			{
+				goldcurrent += 10;
+				Sound.Play(GoldSound);
+				buffer = 0f;
+			}
+		}
+	}
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now);
+}

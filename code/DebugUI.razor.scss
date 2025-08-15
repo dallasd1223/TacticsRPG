@@ -1,0 +1,78 @@
+DebugUI
+{
+
+
+	.container
+	{
+		position: absolute;
+		width: 100%;
+		height: auto;
+		flex-direction: column;
+		justify-content: center;
+		align-items:center;
+		border-radius: 20px;
+		font-size: 25px;
+		font-family: Poppins;
+		color: chartreuse;
+	}
+
+	.list
+	{
+		position: absolute;
+		padding-left: 5px;
+		width: auto;
+		height: 100%;
+		align-items: center;
+		flex-direction: column;
+		font-family: Poppins;
+		color: chartreuse;
+	}
+
+	.list2
+	{
+		position: absolute;
+		padding-right: 5px;
+		right: 0;
+		width: auto;
+		height: 100%;
+		align-items: center;
+		flex-direction: column;
+		font-family: Poppins;
+		color: chartreuse;		
+	}
+
+	.list3
+	{
+		position: absolute;
+		padding-right: 5px;
+		left: 0;
+		bottom: 0;
+		width: auto;
+		height: auto;
+		align-items: center;
+		flex-direction: column;
+		font-family: Poppins;
+		color: chartreuse;				
+	}
+
+	.list4
+	{
+		position: absolute;
+		padding-right: 5px;
+		right: 0;
+		bottom: 0;
+		width: auto;
+		height: auto;
+		align-items: center;
+		flex-direction: column;
+		font-family: Poppins;
+		color: chartreuse;		
+	}
+
+	.list-text
+	{
+		font-size: 15px;
+		font-family: Poppins;
+		color: black;
+	}
+}

@@ -1,0 +1,100 @@
+{
+  "RootObject": {
+    "__guid": "6ad1c27f-6b7a-4e71-9301-a228c499354b",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "num",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "0.2,0.2,0.2",
+    "Tags": "particles",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "SpriteTools.SpriteComponent",
+        "__guid": "6d53fcf8-3591-477b-b23b-1da76b470949",
+        "__enabled": true,
+        "__version": 1,
+        "BroadcastEvents": {},
+        "CastShadows": "Off",
+        "CreateAttachPoints": false,
+        "FlashTint": "1,1,1,0",
+        "MaterialOverride": null,
+        "OnAnimationComplete": null,
+        "OnBroadcastEvent": null,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "PlaybackSpeed": 1,
+        "Sprite": "ui/9.sprite",
+        "SpriteFlags": "None",
+        "StartingAnimationName": "default",
+        "Tint": "1,1,1,1",
+        "UpDirection": "ZPositive",
+        "UsePixelScale": false
+      },
+      {
+        "__type": "Billboard",
+        "__guid": "7f9af515-923c-4618-8199-1624a037942b",
+        "__enabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "TacticsRPG.DamageNumber",
+        "__guid": "a29b8cba-6787-4234-b63f-55dab8a206c8",
+        "__enabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "sprite": {
+          "_type": "component",
+          "component_id": "6d53fcf8-3591-477b-b23b-1da76b470949",
+          "go": "6ad1c27f-6b7a-4e71-9301-a228c499354b",
+          "component_type": "SpriteComponent"
+        }
+      }
+    ],
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

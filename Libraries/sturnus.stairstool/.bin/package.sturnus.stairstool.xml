@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package.sturnus.stairstool</name>
+    </assembly>
+    <members>
+        <member name="T:StairsTool.LandingDirection">
+            <summary>
+            Defines the direction of the second flight of stairs after the landing,
+            from the perspective of someone standing at the bottom of the staircase looking up.
+            </summary>
+        </member>
+        <member name="F:StairsTool.LandingDirection.Straight">
+            <summary>
+            Second flight continues in the same direction as the first flight
+            </summary>
+        </member>
+        <member name="F:StairsTool.LandingDirection.Left">
+            <summary>
+            Second flight turns left from the landing (when viewed from bottom of stairs)
+            </summary>
+        </member>
+        <member name="F:StairsTool.LandingDirection.Right">
+            <summary>
+            Second flight turns right from the landing (when viewed from bottom of stairs)
+            </summary>
+        </member>
+        <member name="T:StairsTool.StairShape">
+            <summary>
+            Defines different types of stair shapes that can be generated.
+            </summary>
+        </member>
+        <member name="F:StairsTool.StairShape.Straight">
+            <summary>
+            A straight staircase with no turns
+            </summary>
+        </member>
+        <member name="F:StairsTool.StairShape.Curved">
+            <summary>
+            A curved staircase that turns while ascending
+            </summary>
+        </member>
+        <member name="F:StairsTool.StairShape.Landing">
+            <summary>
+            A staircase with a landing/platform between two flights
+            </summary>
+        </member>
+    </members>
+</doc>

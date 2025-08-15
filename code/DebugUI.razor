@@ -1,0 +1,67 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	@if(IsActive)
+	{
+		<div class="container">
+			<h1>DEBUG UI </h1>
+			<h1>GAMESTATE: @GameManager.Instance.CurrentState</h1>
+			<h1>BATTLESTATE: @BattleManager.Instance.CurrentBattleState</h1>
+			<h1>PLAYERFOCUS: @PlayerMaster.Instance.Mode</h1>
+			<h1>TIME: @GameManager.Instance.GetTimeAsINT()</h1>
+		</div>
+		<div class="list">
+			<h1>Camera</h1>
+			<h1>State: <span style="color: blue">@GameManager.Instance.CamManager.CurrentState</span></h1>
+			<h1>Position: <span style="color: blue">@GameManager.Instance.CamManager.NodeList[GameManager.Instance.CamManager.SelectedNode].Name</span></h1>
+			<h1>Focus Point: <span style="color: blue">@GameManager.Instance.CamManager.FocusPoint.Name<span></h1>
+		</div>
+
+		<div class="list2">
+			<h1>Map Data</h1>
+			<h1>@GameManager.Instance.Map.Name</h1>
+			<h1>Date: <span style="color: blue">@GameManager.Instance.Map.MonthDay</span></h1>
+			<h1>TimeOfDay: <span style="color: blue">@GameManager.Instance.Map.TimeOfDay</span></h1>
+			<h1>Weather: <span style="color: blue">@GameManager.Instance.Map.Weather</span></h1>
+		</div>
+		@if(GameCursor.Instance.SelectedUnit.IsValid())
+		{
+			<div class="list3">
+				<h1>Unit Data</h1>
+				<h1>Name: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.Name</span></h1>
+				<h1>HP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.CurrentHP</span></h1>
+				<h1>MP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.CurrentMP</span></h1>
+			</div>
+		}	
+		@if(GameCursor.Instance.SelectedObject.IsValid())
+		{
+			<div class="list4">
+				<h1>Tile Data</h1>
+				<h1>Tile Index: <span style="color: blue">@GameCursor.Instance.SelectedTile.TileIndex</span></h1>
+				<h1>Surface Type: <span style="color: blue">@GameCursor.Instance.SelectedTile.SurfaceType</span></h1>
+				<h1>Height: <span style="color: blue">@GameCursor.Instance.SelectedTile.HeightIndex</span></h1>
+			</div>
+		}
+	}
+</root>
+
+@code
+{
+
+	[Property] public bool IsActive {get; set;} = true;
+
+	public void SetActive(bool b)
+	{
+		IsActive = b;
+		Log.Info($"Debug Menu Active: {b}");
+	}
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine(Time.Delta);
+}
