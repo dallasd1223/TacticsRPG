@@ -29,6 +29,7 @@ public class TileInteract: Component
 	protected override void OnAwake()
 	{
 		ThisUnit = GetComponent<Unit>();
+		Log.Info(ThisUnit);
 	}
 
 	protected override void OnStart()

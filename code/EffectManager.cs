@@ -36,6 +36,20 @@ public sealed class EffectManager : Component
 		//Maybe Move This To Its Own Component 
 		TweenManager.Update(Time.Delta);
 	}
+	
+	public void PlayEffect(EffectEvent effect)
+	{
+		Log.Info($"{effect} Added To Effect Manager");
+		if(!effect.Sequences.Any())
+		{
+			Log.Info("No Sequences Found");
+		}
+		foreach(EffectSequence seq in effect.Sequences)
+		{
+			AddSequence(seq);
+			Log.Info("Effect Event Sequence Added");
+		}
+	}
 
 	public void AddSequence(EffectSequence seq)
 	{

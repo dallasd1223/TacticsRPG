@@ -37,21 +37,25 @@
 		switch(State)
 		{
 			case MenuState.Action:
+				if(!CMenu.IsValid()) return;
+				if(!CMenu.IsActive) return;
 				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
 				ImgPanel.Style.Left = CMenuPos.x -20 ;
-
 				break;
 			case MenuState.Ability:
+				if(!AMenu.IsValid()) return;
+				if(!AMenu.IsActive) return;
 				var AMenuPos = AMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = AMenuPos.y + (34 * AMenu.SelectedIndex);
 				ImgPanel.Style.Left = AMenuPos.x -20 ;
 				break;
 			case MenuState.Item:
+				if(!IMenu.IsValid()) return;
+				if(!IMenu.IsActive) return;
 				var IMenuPos = IMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = IMenuPos.y + (34 * IMenu.SelectedIndex);
 				ImgPanel.Style.Left = IMenuPos.x -20 ;
-	
 				break;			
 		}
 

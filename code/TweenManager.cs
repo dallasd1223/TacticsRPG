@@ -1,5 +1,6 @@
 using Sandbox;
 using System;
+using SpriteTools;
 
 namespace TacticsRPG;
 public static class TweenManager
@@ -112,10 +113,30 @@ public static class TweenExtensions
 		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => t = v);
 	}
 
+	public static Tween<Color> ColorTo(this ModelRenderer m, Color end, float duration, EasingType ease = EasingType.Linear)
+	{
+		
+		Color start = m.Tint;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => m.Tint = v);
+	}
+
+	public static Tween<Color> ColorTo(this SpriteComponent m, Color end, float duration, EasingType ease = EasingType.Linear)
+	{
+		
+		Color start = m.Tint;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => m.Tint = v);
+	}
 	public static Tween<float> FadeTo(this Color t, float end, float duration, EasingType ease = EasingType.Linear)
 	{
 		float start = t.a;
 		return TweenManager.To(start, end, duration, ease, (a, b, t) => MathX.Lerp(a, b, t), v => t = new Color(v, t.b, t.g, t.r));
+
+	}
+
+	public static Tween<float> FadeTo(this SpriteComponent s, float end, float duration, EasingType ease = EasingType.Linear)
+	{
+		float start = s.Tint.a;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => MathX.Lerp(a, b, t), v => s.Tint = new Color(v, s.Tint.b, s.Tint.g, s.Tint.r));
 
 	}
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package.lastfish.particlesystemplus</name>
+    </assembly>
+    <members>
+        <member name="P:Sandbox.ShaderParticleModelRenderer.ParticleShaderEnabled">
+            These are the dictionaries used to set the values for the render attributes in the particle system
+        </member>
+        <member name="T:Sandbox.ParticleAttributesSetter">
+            Simple class designed to set render attributes accounting for particule timings
+        </member>
+        <member name="T:MyLibraryComponent">
+            <summary>
+            This is a component - in your library!
+            </summary>
+        </member>
+    </members>
+</doc>

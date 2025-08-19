@@ -1,0 +1,23 @@
+{
+  "Name": "Potion",
+  "ID": 0,
+  "SequenceCount": 1,
+  "stepData": [
+    {
+      "StepName": "PlaySound",
+      "SequenceNum": 0,
+      "StartTime": 0,
+      "Duration": 0.5,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Sound": "sounds/death.sound",
+      "AnimationName": null
+    }
+  ],
+  "Particles": [],
+  "__references": [],
+  "__version": 0
+}

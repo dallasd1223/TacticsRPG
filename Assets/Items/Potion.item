@@ -1,6 +1,7 @@
 {
   "Name": "Potion",
   "Description": "Heals Unit 10 Points",
+  "Sprite": "sprites/potion.sprite",
   "ItemEffect": "Heal",
   "EffectID": 1,
   "MaxStack": 99,

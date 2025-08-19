@@ -4,12 +4,15 @@ using System;
 namespace TacticsRPG;
 public class EffectSequence
 {
+	public int SequenceID = 0;
 	private List<IEffectStep> steps = new();
 	private float elapsed = 0f;
 	public bool IsPlaying = false;
 	public bool IsFinished = false;
+	public void SetID(int id) => SequenceID = id;
 	public void AddStep(IEffectStep step) => steps.Add(step);
 	public void RemoveStep(IEffectStep step) => steps.Remove(step);
+	public void SetAllComplete(Action act) => AllComplete = act;
 
 	public event Action AllComplete;
 
@@ -76,6 +79,32 @@ public interface IEffectStep
 	bool IsComplete(float globalTime);
 }
 
+public class PlaySoundStep : IEffectStep
+{
+	public SoundEvent sound;
+
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public void Start()
+	{
+		Log.Info("Effect Step Started");
+		Started = true;
+		Sound.Play(sound);
+	}
+
+	public void Update(float localTime){Log.Info(localTime);}
+
+	public void End(){
+
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
 public class PlayAnimationStep : IEffectStep
 {
 	public Unit unit;

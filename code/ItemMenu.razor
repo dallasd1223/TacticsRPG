@@ -71,6 +71,12 @@
 	}
 	public void SelectMenuItem()
 	{
+		var effectData = ResourceLibrary.Get<EffectData>( "Effects/PotionEffect.Effect" );
+		Log.Info($"{effectData.Name} Data Loaded With Step {effectData.stepData[0].StepName}");
+		EffectEvent effect = new PotionEffect(effectData);
+		Log.Info($"Menu Sequence Count: {effect.Sequences.Count()}");
+		EffectManager.Instance.PlayEffect(effect);
+
 		Log.Info($"{BattleManager.Instance.ActiveUnit.Turn.ItemCommands[SelectedIndex].Text}");
 	}
 	/// <summary>

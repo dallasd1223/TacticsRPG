@@ -21,7 +21,15 @@ public sealed class GameCursor : Component
 
 	protected override void OnAwake()
 	{
-		Instance = this;
+		if(Instance is null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Instance = null;
+			Instance = this;
+		}
 		GetComponent<ModelRenderer>();
 		TargetPosition = GameObject.WorldPosition;
 		Log.Info($"{SelectedVector}");
@@ -205,6 +213,7 @@ public sealed class GameCursor : Component
 	{
 		Log.Info("Checking Units");
 		var units = Scene.GetAll<Unit>();
+		Log.Info(units);
 		foreach(Unit unit in units)
 		{
 			Log.Info("Checking Units");

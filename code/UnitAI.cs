@@ -1,5 +1,6 @@
 using Sandbox;
-
+using System;
+using System.Threading.Tasks;
 namespace TacticsRPG;
 
 public sealed class UnitAI : Component
@@ -14,13 +15,13 @@ public sealed class UnitAI : Component
 		Self = GetComponent<Unit>();
 	}
 
-	public void TakeTurn()
+	public async void TakeTurn()
 	{
 		Log.Info("AI Taking Turn");
 		HasTakenTurn = true;
 		AIAction best = null;
 		List<AIAction> actionslist = null;
-		actionslist = GatherPossibleActions();
+		actionslist = await GatherPossibleActions();
 		best = SelectBestAndExecute(actionslist);
 		if(best != null)
 		{
@@ -34,7 +35,7 @@ public sealed class UnitAI : Component
 		//Self.Move.ResetTilesFromList(ResetMoveableTiles);
 	}
 
-	private List<AIAction> GatherPossibleActions()
+	private async Task<List<AIAction>> GatherPossibleActions()
 	{
 		var actions = new List<AIAction>();
 		Log.Info("Getting Temp Move Tiles");

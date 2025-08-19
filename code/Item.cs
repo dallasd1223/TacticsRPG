@@ -1,5 +1,6 @@
 using Sandbox;
 using System;
+using SpriteTools;
 
 namespace TacticsRPG;
 
@@ -39,6 +40,7 @@ public class ItemData : GameResource
 {
 	public string Name {get; set;}
 	public string Description {get; set;}
+	public SpriteResource Sprite {get; set;}
 	public Effect ItemEffect {get; set;}
 	public int EffectID {get; set;}
 	public int MaxStack {get; set;}

@@ -1,0 +1,14 @@
+{
+  "Title": "ParticleSystemPlus",
+  "Type": "library",
+  "Org": "lastfish",
+  "Ident": "particlesystemplus",
+  "Schema": 1,
+  "IncludeSourceFiles": false,
+  "Resources": null,
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "Mounts": null,
+  "IsStandaloneOnly": false,
+  "Metadata": {}
+}

@@ -11,12 +11,18 @@
 
 			@foreach(CommandItem com in BattleManager.Instance.ActiveUnit.Turn.CommandItems)
 			{
-				if(IsGrey || !com.Active)
+				if(IsGrey)
 				{
-					<div class="button" style ="background-color: gray">
+					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>	
 								
+				}
+				else if(!com.Active)
+				{
+					<div class="button" style ="background-color: rgb(39, 39, 39)">
+						<h1 class="button-text">@com.Text</h1>
+					</div>						
 				}
 				else if(com.Active)
 				{
@@ -69,7 +75,7 @@
 			return;
 		}
 		SelectedIndex += 1;
-		Sound.Play(SelectSound);
+
 		StateHasChanged();
 		Log.Info($"CommandMenu Index Set To {SelectedIndex}");
 	}

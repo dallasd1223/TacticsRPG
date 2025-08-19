@@ -5,7 +5,8 @@ namespace TacticsRPG;
 public sealed class BattleManager : Component
 {
 	public static BattleManager Instance {get; set;}
-	[Property] public MusicPlayer Music {get; set;}
+	[Property] public BattleConfig Config {get; set;}
+ 	[Property] public MusicPlayer Music {get; set;}
 	[Property] public bool Initialized {get; set;} = false;
 	[Property] public List<Unit> AllUnits {get; set;}
 	[Property] public Queue<Unit> UnitTurnQueue {get; set;}
@@ -93,7 +94,7 @@ public sealed class BattleManager : Component
 			Revolutions = 1f,
 			HeightStart = 1000f,
 			StartTime = 0f,
-			Duration = 7f,
+			Duration = Config.INTRO_SPIRAL_DURATION,
 			action = () => Log.Info("YA MAMA"),
 
 		});

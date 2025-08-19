@@ -163,6 +163,40 @@
       "Children": []
     },
     {
+      "__guid": "87f914b6-2187-49c0-8964-7153b72d3e0b",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Generator",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.TileGenerator",
+          "__guid": "a6adffb4-ab7a-419d-a6da-e4762ae96682",
+          "__enabled": true,
+          "CellSize": 56,
+          "MapName": "MAP 00",
+          "MaxX": 9,
+          "MaxY": 16,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "TileModel": "models/dev/plane.vmdl"
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "af359820-ef19-443f-bf22-a185de862628",
       "__version": 1,
       "Flags": 0,
@@ -12226,6 +12260,7 @@
           },
           "BattleEndTheme": "sounds/fft-complete.sound",
           "commandHandler": null,
+          "Config": "resources/battle.config",
           "CurrentBattleState": "BattleStart",
           "EndGameStarted": false,
           "EndUI": {
@@ -12277,6 +12312,37 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "e4ffa18a-fa62-4f45-8de6-27909ec24cc4",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "SoundManager",
+      "Position": "108.4864,-64.36047,45.3987",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "SoundManager",
+          "__guid": "27230492-ded6-4510-9741-6ba65f7d59dc",
+          "__enabled": true,
+          "HealSound": "sounds/death.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "wow": 52
         }
       ],
       "Children": []
@@ -12743,6 +12809,23 @@
           "Tint": "1,1,1,1"
         },
         {
+          "__type": "TacticsRPG.MapManager",
+          "__guid": "50e9703e-2469-4941-b276-492fa1614735",
+          "__enabled": true,
+          "Data": null,
+          "Model": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Tiles": {
+            "_type": "gameobject",
+            "go": "af359820-ef19-443f-bf22-a185de862628"
+          }
+        },
+        {
           "__type": "MeshTest",
           "__guid": "d44033ba-344c-4344-9857-1fbf838184a3",
           "__enabled": true,
@@ -13021,40 +13104,6 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "87f914b6-2187-49c0-8964-7153b72d3e0b",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Generator",
-      "Position": "0,0,0",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.TileGenerator",
-          "__guid": "a6adffb4-ab7a-419d-a6da-e4762ae96682",
-          "__enabled": true,
-          "CellSize": 56,
-          "MapName": "MAP 00",
-          "MaxX": 9,
-          "MaxY": 16,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "TileModel": "models/dev/plane.vmdl"
         }
       ],
       "Children": []
@@ -13865,6 +13914,252 @@
           "ScaleStrategy": "ConsistentHeight",
           "TargetCamera": null,
           "ZIndex": 100
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "c4144ae3-48b4-45d2-9263-adfb702bfe77",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Object",
+      "Position": "28,28,28",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "particles",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ParticleEffect",
+          "__guid": "e6feec0b-a38b-4ec2-83a7-8c3b40bc3b15",
+          "__enabled": true,
+          "__version": 2,
+          "Alpha": 1,
+          "ApplyAlpha": false,
+          "ApplyColor": false,
+          "ApplyRotation": false,
+          "ApplyShape": false,
+          "Bounce": 1,
+          "Brightness": 1,
+          "Bumpiness": 0,
+          "Collision": false,
+          "CollisionIgnore": null,
+          "CollisionPrefab": null,
+          "CollisionPrefabAlign": false,
+          "CollisionPrefabChance": 1,
+          "CollisionPrefabRotation": 0,
+          "CollisionRadius": 1,
+          "ConstantMovement": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "Damping": 0,
+          "DieOnCollisionChance": 0,
+          "FollowerPrefab": null,
+          "FollowerPrefabChance": 1,
+          "FollowerPrefabKill": true,
+          "Force": false,
+          "ForceDirection": "0,0,0",
+          "ForceScale": 1,
+          "ForceSpace": "World",
+          "Friction": 1,
+          "Gradient": {
+            "Type": "Constant",
+            "Evaluation": "Life",
+            "GradientA": {
+              "blend": "Linear",
+              "color": [
+                {
+                  "t": 0.5,
+                  "c": "1,1,1,1"
+                }
+              ],
+              "alpha": []
+            },
+            "GradientB": {
+              "blend": "Linear",
+              "color": [
+                {
+                  "t": 0.5,
+                  "c": "1,1,1,1"
+                }
+              ],
+              "alpha": []
+            },
+            "ConstantA": "1,1,1,1",
+            "ConstantB": "1,1,1,1"
+          },
+          "InitialVelocity": {
+            "X": 0,
+            "Y": 0,
+            "Z": 29.1
+          },
+          "Lifetime": 3.3999996,
+          "LocalSpace": 0,
+          "MaxParticles": 1000,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnParticleCreated": null,
+          "OnParticleDestroyed": null,
+          "OrbitalForce": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "OrbitalPull": 0,
+          "PerParticleTimeScale": 1,
+          "Pitch": 0,
+          "PreWarm": 0,
+          "PushStrength": 0,
+          "Roll": 0,
+          "Scale": 1,
+          "SequenceId": 0,
+          "SequenceSpeed": 1,
+          "SequenceTime": 1,
+          "SheetSequence": false,
+          "StartDelay": 0,
+          "StartVelocity": 7.9999995,
+          "Stretch": 0,
+          "TimeScale": 1,
+          "Timing": "GameTime",
+          "Tint": "1,1,1,1",
+          "UsePrefabFeature": false,
+          "Yaw": 0
+        },
+        {
+          "__type": "Sandbox.ParticleSpriteRenderer",
+          "__guid": "c203c246-2ded-4286-96bf-3464bff6b15f",
+          "__enabled": true,
+          "Additive": false,
+          "Alignment": "LookAtCamera",
+          "BlurAmount": 0.5,
+          "BlurOpacity": 0.5,
+          "BlurSpacing": 0.5,
+          "DepthFeather": 0,
+          "FaceVelocity": false,
+          "FogStrength": 1,
+          "LeadingTrail": true,
+          "Lighting": false,
+          "MotionBlur": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opaque": false,
+          "Pivot": "0.5,0.5",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RotationOffset": 0,
+          "Scale": 0.9701493,
+          "Shadows": false,
+          "SortMode": "Unsorted",
+          "Texture": {
+            "$compiler": "texture",
+            "$source": "imagefile",
+            "data": {
+              "FilePath": "sprites/e001_a2.png",
+              "MaxSize": 4096,
+              "ConvertHeightToNormals": false,
+              "NormalScale": 1,
+              "Rotate": 0,
+              "FlipVertical": false,
+              "FlipHorizontal": false,
+              "Cropping": {
+                "Left": 10.000001,
+                "Top": 106.099945,
+                "Right": 90.09999,
+                "Bottom": 122.499985
+              },
+              "Padding": {
+                "Left": 0,
+                "Top": 0,
+                "Right": 0,
+                "Bottom": 0
+              },
+              "InvertColor": false,
+              "Tint": "1,1,1,1",
+              "Blur": 0,
+              "Sharpen": 0,
+              "Brightness": 1,
+              "Contrast": 1,
+              "Saturation": 1,
+              "Hue": 0,
+              "Colorize": false,
+              "TargetColor": "0,1,0,1",
+              "CacheToDisk": true
+            },
+            "compiled": null
+          },
+          "TextureFilter": "Point"
+        },
+        {
+          "__type": "Sandbox.ParticleRingEmitter",
+          "__guid": "7d29b70b-f75f-4058-b1b9-787c1d9cee7f",
+          "__enabled": true,
+          "Angle": 360,
+          "AngleStart": 0,
+          "Burst": 0,
+          "Delay": 0,
+          "DestroyOnEnd": false,
+          "Duration": 10,
+          "Flatness": 0,
+          "Loop": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Radius": 8.999995,
+          "Rate": 4.8999996,
+          "RateOverDistance": 0,
+          "Thickness": 10,
+          "VelocityFromCenter": 0,
+          "VelocityFromRing": 0
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "fefb39c1-94fc-462c-968d-e20636392e19",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "State",
+      "Position": "-1.899902,-217.7975,181.4816",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.BattleMachine",
+          "__guid": "7b05d70e-7fce-4e95-88aa-e4d4fa997f70",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
