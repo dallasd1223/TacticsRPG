@@ -5,7 +5,14 @@ public sealed class InputManager : Component
 {
 	[Property] public InputMode Mode {get; set;} = InputMode.Battle;
 	[Property] public DeviceMode Device {get; set;} = DeviceMode.Keyboard;
-	
+
+	/*
+	-URGENT-
+	REFACTOR ALL INPUT HANDLING INTO APPROPRIATE STATE MACHINES
+	THIS IS RETARDED & LAZY
+	-URGENT-
+	*/
+
 	protected override void OnUpdate()
 	{
 		HandleMasterInput();
@@ -40,9 +47,10 @@ public sealed class InputManager : Component
 
 	public void HandleBattleInput()
 	{
-		if(Input.Pressed("Scoreboard"))
+		if(Input.Pressed("Score"))
 		{
-			GameManager.Instance.SetDebugActive();
+			GameManager.Instance.SetDebug();
+			Log.Info("Score Pressed");
 		}
 		switch(BattleManager.Instance.CurrentBattleState)
 		{
@@ -50,6 +58,7 @@ public sealed class InputManager : Component
 				if(Input.Pressed("Back"))
 				{
 					var b = EffectManager.Instance.TrySkipSequence();
+					BattleManager.Instance.IntroUI.Deactivate();
 					Log.Info($"Trying To Skip: {b}");
 				}
 				break;

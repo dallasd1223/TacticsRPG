@@ -151,6 +151,7 @@ public class StepData
 	public float Duration {get; set;}
 	public float Revolutions {get; set;}
 	public float HeightStart {get; set;}
+	public Curve CurveData {get; set;}
 	public Vector3 StartPosition {get; set;}
 	public Vector3 EndPosition {get; set;}
 	public Vector3 FocusPosition {get; set;}

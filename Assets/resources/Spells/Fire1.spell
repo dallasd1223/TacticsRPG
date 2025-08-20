@@ -1,0 +1,19 @@
+{
+  "Name": "Fire1",
+  "Description": "Blast Enemy With Fire",
+  "IconPath": null,
+  "effectData": null,
+  "ManaCost": 10,
+  "IsChargeSpell": false,
+  "TurnCost": 0,
+  "Duration": 0,
+  "IsSelfCastable": false,
+  "IsAOE": true,
+  "AOE": {},
+  "Value": 15,
+  "Stat": "HP",
+  "Element": "Fire",
+  "Modifier": "Decrease",
+  "__references": [],
+  "__version": 0
+}

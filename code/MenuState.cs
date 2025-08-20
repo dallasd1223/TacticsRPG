@@ -7,4 +7,5 @@ public enum MenuState
 	Ability,
 	Item,
 	Magic,
+	Skill
 }

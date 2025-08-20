@@ -12,12 +12,17 @@
 		<CommandMenu @ref="CMenu" />
 		<AbilityMenu @ref="AMenu" />
 		<ItemMenu @ref="IMenu" />
+		<SpellMenu @ref="SpMenu" />
+		<SkillMenu @ref="SkMenu" />
 	}
 
 </root>
 
 @code
 {
+	//CONDENSE ALL ABILITYITEM MENUS TO ONE MENU!!! (SKILL, SPELL, ITEM)
+	//Refactor Asap
+	
 	public bool IsActive {get; set;} = true;
 	public MenuState? State {get; set;} = MenuState.Action;
 	public MenuState? LastState {get; set;} = null;
@@ -25,6 +30,8 @@
 	public CommandMenu CMenu {get; set;}
 	public AbilityMenu AMenu {get; set;}
 	public ItemMenu IMenu {get; set;}
+	public SpellMenu SpMenu {get; set;}
+	public SkillMenu SkMenu {get; set;}
 	[Property] SoundEvent SelectSound {get; set;}
 	[Property] SoundEvent PressSound {get; set;}
 	[Property] SoundEvent BackSound {get; set;}
@@ -56,7 +63,21 @@
 				var IMenuPos = IMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = IMenuPos.y + (34 * IMenu.SelectedIndex);
 				ImgPanel.Style.Left = IMenuPos.x -20 ;
-				break;			
+				break;
+			case MenuState.Magic:
+				if(!SpMenu.IsValid()) return;
+				if(!SpMenu.IsActive) return;
+				var SpMenuPos = SpMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
+				ImgPanel.Style.Top = SpMenuPos.y + (34 * SpMenu.SelectedIndex);
+				ImgPanel.Style.Left = SpMenuPos.x -20 ;
+				break;
+			case MenuState.Skill:
+				if(!SkMenu.IsValid()) return;
+				if(!SkMenu.IsActive) return;
+				var SkMenuPos = SkMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
+				ImgPanel.Style.Top = SkMenuPos.y + (34 * SkMenu.SelectedIndex);
+				ImgPanel.Style.Left = SkMenuPos.x -20 ;
+				break;	
 		}
 
 	}
@@ -92,6 +113,28 @@
 				}
 				break;
 			case MenuState.Magic:
+				if(State == MenuState.Ability)
+				{
+					LastState = State;
+					State = state;
+					NextMenuState();
+					AMenu.IsGrey = true;
+					AMenu.SetTransform(MenuLevel);
+					CMenu.SetTransform(MenuLevel);
+					SpMenu.Activate();
+				}
+				break;
+			case MenuState.Skill:
+				if(State == MenuState.Ability)
+				{
+					LastState = State;
+					State = state;
+					NextMenuState();
+					AMenu.IsGrey = true;
+					AMenu.SetTransform(MenuLevel);
+					CMenu.SetTransform(MenuLevel);
+					SkMenu.Activate();
+				}
 				break;
 		}
 	}
@@ -113,6 +156,26 @@
 				State = MenuState.Ability;
 				Log.Info(State);
 				IMenu.Deactivate();
+				BackMenuState();
+				AMenu.IsGrey = false;
+				AMenu.ZeroTransform();
+				CMenu.SetTransform(MenuLevel);
+				Sound.Play(BackSound);
+				break;
+			case MenuState.Magic:
+				State = MenuState.Ability;
+				Log.Info(State);
+				SpMenu.Deactivate();
+				BackMenuState();
+				AMenu.IsGrey = false;
+				AMenu.ZeroTransform();
+				CMenu.SetTransform(MenuLevel);
+				Sound.Play(BackSound);
+				break;
+			case MenuState.Skill:
+				State = MenuState.Ability;
+				Log.Info(State);
+				SkMenu.Deactivate();
 				BackMenuState();
 				AMenu.IsGrey = false;
 				AMenu.ZeroTransform();
@@ -147,6 +210,14 @@
 				IMenu.IncreaseIndex();
 				Sound.Play(SelectSound);
 				break;
+			case MenuState.Magic:
+				SpMenu.IncreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Skill:
+				SkMenu.IncreaseIndex();
+				Sound.Play(SelectSound);
+				break;
 		}
 	}
 
@@ -166,6 +237,14 @@
 				IMenu.DecreaseIndex();
 				Sound.Play(SelectSound);
 				break;
+			case MenuState.Magic:
+				SpMenu.DecreaseIndex();
+				Sound.Play(SelectSound);
+				break;
+			case MenuState.Skill:
+				SkMenu.DecreaseIndex();
+				Sound.Play(SelectSound);
+				break;
 		}
 	}
 
@@ -183,6 +262,14 @@
 				break;
 			case MenuState.Item:
 				IMenu.SelectMenuItem();
+				Sound.Play(PressSound);
+				break;
+			case MenuState.Magic:
+				SpMenu.SelectMenuItem();
+				Sound.Play(PressSound);
+				break;
+			case MenuState.Skill:
+				SkMenu.SelectMenuItem();
 				Sound.Play(PressSound);
 				break;
 		}

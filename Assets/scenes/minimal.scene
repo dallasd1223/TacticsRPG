@@ -197,6 +197,246 @@
       "Children": []
     },
     {
+      "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Camera",
+      "Position": "-407.852,-606.5533,435.9904",
+      "Rotation": "-0.04604157,0.07882579,0.5022545,0.8598881",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "cf3cbf96-22b6-4be4-a5d0-672a96c17f9f",
+          "__enabled": true,
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "FovAxis": "Horizontal",
+          "IsMainCamera": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        },
+        {
+          "__type": "Sandbox.Bloom",
+          "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
+          "__enabled": true,
+          "__version": 1,
+          "Gamma": 2.2,
+          "Mode": "Additive",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Strength": 0.5,
+          "Threshold": 1.25,
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Sandbox.Tonemapping",
+          "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
+          "__enabled": true,
+          "__version": 3,
+          "AutoExposureEnabled": true,
+          "ExposureCompensation": 0,
+          "ExposureMethod": "RGB",
+          "MaximumExposure": 2,
+          "MinimumExposure": 1,
+          "Mode": "HableFilmic",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Rate": 1
+        },
+        {
+          "__type": "Sandbox.Sharpen",
+          "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Scale": 0.2
+        },
+        {
+          "__type": "CameraManager",
+          "__guid": "c508db43-bebd-4c6e-bec7-d6daf7724d81",
+          "__enabled": true,
+          "Camera": null,
+          "CurrentState": "PlayerControlled",
+          "Direction": "North",
+          "EffectOverride": false,
+          "FocusList": [],
+          "FocusPoint": {
+            "_type": "gameobject",
+            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac"
+          },
+          "NodeList": [
+            {
+              "_type": "gameobject",
+              "go": "5e45db70-13f8-4c87-9e23-7d62b94749eb"
+            },
+            {
+              "_type": "gameobject",
+              "go": "6754462d-6185-4938-bfd3-65737d19ffaf"
+            },
+            {
+              "_type": "gameobject",
+              "go": "72abedd4-da3e-4068-bb09-8afd2da5de1e"
+            },
+            {
+              "_type": "gameobject",
+              "go": "67649785-048c-41af-ae46-841a86c9c069"
+            }
+          ],
+          "NodePosition": "0,0,0",
+          "NodeSwitch": "sounds/arcade-ui-14-229514.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PostBloom": null,
+          "SelectedFocusIndex": 0,
+          "SelectedNode": 0,
+          "Tone": null,
+          "ZoomValue": 0
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Map",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0.7071068,0.7071068",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "171c0eed-f75f-4873-b231-64a1bf1b96ff",
+          "__enabled": true,
+          "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Materials": null,
+          "Model": "models/test_map.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "TacticsRPG.MapManager",
+          "__guid": "50e9703e-2469-4941-b276-492fa1614735",
+          "__enabled": true,
+          "Data": null,
+          "Model": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Tiles": {
+            "_type": "gameobject",
+            "go": "af359820-ef19-443f-bf22-a185de862628"
+          }
+        },
+        {
+          "__type": "MeshTest",
+          "__guid": "d44033ba-344c-4344-9857-1fbf838184a3",
+          "__enabled": true,
+          "myModel": "models/test_map.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "MapData",
+          "__guid": "5c0775e7-9e93-41ae-a452-5f4502d44f9d",
+          "__enabled": true,
+          "MonthDay": "March 13",
+          "Name": "Excul Ruins",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "TimeOfDay": 11,
+          "Weather": "Sunny"
+        },
+        {
+          "__type": "BackgroundController",
+          "__guid": "3217be97-b7f2-4211-82f9-f341505ae0d0",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Skybox": {
+            "_type": "component",
+            "component_id": "de79e9e0-5c37-4c54-ac67-bfcdb1d5483b",
+            "go": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
+            "component_type": "SkyBox2D"
+          }
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "af359820-ef19-443f-bf22-a185de862628",
       "__version": 1,
       "Flags": 0,
@@ -12182,6 +12422,35 @@
       ]
     },
     {
+      "__guid": "fefb39c1-94fc-462c-968d-e20636392e19",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "State",
+      "Position": "-1.899902,-217.7975,181.4816",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.BattleMachine",
+          "__guid": "7b05d70e-7fce-4e95-88aa-e4d4fa997f70",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "6ed4843b-eb9e-41b0-9f8b-447d1dd966b3",
       "__version": 1,
       "Flags": 0,
@@ -12270,6 +12539,12 @@
             "component_type": "BattleEndUI"
           },
           "Initialized": false,
+          "IntroUI": {
+            "_type": "component",
+            "component_id": "6811508b-0a65-4550-85d7-f5ce0bf84006",
+            "go": "331cbf04-e19c-415e-9147-9ba8f3df1153",
+            "component_type": "BattleIntroUI"
+          },
           "MapNode": {
             "_type": "gameobject",
             "go": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a"
@@ -12619,6 +12894,81 @@
       "Children": []
     },
     {
+      "__guid": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Cursor",
+      "Position": "28,28,180",
+      "Rotation": "-1,0,-0,-0.00000004371139",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "155d7e55-4fc7-4e5d-8727-70997c970658",
+          "__enabled": false,
+          "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Materials": null,
+          "Model": "models/asset-quest/halloween/sword.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "TacticsRPG.GameCursor",
+          "__guid": "763d73b8-edd5-494e-bec2-8580e464f634",
+          "__enabled": true,
+          "Border": {
+            "_type": "gameobject",
+            "go": "757b4c0c-e7e8-4c26-86eb-d14e9776761a"
+          },
+          "CAngles": "0,0,180",
+          "Error": "sounds/beep-error.sound",
+          "HasUnit": false,
+          "IsActive": false,
+          "Model": {
+            "_type": "component",
+            "component_id": "155d7e55-4fc7-4e5d-8727-70997c970658",
+            "go": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
+            "component_type": "ModelRenderer"
+          },
+          "MoveSelect": "sounds/cursor_style_3.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RotateSpeed": 2,
+          "SelectedObject": null,
+          "SelectedTile": null,
+          "SelectedUnit": null,
+          "SelectedVector": "0,0",
+          "TargetPosition": "0,0,0"
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "ced9da43-e903-4852-9979-68e9832e2ce6",
       "__version": 1,
       "Flags": 0,
@@ -12769,11 +13119,11 @@
       "Children": []
     },
     {
-      "__guid": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
+      "__guid": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a",
       "__version": 1,
       "Flags": 0,
-      "Name": "Map",
-      "Position": "0,0,0",
+      "Name": "Map Node",
+      "Position": "270,500.0001,200",
       "Rotation": "0,0,0.7071068,0.7071068",
       "Scale": "1,1,1",
       "Tags": "",
@@ -12784,156 +13134,8 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "171c0eed-f75f-4873-b231-64a1bf1b96ff",
-          "__enabled": true,
-          "BodyGroups": 18446744073709551615,
-          "CreateAttachments": false,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Materials": null,
-          "Model": "models/test_map.vmdl",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "RenderOptions": {
-            "GameLayer": true,
-            "OverlayLayer": false,
-            "BloomLayer": false,
-            "AfterUILayer": false
-          },
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "TacticsRPG.MapManager",
-          "__guid": "50e9703e-2469-4941-b276-492fa1614735",
-          "__enabled": true,
-          "Data": null,
-          "Model": null,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Tiles": {
-            "_type": "gameobject",
-            "go": "af359820-ef19-443f-bf22-a185de862628"
-          }
-        },
-        {
-          "__type": "MeshTest",
-          "__guid": "d44033ba-344c-4344-9857-1fbf838184a3",
-          "__enabled": true,
-          "myModel": "models/test_map.vmdl",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        },
-        {
-          "__type": "MapData",
-          "__guid": "5c0775e7-9e93-41ae-a452-5f4502d44f9d",
-          "__enabled": true,
-          "MonthDay": "March 13",
-          "Name": "Excul Ruins",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "TimeOfDay": 11,
-          "Weather": "Sunny"
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Camera",
-      "Position": "-407.852,-606.5532,435.9904",
-      "Rotation": "-0.04604157,0.07882579,0.5022544,0.859888",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.CameraComponent",
-          "__guid": "cf3cbf96-22b6-4be4-a5d0-672a96c17f9f",
-          "__enabled": true,
-          "BackgroundColor": "0.33333,0.46275,0.52157,1",
-          "ClearFlags": "All",
-          "FieldOfView": 60,
-          "FovAxis": "Horizontal",
-          "IsMainCamera": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Orthographic": false,
-          "OrthographicHeight": 1204,
-          "Priority": 1,
-          "RenderExcludeTags": "",
-          "RenderTags": "",
-          "TargetEye": "None",
-          "Viewport": "0,0,1,1",
-          "ZFar": 10000,
-          "ZNear": 10
-        },
-        {
-          "__type": "Sandbox.Bloom",
-          "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
-          "__enabled": true,
-          "__version": 1,
-          "Gamma": 2.2,
-          "Mode": "Additive",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Strength": 0.5,
-          "Threshold": 1.25,
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "Sandbox.Tonemapping",
-          "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
-          "__enabled": true,
-          "__version": 3,
-          "AutoExposureEnabled": true,
-          "ExposureCompensation": 0,
-          "ExposureMethod": "RGB",
-          "MaximumExposure": 2,
-          "MinimumExposure": 1,
-          "Mode": "HableFilmic",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Rate": 1
-        },
-        {
-          "__type": "Sandbox.Sharpen",
-          "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
+          "__type": "CameraFocusNode",
+          "__guid": "03969756-bb9a-4cf3-8bff-d14b15bbf490",
           "__enabled": true,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -12941,49 +13143,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Scale": 0.2
-        },
-        {
-          "__type": "CameraManager",
-          "__guid": "c508db43-bebd-4c6e-bec7-d6daf7724d81",
-          "__enabled": true,
-          "CurrentState": "PlayerControlled",
-          "Direction": "North",
-          "EffectOverride": false,
-          "FocusList": [],
-          "FocusPoint": {
-            "_type": "gameobject",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac"
-          },
-          "NodeList": [
-            {
-              "_type": "gameobject",
-              "go": "5e45db70-13f8-4c87-9e23-7d62b94749eb"
-            },
-            {
-              "_type": "gameobject",
-              "go": "6754462d-6185-4938-bfd3-65737d19ffaf"
-            },
-            {
-              "_type": "gameobject",
-              "go": "72abedd4-da3e-4068-bb09-8afd2da5de1e"
-            },
-            {
-              "_type": "gameobject",
-              "go": "67649785-048c-41af-ae46-841a86c9c069"
-            }
-          ],
-          "NodePosition": "0,0,0",
-          "NodeSwitch": "sounds/arcade-ui-14-229514.sound",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "SelectedFocusIndex": 0,
-          "SelectedNode": 0,
-          "ZoomValue": 0
+          "Type": "Map"
         }
       ],
       "Children": []
@@ -13198,7 +13358,9 @@
           "Team": "Alpha",
           "Turn": null,
           "UAbility": null,
-          "UnitPosition": "0,0,0"
+          "UnitPosition": "0,0,0",
+          "USkill": null,
+          "USpell": null
         },
         {
           "__type": "CameraFocusNode",
@@ -13298,6 +13460,30 @@
           "OnComponentUpdate": null
         },
         {
+          "__type": "TacticsRPG.UnitSkills",
+          "__guid": "e56d25d3-adb6-463c-b0b3-db19d4cbb111",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Skills": []
+        },
+        {
+          "__type": "TacticsRPG.UnitSpells",
+          "__guid": "e6258cac-bf37-4bfa-aa4e-e37978ce67a2",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Spells": []
+        },
+        {
           "__type": "TacticsRPG.UnitTurn",
           "__guid": "1a16d17e-872e-43b0-a410-d1635692edfb",
           "__enabled": true,
@@ -13317,7 +13503,9 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "SkillCommands": [],
+          "SpellCommands": []
         }
       ],
       "Children": [
@@ -13376,36 +13564,6 @@
           "Children": []
         }
       ]
-    },
-    {
-      "__guid": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Map Node",
-      "Position": "270,500.0001,200",
-      "Rotation": "0,0,0.7071068,0.7071068",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "CameraFocusNode",
-          "__guid": "03969756-bb9a-4cf3-8bff-d14b15bbf490",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Type": "Map"
-        }
-      ],
-      "Children": []
     },
     {
       "__guid": "99925a2b-963c-4e53-b4a6-a094a07917f4",
@@ -13497,7 +13655,9 @@
           "Team": "Omega",
           "Turn": null,
           "UAbility": null,
-          "UnitPosition": "0,0,0"
+          "UnitPosition": "0,0,0",
+          "USkill": null,
+          "USpell": null
         },
         {
           "__type": "CameraFocusNode",
@@ -13582,28 +13742,6 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "TacticsRPG.UnitTurn",
-          "__guid": "4f790c17-55c6-4164-afa3-84c0259155fb",
-          "__enabled": true,
-          "AbilityCommands": [],
-          "CommandItems": [],
-          "HasActed": false,
-          "HasMoved": false,
-          "InitialCommands": [
-            "MOVE",
-            "ATTACK",
-            "ABILITY",
-            "WAIT"
-          ],
-          "ItemCommands": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        },
-        {
           "__type": "TacticsRPG.UnitBattle",
           "__guid": "7a69aae4-d124-49b8-98d5-4afae600a154",
           "__enabled": true,
@@ -13628,6 +13766,54 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitSkills",
+          "__guid": "c6066b45-bb9d-45a4-bec4-e9213d9c49c2",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Skills": []
+        },
+        {
+          "__type": "TacticsRPG.UnitSpells",
+          "__guid": "9fef23af-bcd8-4cbf-8571-07d31e5c060b",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Spells": []
+        },
+        {
+          "__type": "TacticsRPG.UnitTurn",
+          "__guid": "4f790c17-55c6-4164-afa3-84c0259155fb",
+          "__enabled": true,
+          "AbilityCommands": [],
+          "CommandItems": [],
+          "HasActed": false,
+          "HasMoved": false,
+          "InitialCommands": [
+            "MOVE",
+            "ATTACK",
+            "ABILITY",
+            "WAIT"
+          ],
+          "ItemCommands": [],
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "SkillCommands": [],
+          "SpellCommands": []
         }
       ],
       "Children": [
@@ -13743,12 +13929,12 @@
       "Children": []
     },
     {
-      "__guid": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
+      "__guid": "331cbf04-e19c-415e-9147-9ba8f3df1153",
       "__version": 1,
       "Flags": 0,
-      "Name": "Cursor",
-      "Position": "28,28,180",
-      "Rotation": "-1,0,-0,-0.00000004371139",
+      "Name": "StartUI",
+      "Position": "-1.899887,-217.7975,181.4816",
+      "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
       "Tags": "",
       "Enabled": true,
@@ -13758,61 +13944,41 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "155d7e55-4fc7-4e5d-8727-70997c970658",
-          "__enabled": false,
-          "BodyGroups": 18446744073709551615,
-          "CreateAttachments": false,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Materials": null,
-          "Model": "models/asset-quest/halloween/sword.vmdl",
+          "__type": "Sandbox.BattleIntroUI",
+          "__guid": "6811508b-0a65-4550-85d7-f5ce0bf84006",
+          "__enabled": true,
+          "BattleStartText": "BATTLE",
+          "BattleTextEndTime": 5,
+          "IsActive": false,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "RenderOptions": {
-            "GameLayer": true,
-            "OverlayLayer": false,
-            "BloomLayer": false,
-            "AfterUILayer": false
-          },
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
+          "Slide1Active": false,
+          "Slide2Active": false,
+          "TimeSinceLastSlide": {
+            "Absolute": 0,
+            "Relative": 916.65265
+          }
         },
         {
-          "__type": "TacticsRPG.GameCursor",
-          "__guid": "763d73b8-edd5-494e-bec2-8580e464f634",
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "3a128efd-84d1-4d38-bb60-9739159fff64",
           "__enabled": true,
-          "Border": {
-            "_type": "gameobject",
-            "go": "757b4c0c-e7e8-4c26-86eb-d14e9776761a"
-          },
-          "CAngles": "0,0,180",
-          "Error": "sounds/beep-error.sound",
-          "HasUnit": false,
-          "IsActive": false,
-          "Model": {
-            "_type": "component",
-            "component_id": "155d7e55-4fc7-4e5d-8727-70997c970658",
-            "go": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
-            "component_type": "ModelRenderer"
-          },
-          "MoveSelect": "sounds/cursor_style_3.sound",
+          "AutoScreenScale": true,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "RotateSpeed": 2,
-          "SelectedObject": null,
-          "SelectedTile": null,
-          "SelectedUnit": null,
-          "SelectedVector": "0,0",
-          "TargetPosition": "0,0,0"
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
         }
       ],
       "Children": []
@@ -14103,7 +14269,7 @@
               "TargetColor": "0,1,0,1",
               "CacheToDisk": true
             },
-            "compiled": null
+            "compiled": "textures/generated/imagefile/b52bb75771041db.vtex"
           },
           "TextureFilter": "Point"
         },
@@ -14131,35 +14297,6 @@
           "Thickness": 10,
           "VelocityFromCenter": 0,
           "VelocityFromRing": 0
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "fefb39c1-94fc-462c-968d-e20636392e19",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "State",
-      "Position": "-1.899902,-217.7975,181.4816",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.BattleMachine",
-          "__guid": "7b05d70e-7fce-4e95-88aa-e4d4fa997f70",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
         }
       ],
       "Children": []

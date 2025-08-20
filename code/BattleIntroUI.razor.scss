@@ -1,0 +1,187 @@
+BattleIntroUI
+{
+	.screen-container
+	{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(255, 167, 85, 0.192);
+		justify-content: center;
+		align-items: center;
+		transition: background-color 0.6s;
+		&:intro{
+			background-color: rgba(255, 167, 85, 0);
+		}
+		&:outro{
+			background-color: rgba(255, 167, 85, 0);
+		}
+	}
+
+	.text
+	{
+		color: yellow;
+		position: absolute;
+		top: 50%;
+		bottom: 50%;
+	}
+
+	.map-info
+	{
+		color: white;
+	}
+
+	.win-condition
+	{
+		color:white
+	}
+
+	.battle-container
+	{
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+		gap: 5px;
+		opacity: 1;
+
+
+	}
+
+	.battle-text1
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s;
+		animation: fade-out 1s 3s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text2
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 0.2s;
+		animation: fade-out 1s 3.2s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text3
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 0.4s;
+		animation: fade-out 1s 3.4s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text4
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 0.6s;
+		animation: fade-out 1s 3.6s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text5
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 0.8s;
+		animation: fade-out 1s 3.8s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text6
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 1s;
+		animation: fade-out 1s 4s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+
+	.battle-text7
+	{
+		color: white;
+		font-family: "Super Mario Bros. NES";
+		font-size: 250px;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 3s 1.2s;
+		animation: fade-out 1s 4.2s linear;
+		&:intro {
+			transform: translateY(-50);
+			opacity: 0;
+		}
+		&:outro{
+			opacity: 0;
+		}
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+
+
+	to {
+		opacity: 0;
+	}
+}

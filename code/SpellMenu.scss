@@ -1,17 +1,14 @@
-AbilityMenu
+SpellMenu
 {
-
-
-	.ability-menu
+	.spell-menu
 	{
 		position: absolute;
 		top: 370px;
-		left: 1500px;
+		left: 1800px;
 		flex-direction: column;
 		gap: 5px;
 		justify-content: center;
 		align-items: center;
-		color: rgb(39, 39, 39)
 	}
 
 	.button

@@ -4,6 +4,15 @@ using TacticsRPG;
 public class CameraManager: Component
 {
 	public static CameraManager Instance {get; set;}
+	
+	//Camera Component
+	[Property] public CameraComponent Camera {get; set;}
+
+	//PostProcessing Components
+	[Property] public Bloom PostBloom {get; set;}
+	[Property] public Tonemapping Tone {get; set;}
+
+	//Manager Properties 
 	[Property] public CameraState CurrentState {get; set;} = CameraState.PlayerControlled;
 	[Property] public CameraDirection Direction {get; set;}
 	[Property] public GameObject FocusPoint {get; set;}

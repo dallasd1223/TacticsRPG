@@ -52,12 +52,18 @@
 @code
 {
 
-	[Property] public bool IsActive {get; set;} = true;
+	[Property] public bool IsActive {get; private set;}
 
-	public void SetActive(bool b)
+	public void Activate()
 	{
-		IsActive = b;
-		Log.Info($"Debug Menu Active: {b}");
+		IsActive = true;
+		Log.Info($"DebugUI: {IsActive}");
+	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+		Log.Info($"DebugUI: {IsActive}");
 	}
 
 	/// <summary>

@@ -1,0 +1,80 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	@if(!IsActive) return;
+		<div class="spell-menu" @ref="Menu">
+
+			@foreach(CommandItem spell in BattleManager.Instance.ActiveUnit.Turn.SpellCommands)
+			{
+				if(spell.Active)
+				{
+					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.SpellCommands.IndexOf(spell) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+						<h1 class="button-text">@spell.Text</h1>
+					</div>
+				}
+				else if(!spell.Active)
+				{
+					<div class="button" style ="background-color: gray">
+						<h1 class="button-text">@spell.Text</h1>
+					</div>					
+				}
+
+			}
+		</div>	
+</root>
+
+@code
+{
+	//CONDENSE ALL ABILITYITEM MENUS TO ONE MENU!!! (SKILL, SPELL, ITEM)
+
+	public bool IsActive = false;
+	public bool IsGrey = false;
+	public int MenuDepth = 3;
+	public Panel Menu;
+	public int SelectedIndex = 0;
+
+	public void Activate()
+	{
+		IsActive = true;
+	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+	}
+
+	public void IncreaseIndex()
+	{
+		if(SelectedIndex == BattleManager.Instance.ActiveUnit.Turn.SpellCommands.Count() - 1)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}
+		SelectedIndex += 1;
+
+		StateHasChanged();
+		Log.Info($"ItemMenu Index Set To {SelectedIndex}");
+	}
+
+	public void DecreaseIndex()
+	{
+		if(SelectedIndex == 0)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}		
+		SelectedIndex -= 1;
+		StateHasChanged();
+		Log.Info($"ItemMenu Index Set To {SelectedIndex}");
+	}
+
+	public void SelectMenuItem()
+	{
+		Log.Info($"{BattleManager.Instance.ActiveUnit.Turn.SpellCommands[SelectedIndex].Text} Selected");
+	}
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

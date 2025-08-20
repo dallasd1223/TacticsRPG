@@ -1,0 +1,93 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	@if(!IsActive) return;
+
+		<div class="screen-container">
+			@if(Slide1Active)
+			{
+				<div class="slide1">
+					<h1 class="map-info"></h1>
+				</div>
+			}
+			@if(Slide2Active)
+			{
+				<div class="slide2">
+					<h1 class="win-condition"></h1>
+				</div>
+			}
+		</div>
+		
+		<div class ="battle-container">
+			@if(BattleTextActive)
+			{
+				var text = BattleStartText.ToCharArray().ToList();
+				for(int i=0; i <= text.Count()-1; i++)
+				{
+					<p class="battle-text@(i + 1)">@text[i]</p>
+				}
+			}
+		</div>
+</root>
+
+@code
+{
+
+	[Property] public bool IsActive {get; set;}
+	[Property] public string BattleStartText {get; set;}
+	[Property] public bool Slide1Active {get; set;} = false;
+	[Property] public bool Slide2Active {get; set;} = false;
+	public bool BattleTextActive = false;
+	public float SlideBufferTime {get; set;} = 0.2f;
+	[Property] public float BattleTextEndTime {get; set;} 
+	[Property] public TimeSince TimeSinceLastSlide {get; private set;}
+	public float elapsed = 0f;
+
+	protected override void OnStart()
+	{
+		Activate();
+	}
+	protected override void OnUpdate()
+	{
+		if(!IsActive) return;
+		elapsed += Time.Delta;
+		if(Slide1Active && !Slide2Active && TimeSinceLastSlide >= SlideBufferTime)
+		{
+			Slide1Active = false;
+			Slide2Active = true;
+			TimeSinceLastSlide = 0f;
+		}
+		if(Slide2Active && TimeSinceLastSlide >= SlideBufferTime)
+		{
+			Slide2Active = false;
+			BattleTextActive = true;
+			TimeSinceLastSlide = 0f;
+		}
+		if(BattleTextActive && TimeSinceLastSlide >= BattleTextEndTime)
+		{
+			Deactivate();
+		}
+	}
+
+	public void Activate()
+	{
+		IsActive = true;
+		Slide1Active = true;
+		TimeSinceLastSlide = 0f;
+		elapsed = 0f;
+	}
+
+	
+	public void Deactivate()
+	{
+		IsActive = false;
+		Slide1Active = false;
+		Slide2Active = false;
+		BattleTextActive = false;
+		elapsed = 0f;
+	}
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -15,6 +15,8 @@ public sealed class Unit : Component
 	[Property] public UnitAttack Attack {get; set;}
 	[Property] public UnitData Data {get; set;}
 	[Property] public UnitAbilities UAbility {get; set;}
+	[Property] public UnitSpells USpell {get; set;}
+	[Property] public UnitSkills USkill {get; set;}
 	[Property] public UnitAnimator Animator {get; set;}
 	[Property] public UnitBattle Battle {get; set;}
 	[Property] public UnitAI AI {get; set;}
@@ -29,7 +31,11 @@ public sealed class Unit : Component
 		Animator = GetComponent<UnitAnimator>();
 		Turn = GetComponent<UnitTurn>();
 		UAbility = GetComponent<UnitAbilities>();
+		USpell = GetComponent<UnitSpells>();
+		USkill = GetComponent<UnitSkills>();
 		UAbility.OnAbilityAdded += AbilityAdded;
+		USkill.OnSkillAdded += SkillAdded;
+		USpell.OnSpellAdded += SpellAdded;
 	}
 
 	protected override void OnStart()
@@ -43,6 +49,16 @@ public sealed class Unit : Component
 	public void AbilityAdded(Ability a)
 	{
 		Log.Info($"{Data.Name} Learned Ability {a.Data.Name}");
+	}
+
+	public void SkillAdded(Skill s)
+	{
+		Log.Info($"{Data.Name} Learned Skill {s.Data.Name}");
+	}
+
+	public void SpellAdded(Spell s)
+	{
+		Log.Info($"{Data.Name} Learned Spell {s.Data.Name}");
 	}
 }
 

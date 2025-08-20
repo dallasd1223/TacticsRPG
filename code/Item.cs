@@ -77,6 +77,7 @@ public enum Effect
 	Cleanse,
 	Item,
 	Magic,
+	Skill,
 }
 
 

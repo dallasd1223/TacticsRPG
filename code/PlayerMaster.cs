@@ -104,6 +104,7 @@ public sealed class PlayerMaster : Component
 		}
 	}
 
+	//THIS IS TERRIBLE, KEEP THIS IN THE UI
 	public void AbilityMenuSelect(string text)
 	{
 		switch(text)
@@ -113,6 +114,9 @@ public sealed class PlayerMaster : Component
 				break;
 			case "Magic":
 				Menu.ChangeMenuState(MenuState.Magic);
+				break;
+			case "Skill":
+				Menu.ChangeMenuState(MenuState.Skill);
 				break;
 		}
 	}

@@ -138,7 +138,7 @@ public class CameraOrbitStep : IEffectStep
 	public float Height = 400f;
 	public float ZoomDistance = 100f;
 	public float Revolutions = 2f;
-
+	public Curve eCurve {get; set;}
 	public float StartTime {get; set;} = 0f;
 	public float Duration {get; set;} = 10f;
 

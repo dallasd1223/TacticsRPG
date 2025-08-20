@@ -2,7 +2,7 @@ using Sandbox;
 
 public sealed class GameManager : Component
 {
-	public static GameManager Instance {get; set;}
+	public static GameManager Instance;
 	[Property] public GameState CurrentState {get; set;} = GameState.NA;
 	[Property] public CameraManager CamManager {get; set;}
 	[Property] public MapData Map {get; set;}
@@ -13,7 +13,16 @@ public sealed class GameManager : Component
 	[Property] public float GameTime {get; set;} = 0;
 	protected override void OnAwake()
 	{
-		Instance = this;
+		if(Instance is null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Instance = null;
+			Instance = this;
+		}
+
 	}
 	protected override void OnStart()
 	{
@@ -31,9 +40,16 @@ public sealed class GameManager : Component
 		return (int)GameTime;
 	}
 
-	public void SetDebugActive()
+	public void SetDebug()
 	{
-		DebugVisual.IsActive = !DebugVisual.IsActive;
+		if(DebugVisual.IsActive)
+		{
+			DebugVisual.Deactivate();
+		}
+		else if(!DebugVisual.IsActive)
+		{
+			DebugVisual.Activate();
+		}
 	}
 
 }

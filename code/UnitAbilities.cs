@@ -31,7 +31,10 @@ public class UnitAbilities : Component
 		var abi = new Ability(ab);
 		var ma = ResourceLibrary.Get<AbilityData>("Abilities/MagicAbility.Ability");
 		var mag = new Ability(ma);
+		var sk = ResourceLibrary.Get<AbilityData>("Abilities/SkillAbility.Ability");
+		var skl = new Ability(sk);
 		AddAbility(abi);
 		AddAbility(mag);
+		AddAbility(skl);
 	}
 }

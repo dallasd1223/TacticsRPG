@@ -75,6 +75,18 @@ public class AttackCommand: Command
 	}
 }
 
+public class AbilityCommand: Command
+{
+	public override void Execute()
+	{
+
+	}
+
+	public override void Tick(){}
+
+	public AbilityCommand(Unit self, Unit Target = null){}
+}
+
 public class WaitCommand: Command
 {
 	public override void Execute()

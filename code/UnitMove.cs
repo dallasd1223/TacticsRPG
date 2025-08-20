@@ -84,7 +84,7 @@ public class UnitMove: TileInteract
 		RemoveUnitTile();
 		GetUnitTile();
 		moving = false;
-		ThisUnit.Animator.AssignAnimation();
+
 	}
 
 

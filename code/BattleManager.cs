@@ -21,6 +21,7 @@ public sealed class BattleManager : Component
 	[Property] public bool StateHasStarted {get; set;} = false;
 	[Property] public bool EndGameStarted {get; set;} = false;
 	[Property] public GameObject MapNode {get; set;}
+	[Property] public BattleIntroUI IntroUI {get; set;}
 	[Property] public BattleEndUI EndUI {get; set;}
 	public BattleReward Reward {get; set;}  = new BattleReward();
 	public bool EnsureAITurn = false;

@@ -11,6 +11,8 @@ public class UnitTurn : Component
 	[Property] public List<CommandItem> CommandItems {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> AbilityCommands {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> ItemCommands {get; set;} = new List<CommandItem>(); 
+	[Property] public List<CommandItem> SkillCommands {get; set;} = new List<CommandItem>();
+	[Property] public List<CommandItem> SpellCommands {get; set;} = new List<CommandItem>();
 
 	public event Action TurnStarted;
 	public event Action TurnEnded;
@@ -35,6 +37,22 @@ public class UnitTurn : Component
 			{
 				AbilityCommands.Add(new CommandItem(a.Data.Name));
 				Log.Info(a.Data.Name);
+			}
+		}
+		if(unit.USkill.Skills.Any())
+		{
+			foreach(Skill s in unit.USkill.Skills)
+			{
+				SkillCommands.Add(new CommandItem(s.Data.Name));
+				Log.Info(s.Data.Name);
+			}
+		}
+		if(unit.USpell.Spells.Any())
+		{
+			foreach(Spell s in unit.USpell.Spells)
+			{
+				SpellCommands.Add(new CommandItem(s.Data.Name));
+				Log.Info(s.Data.Name);
 			}
 		}
 		if(PlayerMaster.Instance.Inventory.Items.Any())
@@ -95,14 +113,17 @@ public class CommandItem
 	public virtual string Text {get; set;} = "";
 	public bool Active = true;
 	public int Amount = 0;
+	public int Cost = 0;
 	public void SetActive(bool b)
 	{
 		Active = b;
 	}
 
-	public CommandItem(string text, int amount = 0)
+	public CommandItem(string text, int amount = 0, int cost = 0)
 	{
 		Text = text;
+		Amount = amount;
+		Cost = cost;
 	}
 }
 
