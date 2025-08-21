@@ -1,0 +1,53 @@
+{
+  "RootObject": {
+    "__guid": "47bffda6-6c5a-48cb-ab12-58a8ca7215af",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "PotionObject",
+    "Position": "0,0,0",
+    "Rotation": "0.00000001580507,0.00000001580507,-0.7071068,0.7071068",
+    "Scale": "0.3,0.3,0.2",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "SpriteTools.SpriteComponent",
+        "__guid": "ebf72de4-4530-4c82-88a2-b4cb7f5ba9ff",
+        "__enabled": true,
+        "__version": 1,
+        "BroadcastEvents": {},
+        "CastShadows": "On",
+        "CreateAttachPoints": false,
+        "FlashTint": "1,1,1,0",
+        "MaterialOverride": null,
+        "OnAnimationComplete": null,
+        "OnBroadcastEvent": null,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "PlaybackSpeed": 1,
+        "Sprite": "sprites/potion.sprite",
+        "SpriteFlags": "None",
+        "StartingAnimationName": "default",
+        "Tint": "1,1,1,1",
+        "UpDirection": "ZPositive",
+        "UsePixelScale": false
+      }
+    ],
+    "Children": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

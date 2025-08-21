@@ -90,16 +90,111 @@ public class PotionEffect: EffectEvent
 	public override Action OnCompleteAll {get; set;}
 	public override List<EffectSequence> Sequences {get; set;}
 
-	public PotionEffect(EffectData e)
+	public PotionEffect(CombatObject co, EffectData e)
 	{
+		CObject = co;
 		Data = e;
 
 		List<EffectSequence> list = new List<EffectSequence>{
-			new EffectSequenceBuilder().SetID(0).AddStep(new PlaySoundStep{
-				sound = Data.stepData[0].Sound,
-				StartTime = Data.stepData[0].StartTime,
-				Duration = Data.stepData[0].Duration,
-			}).Finish(),
+			new EffectSequenceBuilder().SetID(0)
+				.AddStep(
+					new ColorMapStep{
+					StartTime = Data.stepData[0].StartTime,
+					Duration = Data.stepData[0].Duration,
+					ToColor = Data.stepData[0].Color,
+					Map = BattleManager.Instance.Map.Model,
+				})
+				.AddStep(
+					new ColorSkyBoxStep
+					{
+						StartTime = Data.stepData[1].StartTime,
+						Duration = Data.stepData[1].Duration,
+						ToColor = Data.stepData[1].Color,
+						Skybox = BattleManager.Instance.Map.Background.Skybox,
+					}
+				)
+				.AddStep(
+					new SpawnPrefabStep{
+					StartTime = Data.stepData[2].StartTime,
+					Duration = Data.stepData[2].Duration,
+					StartPosition = CObject.ActingUnit.GameObject.WorldPosition + Data.stepData[2].StartPosition,
+					SpawnObject = Data.stepData[2].Resource,
+				})
+				.AddStep(
+					new SpawnParticlePrefabStep{
+						StartTime = Data.stepData[3].StartTime,
+						Duration = Data.stepData[3].Duration,
+						SpawnPosition = CObject.ActingUnit.GameObject.WorldPosition + Data.stepData[3].StartPosition,
+						ParticlePrefab = Data.stepData[3].Resource,
+					}
+				)
+				.AddStep(
+					new SpawnPointLightStep{
+						StartTime = Data.stepData[4].StartTime,
+						Duration = Data.stepData[4].Duration,
+						ToColor = Data.stepData[4].Color,
+						SpawnPosition = CObject.ActingUnit.GameObject.WorldPosition + Data.stepData[4].StartPosition,						
+					}
+				)
+				.AddStep(
+					new PlaySoundStep{
+						StartTime = Data.stepData[5].StartTime,
+						Duration = Data.stepData[5].Duration,	
+						sound = Data.stepData[5].Sound,			
+					}
+				)
+				.AddStep(
+					new ColorSpriteStep{
+						StartTime = Data.stepData[6].StartTime,
+						Duration = Data.stepData[6].Duration,
+						ToColor = Data.stepData[6].Color,
+						Sprite = CObject.ActingUnit.Animator.UnitSprite,				
+					}
+				)
+				.AddStep(
+					new PlaySoundStep{
+						StartTime = Data.stepData[7].StartTime,
+						Duration = Data.stepData[7].Duration,	
+						sound = Data.stepData[7].Sound,							
+					}
+				)
+				.AddStep(
+					new SpawnValueNumberStep{
+						StartTime = Data.stepData[8].StartTime,
+						Duration = Data.stepData[8].Duration,
+						SpawnPosition = CObject.ActingUnit.GameObject.WorldPosition + Data.stepData[8].StartPosition,
+						NumberPrefab = Data.stepData[8].Resource,						
+					}
+				)
+				.Finish(),
+
+				new EffectSequenceBuilder().SetID(1)
+				.AddStep(
+					new ColorMapStep{
+						StartTime = Data.stepData[9].StartTime,
+						Duration = Data.stepData[9].Duration,
+						ToColor = Data.stepData[9].Color,
+						Map = BattleManager.Instance.Map.Model,						
+					}
+				)
+				.AddStep(
+					new ColorSkyBoxStep{
+						StartTime = Data.stepData[10].StartTime,
+						Duration = Data.stepData[10].Duration,
+						ToColor = Data.stepData[10].Color,
+						Skybox = BattleManager.Instance.Map.Background.Skybox,
+					}
+				)
+				.AddStep(
+					new ColorSpriteStep{
+						StartTime = Data.stepData[11].StartTime,
+						Duration = Data.stepData[11].Duration,
+						ToColor = Data.stepData[11].Color,
+						Sprite = CObject.ActingUnit.Animator.UnitSprite,	
+					}
+				)
+				.Finish(),
+
 		};
 
 		Sequences = list;
@@ -114,15 +209,7 @@ public class PotionEffect: EffectEvent
 			Log.Info("No Effect Data Found");
 			return;
 		}
-		List<EffectSequence> list = new List<EffectSequence>{
-			new EffectSequenceBuilder().SetID(0).AddStep(new PlaySoundStep{
-				sound = Data.stepData[0].Sound,
-				StartTime = Data.stepData[0].StartTime,
-				Duration = Data.stepData[0].Duration,
-			}).Finish(),
-		};
 
-		Sequences = list;
 		Log.Info($"Sequence Count: {Sequences.Count()} {Sequences[0].SequenceID}");
 	}
 
@@ -139,8 +226,9 @@ public class EffectData: GameResource
 	public string Name {get; set;}
 	public int ID {get; set;}
 	public int SequenceCount {get; set;}
+	public int TotalDuration {get; set;}
 	public List<StepData> stepData {get; set;}= new();
-	public List<GameObject> Particles {get; set;}
+
 }
 
 public class StepData
@@ -155,6 +243,8 @@ public class StepData
 	public Vector3 StartPosition {get; set;}
 	public Vector3 EndPosition {get; set;}
 	public Vector3 FocusPosition {get; set;}
+	public Color Color {get; set;}
+	public GameObject Resource {get; set;}
 	public SoundEvent Sound {get; set;}
 	public string AnimationName {get; set;}
 }

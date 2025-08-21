@@ -74,6 +74,7 @@
 
 	public void SelectMenuItem()
 	{
+		PlayerMaster.Instance.SelectedCommand(CommandType.Magic, BattleManager.Instance.ActiveUnit.Turn.SpellCommands[SelectedIndex]);
 		Log.Info($"{BattleManager.Instance.ActiveUnit.Turn.SpellCommands[SelectedIndex].Text} Selected");
 	}
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

@@ -32,6 +32,7 @@
 	//CONDENSE ALL ABILITYITEM MENUS TO ONE MENU!!! (SKILL, SPELL, ITEM)
 	//TODO: Use For Loop Limited By 4, Push Offset Using Selected Index INSTEAD OF FOREACH
 	//This Creates Scrolling List Support, When Over 4 Items
+	
 	public bool IsActive = false;
 	public bool IsGrey = false;
 	public int MenuDepth = 3;
@@ -50,6 +51,7 @@
 
 	public void IncreaseIndex()
 	{
+		Log.Info(IsActive);
 		if(SelectedIndex == BattleManager.Instance.ActiveUnit.Turn.ItemCommands.Count() - 1)
 		{
 			Log.Info("Out Of Range");
@@ -63,6 +65,7 @@
 
 	public void DecreaseIndex()
 	{
+		Log.Info(IsActive);
 		if(SelectedIndex == 0)
 		{
 			Log.Info("Out Of Range");
@@ -74,11 +77,8 @@
 	}
 	public void SelectMenuItem()
 	{
-		var effectData = ResourceLibrary.Get<EffectData>( "Effects/PotionEffect.Effect" );
-		Log.Info($"{effectData.Name} Data Loaded With Step {effectData.stepData[0].StepName}");
-		EffectEvent effect = new PotionEffect(effectData);
-		Log.Info($"Menu Sequence Count: {effect.Sequences.Count()}");
-		EffectManager.Instance.PlayEffect(effect);
+
+		PlayerMaster.Instance.SelectedCommand(CommandType.Item, BattleManager.Instance.ActiveUnit.Turn.ItemCommands[SelectedIndex]);	
 
 		Log.Info($"{BattleManager.Instance.ActiveUnit.Turn.ItemCommands[SelectedIndex].Text}");
 	}

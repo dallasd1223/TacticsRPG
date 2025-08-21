@@ -4,7 +4,7 @@ using SpriteTools;
 
 namespace TacticsRPG;
 
-public class Item: IUsable
+public class Item: IUsable, IAbilityItem
 {
 	public ItemData Data {get; private set;}
 
@@ -42,8 +42,15 @@ public class ItemData : GameResource
 	public string Description {get; set;}
 	public SpriteResource Sprite {get; set;}
 	public Effect ItemEffect {get; set;}
+	public EffectData EffectData {get; set;}
 	public int EffectID {get; set;}
 	public int MaxStack {get; set;}
+
+	public bool CanUseOnSelf {get; set;}
+	public RangeShape Shape {get; set;}
+	public int BaseRange {get; set;}
+	public int ActionRange {get; set;}
+
 	public int Value {get; set;}
 
 	// Access these statically with Clothing.All

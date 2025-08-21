@@ -43,8 +43,8 @@ public static class Ease
 
 	public static float OutElastic(float t)
 	{
-		const float c4 = (2 * (float)Math.PI) / 3;
-		return t == 0 ? 0 : t == 1 ? 1 : (float)Math.Pow(2, -10 * t) * (float)Math.Sin((t * 10 - 0.75f) * c4) + 1;
+		const float c4 = (2 * MathF.PI) / 3;
+		return t == 0 ? 0 : t == 1 ? 1 : MathF.Pow(2, -10 * t) * MathF.Sin((t * 10 - 0.75f) * c4) + 1;
 	}
 
 	public static float DampHarmonic(float t)

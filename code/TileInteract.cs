@@ -6,12 +6,15 @@ public class TileInteract: Component
 {
 	public List<TileData> moveableTiles = new List<TileData>();
 	public List<TileData> attackableTiles = new List<TileData>();
+	public List<TileData> abilityTiles = new List<TileData>();
 	public List<TileData> occupiedTiles = new List<TileData>();
+
 	GameObject[] tiles;
 	[Property] public TileData UnitTile;
 
 	public bool IsMoveSelecting = false;
 	public bool IsAttackSelecting = false;
+	public bool IsAbilitySelecting = false;
 
 	public bool moving = false;
 	public bool attacking = false;
@@ -37,6 +40,7 @@ public class TileInteract: Component
 		GetUnitTile();
 	}
 	
+	//Get Units Occupied Tile
 	public void GetUnitTile()
 	{
 		Log.Info("Getting Current Unit Tile");
@@ -48,13 +52,15 @@ public class TileInteract: Component
 		}
 		SetTileOccupied(UnitTile);
 	}
-
+	
+	//Set Tile As Current (Active Turn Unit's Tile)
 	public void SetTileCurrent(TileData t, bool b)
 	{
 		t.current = b;
 		Log.Info($"Tile {t.TileIndex} Is Current {t.current}");
 	}
 
+	//Gets Tile From GameObject (Probably Better In Another Class)
 	public TileData GetTargetTile(GameObject target)
 	{
 		foreach(TileData tile in TileMapManager.Instance.TileList)
@@ -69,11 +75,14 @@ public class TileInteract: Component
 		return null;
 	}
 
+	//Granular Set Tile As Occupied
 	public void SetTileOccupied(TileData t)
 	{
 		t.IsOccupied = true;
 		Log.Info($"Tile {t.TileIndex} Is Occupied");
 	}
+
+	//Reset And Remove Tiles Inside moveableTiles List<TileData>
 	public void RemoveMoveableTiles()
 	{
 
@@ -85,6 +94,7 @@ public class TileInteract: Component
 		moveableTiles.Clear();
 	}
 
+	//Reset And Falsify IsOccupied on All Touched OccupiedTiles
 	public void ResetRemoveOccupiedTiles()
 	{
 		if(!occupiedTiles.Any()) return;
@@ -95,6 +105,7 @@ public class TileInteract: Component
 		}
 	}
 
+	//Remove & Reset This Units Current Tile
 	protected void RemoveUnitTile()
 	{
 		Log.Info("Removing Current Tile");
@@ -119,11 +130,19 @@ public class TileInteract: Component
 		foreach(TileData tile in tiles)
 		{
 			tile.selectable = false;
-			tile.highlightType = HighlightType.None;
-			tile.ApplyHighlightMat();
+			tile.ApplyHighlightMat(HighlightType.None);
 		}
 	}
 
+	public void HighlightTilesFromList(List<TileData> list, HighlightType Type)
+	{
+		foreach(TileData t in list)
+		{
+
+			t.ApplyHighlightMat(Type);
+		}
+	}
+	//Finds Moveable Tiles from CurrentTile Using Move Distance As Range
 	public void FindMoveableTiles()
 	{
 		GetUnitTile();
@@ -147,8 +166,7 @@ public class TileInteract: Component
 				Log.Info("Moveable tile added");
 				moveableTiles.Add(t);
 				t.selectable = true;
-				t.highlightType = HighlightType.Move;
-				t.ApplyHighlightMat();
+				t.ApplyHighlightMat(HighlightType.Move);
 			}
 				else if(t.IsOccupied && t != UnitTile)
 			{
@@ -173,6 +191,7 @@ public class TileInteract: Component
 		}
 	}
 
+	//Returns A List Of MoveableTiles From Units Current Tile
 	public List<TileData> ForceFindTempMoveableTiles()
 	{
 		GetUnitTile();
@@ -220,7 +239,7 @@ public class TileInteract: Component
 
 		}
 		return tempMoveableTiles;
-	}
+	}	
 	
 	public void ResetTilesFromList(List<TileData> tiles)
 	{
@@ -230,6 +249,7 @@ public class TileInteract: Component
 			tile.ResetTile();
 		}
 	}
+
 	public List<TileData> GetMoveableTiles()
 	{
 		if(moveableTiles.Any())
@@ -243,6 +263,7 @@ public class TileInteract: Component
 		}
 	}
 
+	//Finds AttackableTiles From Current Tile
 	public void FindAttackableTiles()
 	{
 		GetUnitTile();
@@ -266,8 +287,7 @@ public class TileInteract: Component
 				Log.Info($"Tile {t.TileIndex} Added To Attackable Tiles");
 				attackableTiles.Add(t);
 				t.selectable = true;
-				t.highlightType = HighlightType.Attack;
-				t.ApplyHighlightMat();
+				t.ApplyHighlightMat(HighlightType.Attack);
 			}
 			if(t.distance < attackrange)
 			{
@@ -284,10 +304,112 @@ public class TileInteract: Component
 					}
 				}
 			}
-
 		}
 	}
 
+
+	//Finds AttackableTiles From Start Tile & Range
+	public void FindAbilityTilesFromRange(int range, bool SelectCenter = false)
+	{
+		GetUnitTile();
+		SetTileCurrent(UnitTile, true);
+
+		if(UnitTile is null)
+		{
+			Log.Info("No Start Tile");
+			return;
+		}
+		
+		List<TileData> ATiles = new List<TileData>();
+		Queue<TileData> process = new Queue<TileData>();
+
+
+		process.Enqueue(UnitTile);
+		UnitTile.visited = true;
+		
+		while (process.Count > 0)
+		{
+			TileData t = process.Dequeue();
+
+			if(SelectCenter)
+			{
+				Log.Info($"Tile {t.TileIndex} Added To Ability Tiles");
+				ATiles.Add(t);
+				t.selectable = true;
+				t.ApplyHighlightMat(HighlightType.Attack);			
+			}
+			else if(t.current == false)
+			{
+				Log.Info($"Tile {t.TileIndex} Added To Ability Tiles");
+				ATiles.Add(t);
+				t.selectable = true;
+				t.ApplyHighlightMat(HighlightType.Attack);
+			}
+			if(t.distance < range)
+			{
+				foreach(TileData tile in t.neighborsList)
+				{
+					if(!tile.visited)
+					{
+						tile.parent = t;
+						tile.visited = true;
+						Log.Info($"Distance Added To Tile {tile.TileIndex} In TempMove");
+						tile.distance = 1 + t.distance;
+						Log.Info($"{tile.TileIndex} Tile Distance {tile.distance}");
+						process.Enqueue(tile);
+					}
+				}
+			}
+		}
+		abilityTiles = ATiles;
+		return;
+	}
+
+	public List<TileData> GetTilesInRangeFromShape(TileData TargetTile, AOEData AOE)
+	{
+		List<TileData> inRangeTiles = new();
+		if(AOE.Range == 0)
+		{
+			inRangeTiles.Add(TargetTile);
+			return inRangeTiles;
+		}
+		for(int x = -AOE.Range; x <= AOE.Range; x++)
+		{
+
+			for(int y = -AOE.Range; y <= AOE.Range; y++)
+			{
+				int tx = TargetTile.XIndex + x;
+				int ty = TargetTile.YIndex + y;
+
+				if(!TileMapManager.Instance.TileIsValid(new Vector2(tx, ty))) continue;
+				if(!AOE.KeepCenter && x == 0 && y == 0) continue;
+
+				switch(AOE.Shape)
+				{
+					case RangeShape.Line:
+						break;
+					case RangeShape.Square:
+						inRangeTiles.Add(TileMapManager.Instance.GetTileFromVector2(new Vector2(tx, ty)));
+						break;
+					case RangeShape.Cross:
+						if(x == 0 || y == 0)
+							inRangeTiles.Add(TileMapManager.Instance.GetTileFromVector2(new Vector2(tx, ty)));					
+						break;
+					case RangeShape.Donut:
+						break;
+					case RangeShape.Diagonal:
+						if(Math.Abs(x) + Math.Abs(y) <= AOE.Range)
+							inRangeTiles.Add(TileMapManager.Instance.GetTileFromVector2(new Vector2(tx, ty)));
+						break;
+				}
+			}
+		}
+
+
+		return inRangeTiles;
+	}
+
+	//Returns List Of Attackable Tiles From Current Tile
 	public List<TileData> FindTempAttackableTilesFromTile(TileData startTile)
 	{
 		if(startTile is null)

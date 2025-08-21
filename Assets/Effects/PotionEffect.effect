@@ -2,32 +2,19 @@
   "Name": "Potion",
   "ID": 0,
   "SequenceCount": 1,
+  "TotalDuration": 4,
   "stepData": [
     {
-      "StepName": "PlaySound",
+      "StepName": "ColorMap",
       "SequenceNum": 0,
       "StartTime": 0,
-      "Duration": 0.5,
+      "Duration": 0.6,
       "Revolutions": 0,
       "HeightStart": 0,
       "CurveData": [
         {
-          "x": 0,
-          "y": 0,
-          "in": 0,
-          "out": 0,
-          "mode": "Mirrored"
-        },
-        {
           "x": 0.5,
-          "y": 1,
-          "in": 0,
-          "out": 0,
-          "mode": "Mirrored"
-        },
-        {
-          "x": 1,
-          "y": 0,
+          "y": 0.5,
           "in": 0,
           "out": 0,
           "mode": "Mirrored"
@@ -36,11 +23,285 @@
       "StartPosition": "0,0,0",
       "EndPosition": "0,0,0",
       "FocusPosition": "0,0,0",
-      "Sound": "sounds/death.sound",
+      "Color": "0.05882,0.05882,0.05882,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "ColorSkybox",
+      "SequenceNum": 0,
+      "StartTime": 0,
+      "Duration": 0.6,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0.03922,0.03922,0.03922,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "SpawnPrefab",
+      "SequenceNum": 0,
+      "StartTime": 1,
+      "Duration": 2,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,104",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,0,0,0",
+      "Resource": {
+        "_type": "gameobject",
+        "prefab": "prefabs/potionobject.prefab"
+      },
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "SpawnParticle",
+      "SequenceNum": 0,
+      "StartTime": 3,
+      "Duration": 0.5,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,35",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,0,0,0",
+      "Resource": {
+        "_type": "gameobject",
+        "prefab": "prefabs/sparkleprefab.prefab"
+      },
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "SpawnPointLight",
+      "SequenceNum": 0,
+      "StartTime": 3,
+      "Duration": 0.2,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "-1.46093,-44.99329,111.1863",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,1.6471,10,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "PlaySound",
+      "SequenceNum": 0,
+      "StartTime": 3,
+      "Duration": 0,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,0,0,0",
+      "Resource": null,
+      "Sound": "sounds/heal2.sound",
+      "AnimationName": null
+    },
+    {
+      "StepName": "ColorSprite",
+      "SequenceNum": 0,
+      "StartTime": 2.8,
+      "Duration": 0.3,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "10,10,10,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "PlaySound",
+      "SequenceNum": 0,
+      "StartTime": 1,
+      "Duration": 0.2,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,0,0,0",
+      "Resource": null,
+      "Sound": "sounds/bottle-clink1.sound",
+      "AnimationName": null
+    },
+    {
+      "StepName": "SpawnValueNumber",
+      "SequenceNum": 0,
+      "StartTime": 3,
+      "Duration": 0,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,10",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "0,0,0,0",
+      "Resource": {
+        "_type": "gameobject",
+        "prefab": "prefabs/num.prefab"
+      },
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "ColorMap",
+      "SequenceNum": 0,
+      "StartTime": 3.5,
+      "Duration": 0.6,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "1,1,1,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "ColorSkybox",
+      "SequenceNum": 0,
+      "StartTime": 3.5,
+      "Duration": 0.6,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "1,1,1,1",
+      "Resource": null,
+      "Sound": null,
+      "AnimationName": null
+    },
+    {
+      "StepName": "ColorSprite",
+      "SequenceNum": 0,
+      "StartTime": 3.1,
+      "Duration": 0.4,
+      "Revolutions": 0,
+      "HeightStart": 0,
+      "CurveData": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "in": 0,
+          "out": 0,
+          "mode": "Mirrored"
+        }
+      ],
+      "StartPosition": "0,0,0",
+      "EndPosition": "0,0,0",
+      "FocusPosition": "0,0,0",
+      "Color": "1,1,1,0",
+      "Resource": null,
+      "Sound": null,
       "AnimationName": null
     }
   ],
-  "Particles": [],
   "__references": [],
   "__version": 0
 }

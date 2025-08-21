@@ -20,6 +20,7 @@ public sealed class BattleManager : Component
 	[Property] public SoundEvent BattleEndTheme {get; set;}
 	[Property] public bool StateHasStarted {get; set;} = false;
 	[Property] public bool EndGameStarted {get; set;} = false;
+	[Property] public MapManager Map {get; set;}
 	[Property] public GameObject MapNode {get; set;}
 	[Property] public BattleIntroUI IntroUI {get; set;}
 	[Property] public BattleEndUI EndUI {get; set;}
@@ -165,6 +166,7 @@ public sealed class BattleManager : Component
 		}
 		else if(!ActiveUnit.Turn.HasMoved && ActiveUnit.Turn.HasActed)
 		{
+			PlayerMaster.Instance.Mode = FocusMode.Menu;
 			Log.Info("Unit Must Move");
 			return false;
 		}

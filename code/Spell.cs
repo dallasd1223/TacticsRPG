@@ -32,10 +32,9 @@ public class SpellData : GameResource
 	public int TurnCost {get; set;}
 	public int Duration {get; set;}
 
-	public bool IsSelfCastable {get; set;}
-	public bool IsAOE {get; set;}
-
-	public AOEData AOE {get; set;}
+	public bool CanUseOnSelf {get; set;}
+	public RangeShape Shape {get; set;}
+	public int Range {get; set;}
 
 	public int Value {get; set;}
 

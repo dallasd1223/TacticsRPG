@@ -1,5 +1,6 @@
 using Sandbox;
 using System;
+using SpriteTools;
 
 namespace TacticsRPG;
 public class EffectSequence
@@ -44,6 +45,7 @@ public class EffectSequence
 		{
 			if(elapsed >= step.StartTime && !step.Started)
 			{
+				Log.Info("Starting Step");
 				step.Start();
 			}
 			if(elapsed >= step.StartTime && !step.IsComplete(elapsed))
@@ -79,6 +81,160 @@ public interface IEffectStep
 	bool IsComplete(float globalTime);
 }
 
+public class ColorSpriteStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public SpriteComponent Sprite;
+	public Color ToColor;
+
+	public void Start()
+	{
+		Started = true;
+		if(!Sprite.IsValid()) return;
+
+		Sprite.ColorTo(ToColor, Duration, EasingType.Linear);
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;		
+}
+
+public class SpawnValueNumberStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public GameObject NumberPrefab;
+	public Vector3 SpawnPosition;
+
+	public void Start()
+	{
+		if(!NumberPrefab.IsValid()) return;
+		Started = true;
+
+		NumberPrefab.Clone(SpawnPosition);
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
+
+public class SpawnPointLightStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public Vector3 SpawnPosition;
+	public Color ToColor;
+	private GameObject light;
+
+	public void Start()
+	{
+		Started = true;
+
+		light = new GameObject( true, "light");
+		light.WorldPosition = SpawnPosition;
+		var comp = light.AddComponent<PointLight>();
+		comp.Radius = 400f;
+		comp.Attenuation = 1f;
+		comp.LightColor = "#E9FAFF";
+		comp.ColorTo(ToColor, Duration);
+
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		light.Destroy();
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;	
+}
+
+public class ColorSkyBoxStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public Color ToColor;
+	public SkyBox2D Skybox;
+
+	public void Start()
+	{
+		if(!Skybox.IsValid()) return;
+		Started = true;
+
+		Skybox.ColorTo(ToColor, Duration, EasingType.Linear);
+
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
+
+public class ColorMapStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public Color ToColor;
+	public ModelRenderer Map;
+
+	public void Start()
+	{
+		if(!Map.IsValid()) return;
+		Started = true;
+
+		Map.ColorTo(ToColor, Duration, EasingType.Linear);
+
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
 public class PlaySoundStep : IEffectStep
 {
 	public SoundEvent sound;
@@ -243,6 +399,75 @@ public class CameraSpiralInStep : IEffectStep
 	{
 		CameraManager.Instance.EffectOverride = false;
 		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
+
+public class SpawnPrefabStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;}
+	public bool Finished {get; set;}
+
+	public float elapsed = 0f;
+
+	public Vector3 StartPosition {get; set;}
+	public GameObject SpawnObject {get; set;}
+
+
+	private GameObject SpawnedInstance;
+
+	public void Start()
+	{
+		Log.Info("Before Object Spawn");
+		if(!SpawnObject.IsValid()) return;
+		Started = true;
+		SpawnedInstance = SpawnObject.Clone(StartPosition);
+		Log.Info($"Started Spawn PrefabStep {SpawnedInstance.IsValid()}");
+
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+		SpawnedInstance.Destroy();
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
+
+public class SpawnParticlePrefabStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;}
+	public bool Finished {get; set;}
+
+	public float elapsed = 0f;
+
+	public GameObject ParticlePrefab;
+	public Vector3 SpawnPosition;
+
+	public void Start()
+	{
+		if(!ParticlePrefab.IsValid) return;
+
+		Started = true;
+
+		ParticlePrefab.Clone(SpawnPosition);
+	}
+
+	public void Update(float localTime) {}
+
+	public void End()
+	{
+
 	}
 
 	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;

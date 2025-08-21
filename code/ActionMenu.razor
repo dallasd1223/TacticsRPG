@@ -24,9 +24,9 @@
 	//Refactor Asap
 	
 	public bool IsActive {get; set;} = true;
-	public MenuState? State {get; set;} = MenuState.Action;
-	public MenuState? LastState {get; set;} = null;
-	private int MenuLevel {get; set;} = 0;
+	[Property] public MenuState? State {get; set;} = MenuState.Action;
+	[Property] public MenuState? LastState {get; set;} = null;
+	[Property] private int MenuLevel {get; set;} = 0;
 	public CommandMenu CMenu {get; set;}
 	public AbilityMenu AMenu {get; set;}
 	public ItemMenu IMenu {get; set;}
@@ -80,6 +80,13 @@
 				break;	
 		}
 
+	}
+
+	public void Reset()
+	{
+		State = MenuState.Action;
+		LastState = null;
+		MenuLevel = 0;
 	}
 
 	public void ChangeMenuState(MenuState? state)

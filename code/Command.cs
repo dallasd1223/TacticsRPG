@@ -54,14 +54,14 @@ public class AttackCommand: Command
 		CombatObject obj = new CombatObject(ThisUnit, TargetUnit, AffectType.Single, true);
 		Log.Info("Logging Combat Object Info");
 		Log.Info($"ComObj {obj.ActingUnit}, {obj.AffectedUnit}, {obj.Affect}, Basic Attack: {obj.BasicAttack}");
-		CombatManager.Instance.Add(obj, true);
-		CombatManager.Instance.ProcessFinished += OnFinished;
+		CombatController.Instance.Add(obj, true);
+		CombatController.Instance.ProcessFinished += OnFinished;
 	}
 
 	public void OnFinished()
 	{
 		IsFinished = true;
-		CombatManager.Instance.ProcessFinished -= OnFinished;
+		CombatController.Instance.ProcessFinished -= OnFinished;
 	}
 	public override void Tick()
 	{
@@ -77,14 +77,60 @@ public class AttackCommand: Command
 
 public class AbilityCommand: Command
 {
-	public override void Execute()
-	{
+	public Unit TargetUnit;
+	public List<TileData> TargetTiles;
+	public IAbilityItem AbilityItem;
 
+	public override void Execute()
+	{	
+		AffectType Type;
+
+		List<Unit> targetUnits = new List<Unit>();
+		Log.Info($"{TargetTiles.Count()} in Command");
+		foreach(TileData t in TargetTiles)
+		{
+			Log.Info($"TargetTiles {t} in Command");
+			targetUnits.Add(UnitManager.Instance.GetUnitFromTile(t));
+		}
+		if(targetUnits.Count() > 1)
+		{
+			Type = AffectType.Multi;
+		}
+		else if(ThisUnit == TargetUnit)
+		{
+			Type = AffectType.Self;
+		}
+		else
+		{
+			Type = AffectType.Single;
+		}
+		CombatObject obj = new CombatObject(ThisUnit, TargetUnit, Type, false, targetUnits, AbilityItem);
+		Log.Info("Logging Combat Object Info");
+		Log.Info($"ComObj {obj.AbilityItem}{obj.ActingUnit}, {obj.AffectedUnit}, {obj.Affect} {targetUnits.Count()}");
+		Log.Info($"{CombatController.Instance.IsValid()} Controller Valid");
+		CombatController.Instance.Add(obj, true);
+		CombatController.Instance.ProcessFinished += OnFinished;		
 	}
 
+	public void OnFinished()
+	{
+		Log.Info("Ability Command Finished");
+		IsFinished = true;
+		ThisUnit.Turn.SetCommand("ATTACK", false);
+		ThisUnit.Turn.SetCommand("ABILITY", false);
+		CombatController.Instance.ProcessFinished -= OnFinished;
+	}
 	public override void Tick(){}
 
-	public AbilityCommand(Unit self, Unit Target = null){}
+	public AbilityCommand(IAbilityItem AItem, Unit unit, Unit Target, List<TileData> TarTiles)
+	{
+		Log.Info($"{TarTiles.Count()} in Ability Command Initialization");
+		AbilityItem = AItem;
+		ThisUnit = unit;
+		TargetUnit = Target;
+		TargetTiles = TarTiles;
+	}
+
 }
 
 public class WaitCommand: Command

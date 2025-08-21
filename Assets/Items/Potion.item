@@ -3,8 +3,13 @@
   "Description": "Heals Unit 10 Points",
   "Sprite": "sprites/potion.sprite",
   "ItemEffect": "Heal",
+  "EffectData": "effects/potioneffect.effect",
   "EffectID": 1,
   "MaxStack": 99,
+  "CanUseOnSelf": true,
+  "Shape": "Cross",
+  "BaseRange": 1,
+  "ActionRange": 0,
   "Value": 10,
   "__references": [],
   "__version": 0

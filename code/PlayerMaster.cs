@@ -3,6 +3,11 @@ using Sandbox;
 namespace TacticsRPG;
 public sealed class PlayerMaster : Component
 {
+	//URGENT
+	//REFACTOR THIS CLASS: SPLIT RESPONSABILITIES WITH NEW BATTLEMANAGER STATES 
+	//& NEW SELECTOR MANAGER, AND MORE IF NEEDED
+	//URGENT
+
 	public static PlayerMaster Instance {get; set;}
 	[Property] public Unit CurrentUnit {get; set;} = null;
 	[Property] public FocusMode? LastMode {get; set;} = null;
@@ -11,6 +16,7 @@ public sealed class PlayerMaster : Component
 	[Property] public CommandMode? LastcMode {get; set;} = null;
 	[Property] public CommandMode? cMode {get; set;} = CommandMode.NA;
 	[Property] public CommandType? CurrentSelectedCommand {get; set;} = null;
+	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
 	[Property] public ActionMenu Menu {get; set;}
 	[Property] public ConfirmUI ConfirmMenu {get; set;}
 	[Property] public SoundEvent Error {get; set;}
@@ -29,14 +35,18 @@ public sealed class PlayerMaster : Component
 
 	public void CancelCommand()
 	{
-		if(Mode == FocusMode.FreeLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect))
+		if(Mode == FocusMode.FreeLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect || cMode == CommandMode.AbilitySelect))
 		{
+			CurrentUnit.Move.IsMoveSelecting = false;
 			CurrentUnit.Move.RemoveMoveableTiles();
+			CurrentUnit.Attack.IsAttackSelecting = false;
 			CurrentUnit.Attack.RemoveAttackableTiles();
 			CurrentUnit.Attack.EndAttackSelection();
-			CurrentUnit.Move.IsMoveSelecting = false;
-			CurrentUnit.Attack.IsAttackSelecting = false;
+			CurrentUnit.Ability.IsAbilitySelecting = false;
+			CurrentUnit.Ability.EndAbilitySelect();
+
 			Mode = FocusMode.Menu;
+			Menu.Reset();
 			GameCursor.Instance.DeactivateCursor();
 			CurrentSelectedCommand = null;
 			cMode = CommandMode.NA;
@@ -44,7 +54,7 @@ public sealed class PlayerMaster : Component
 		}
 	}
 
-	public void SelectedCommand(CommandType? command)
+	public void SelectedCommand(CommandType? command, CommandItem cItem = null)
 	{
 		switch(command)
 		{
@@ -85,6 +95,41 @@ public sealed class PlayerMaster : Component
 					Menu.ChangeMenuState(MenuState.Ability);
 				}				
 				break;
+			case CommandType.Item:
+				if(cItem is null) return;
+				Mode = FocusMode.FreeLook;
+				cMode = CommandMode.AbilitySelect;
+				GameCursor.Instance.ActivateCursor();
+				CurrentUnit.Ability.IsAbilitySelecting = true;
+				Log.Info("Were Before Data Part");
+				var item = (Item)cItem.AbilityItem;
+				if(item is not null)
+				{
+					Log.Info("Were inside data part");
+					CurrentUnit.Ability.FindAbilityTilesFromRange(item.Data.BaseRange, item.Data.CanUseOnSelf);
+					CurrentSelectedCommand = command;
+					CurrentCommandAbility = item;
+					break;
+				}
+				else
+				{
+					Log.Info("Bad Data");
+					break;
+				}
+	
+			case CommandType.Magic:
+				if(cItem is null) return;
+				Mode = FocusMode.FreeLook;
+				cMode = CommandMode.AbilitySelect;
+				GameCursor.Instance.ActivateCursor();
+				break;
+			case CommandType.Skill:
+				if(cItem is null) return;
+				Mode = FocusMode.FreeLook;
+				cMode = CommandMode.AbilitySelect;
+				GameCursor.Instance.ActivateCursor();
+	
+				break;
 			case CommandType.Wait:
 				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
 				{
@@ -121,7 +166,7 @@ public sealed class PlayerMaster : Component
 		}
 	}
 
-	public void ConfirmCommand(Unit unit, TileData tile)
+	public void ConfirmCommand(Unit unit, TileData tile, List<TileData> tileList)
 	{
 		switch(CurrentSelectedCommand)
 		{
@@ -131,6 +176,20 @@ public sealed class PlayerMaster : Component
 			case CommandType.Attack:
 				CurrentUnit.Attack.EndAttackSelection();
 				BattleManager.Instance.commandHandler.AddCommand(new AttackCommand(unit, UnitManager.Instance.GetUnitFromTile(tile)));
+				break;
+			case CommandType.Item:
+				CurrentUnit.Ability.EndAbilitySelect();
+				Mode = FocusMode.NA;
+				cMode = CommandMode.NA;
+				Menu.Reset();
+				GameCursor.Instance.DeactivateCursor();
+				Log.Info($"{tileList.Count()} TileList Count in Confirm Command");
+				BattleManager.Instance.commandHandler.AddCommand(new AbilityCommand(CurrentCommandAbility, unit, UnitManager.Instance.GetUnitFromTile(tile), CurrentUnit.Ability.FinalTiles));
+				CurrentUnit.Ability.ResetRemoveFinalTiles();
+				break;
+			case CommandType.Magic:
+				break;
+			case CommandType.Skill:
 				break;
 			case CommandType.Wait:
 				BattleManager.Instance.commandHandler.AddCommand(new WaitCommand(unit));
@@ -172,8 +231,12 @@ public sealed class PlayerMaster : Component
 			case CommandType.Attack:
 				GameCursor.Instance.SendConfirmData();
 				break;
+			case CommandType.Item:
+				CurrentUnit.Ability.MoveTempToFinalTiles();
+				GameCursor.Instance.SendConfirmData();
+				break;
 			case CommandType.Wait:
-				ConfirmCommand(CurrentUnit, CurrentUnit.Move.UnitTile);
+				ConfirmCommand(CurrentUnit, CurrentUnit.Move.UnitTile, null);
 				break;
 		}
 	}
@@ -212,5 +275,6 @@ public enum CommandMode
 	NA,
 	MoveSelect,
 	AttackSelect,
+	AbilitySelect,
 	WaitSelect,
 }

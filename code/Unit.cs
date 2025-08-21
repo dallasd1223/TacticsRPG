@@ -13,6 +13,7 @@ public sealed class Unit : Component
 	[Property] public UnitTurn Turn {get; set;}
 	[Property] public UnitMove Move {get; set;}
 	[Property] public UnitAttack Attack {get; set;}
+	[Property] public UnitAbility Ability {get; set;}
 	[Property] public UnitData Data {get; set;}
 	[Property] public UnitAbilities UAbility {get; set;}
 	[Property] public UnitSpells USpell {get; set;}
@@ -28,6 +29,7 @@ public sealed class Unit : Component
 	{
 		Battle = GetComponent<UnitBattle>();
 		Move = GetComponent<UnitMove>();
+		Ability = GetComponent<UnitAbility>();
 		Animator = GetComponent<UnitAnimator>();
 		Turn = GetComponent<UnitTurn>();
 		UAbility = GetComponent<UnitAbilities>();

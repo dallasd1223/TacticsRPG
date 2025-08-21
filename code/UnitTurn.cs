@@ -43,7 +43,7 @@ public class UnitTurn : Component
 		{
 			foreach(Skill s in unit.USkill.Skills)
 			{
-				SkillCommands.Add(new CommandItem(s.Data.Name));
+				SkillCommands.Add(new CommandItem(s.Data.Name, 0, s, s.Data.ManaCost));
 				Log.Info(s.Data.Name);
 			}
 		}
@@ -51,7 +51,7 @@ public class UnitTurn : Component
 		{
 			foreach(Spell s in unit.USpell.Spells)
 			{
-				SpellCommands.Add(new CommandItem(s.Data.Name));
+				SpellCommands.Add(new CommandItem(s.Data.Name, 0, s, s.Data.ManaCost));
 				Log.Info(s.Data.Name);
 			}
 		}
@@ -59,7 +59,8 @@ public class UnitTurn : Component
 		{
 			foreach(InventorySlot slot in PlayerMaster.Instance.Inventory.Items)
 			{
-				ItemCommands.Add(new CommandItem(slot.SlotItem.Data.Name, slot.Quantity));
+				ItemCommands.Add(new CommandItem(slot.SlotItem.Data.Name, slot.Quantity, slot.SlotItem));
+
 				Log.Info(slot.SlotItem.Data.Name);
 			}
 		}
@@ -112,6 +113,7 @@ public class CommandItem
 {
 	public virtual string Text {get; set;} = "";
 	public bool Active = true;
+	public IAbilityItem AbilityItem = null;
 	public int Amount = 0;
 	public int Cost = 0;
 	public void SetActive(bool b)
@@ -119,11 +121,12 @@ public class CommandItem
 		Active = b;
 	}
 
-	public CommandItem(string text, int amount = 0, int cost = 0)
+	public CommandItem(string text, int amount = 0, IAbilityItem aitem = null, int cost = 0)
 	{
 		Text = text;
 		Amount = amount;
 		Cost = cost;
+		AbilityItem = aitem;
 	}
 }
 

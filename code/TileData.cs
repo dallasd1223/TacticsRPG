@@ -16,7 +16,9 @@ public class TileData : Component
 	[Property] public ModelRenderer Model {get; set;}
 	[Property] public Material MoveHighlightMat {get; set;}
 	[Property] public Material AttackHighlightMat {get; set;}
-	[Property] public HighlightType highlightType {get; set;} = HighlightType.Move;
+	[Property] public Material AbilityHighlightMat {get; set;}
+	[Property] public HighlightType? highlightType {get; set;} = HighlightType.Move;
+	[Property] public HighlightType? LastHighlightType {get; set;} = null;
 	[Property] public bool current = false;
 	[Property] public bool IsOccupied = false;
 	public bool target = false;
@@ -30,9 +32,9 @@ public class TileData : Component
 	{
 		MoveHighlightMat = Material.Load("materials/bluetilemat.vmat");
 		AttackHighlightMat = Material.Load("materials/redtilemat.vmat");
-		highlightType = HighlightType.Move;
+		AbilityHighlightMat = Material.Load("materials/yellowtilemat.vmat");
 		Model = GetComponent<ModelRenderer>();
-		ApplyHighlightMat();
+		ApplyHighlightMat(HighlightType.Move);
 		Model.Tint = new Color(1,1,1,0);
 	}
 
@@ -72,8 +74,13 @@ public class TileData : Component
 			Log.Info($"Tile {TileIndex} No Neighbor found at {direction.x}, {direction.y}");
 		}
 	}
-	public void ApplyHighlightMat()
+	public void ApplyHighlightMat(HighlightType? type)
 	{
+		if(type is null ) return;
+
+		LastHighlightType = highlightType;
+		highlightType = type;
+
 		switch(highlightType)
 		{
 			case HighlightType.None:
@@ -84,6 +91,9 @@ public class TileData : Component
 				break;
 			case HighlightType.Attack:
 				Model.SetMaterial(AttackHighlightMat);
+				break;
+			case HighlightType.Ability:
+				Model.SetMaterial(AbilityHighlightMat);
 				break;
 			case HighlightType.Special:
 				break;
@@ -119,5 +129,6 @@ public enum HighlightType
 	None,
 	Move,
 	Attack,
+	Ability,
 	Special,
 }

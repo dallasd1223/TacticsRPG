@@ -56,10 +56,6 @@ public sealed class UnitBattle : Component
 	public void OnDamageTaken(int d)
 	{
 		Log.Info($"Unit {ThisUnit.Data.Name} Took {d} Damage");
-		if(CheckIfDead())
-		{
-			UnitHasDied?.Invoke();
-		}
 	}
 
 	public bool CheckIfDead()
@@ -70,7 +66,9 @@ public sealed class UnitBattle : Component
 			Sound.Play(DeathSound);
 			ThisUnit.Animator.PlayAnimation("downed");
 			this.GameObject.WorldRotation = new Angles(0,0,0).ToRotation();
+			UnitHasDied?.Invoke();
 			Log.Info($"Unit {ThisUnit.Data.Name} Has Died");
+
 			return true;
 		}
 		else

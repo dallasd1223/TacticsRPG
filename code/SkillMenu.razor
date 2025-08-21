@@ -72,6 +72,7 @@
 
 	public void SelectMenuItem()
 	{
+		PlayerMaster.Instance.SelectedCommand(CommandType.Skill, BattleManager.Instance.ActiveUnit.Turn.SkillCommands[SelectedIndex]);
 		Log.Info($"{BattleManager.Instance.ActiveUnit.Turn.SkillCommands[SelectedIndex].Text} Selected");
 	}
 

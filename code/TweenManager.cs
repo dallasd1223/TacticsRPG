@@ -107,6 +107,12 @@ public static class TweenExtensions
 		return TweenManager.To(start, end, duration, ease, (a, b, t) => Rotation.Lerp(a, b, t), v => t.WorldRotation = v);
 	}
 
+	public static Tween<Vector3> ScaleTo(this GameObject t, Vector3 end, float duration, EasingType ease = EasingType.Linear)
+	{
+		Vector3 start = t.WorldScale;
+		return TweenManager.To(start, end, duration, ease, (a,b,t) => Vector3.Lerp(a, b, t), v => t.WorldScale = v);
+	}
+
 	public static Tween<Color> ColorTo(this Color t, Color end, float duration, EasingType ease = EasingType.Linear)
 	{
 		Color start = t;
@@ -123,9 +129,24 @@ public static class TweenExtensions
 	public static Tween<Color> ColorTo(this SpriteComponent m, Color end, float duration, EasingType ease = EasingType.Linear)
 	{
 		
-		Color start = m.Tint;
-		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => m.Tint = v);
+		Color start = m.FlashTint;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => m.FlashTint = v);
 	}
+
+	public static Tween<Color> ColorTo(this SkyBox2D s, Color end, float duration, EasingType ease = EasingType.Linear)
+	{
+		
+		Color start = s.Tint;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => s.Tint = v);
+	}
+
+	public static Tween<Color> ColorTo(this PointLight l, Color end, float duration, EasingType ease = EasingType.Linear)
+	{
+		
+		Color start = l.LightColor;
+		return TweenManager.To(start, end, duration, ease, (a, b, t) => Color.Lerp(a, b, t), v => l.LightColor = v);
+	}
+
 	public static Tween<float> FadeTo(this Color t, float end, float duration, EasingType ease = EasingType.Linear)
 	{
 		float start = t.a;
@@ -139,4 +160,5 @@ public static class TweenExtensions
 		return TweenManager.To(start, end, duration, ease, (a, b, t) => MathX.Lerp(a, b, t), v => s.Tint = new Color(v, s.Tint.b, s.Tint.g, s.Tint.r));
 
 	}
+
 }

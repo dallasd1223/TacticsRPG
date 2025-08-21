@@ -4,6 +4,9 @@ using System;
 namespace TacticsRPG;
 public sealed class GameCursor : Component
 {
+	//URGENT
+	//REFACTOR THIS CLASS ASAP: SPLIT CURSOR VISUAL AND SELECTION LOGIC INTO OWN CLASS (MAYBE USE COMPONENTS TO DICTACTE SELECTION LOGIC STATES)
+	//URGENT
 	public static GameCursor Instance {get; set;}
 	[Property] public bool IsActive {get; set;} = true;
 	[Property] public Vector3 TargetPosition {get; set;}
@@ -151,29 +154,76 @@ public sealed class GameCursor : Component
 					return;
 				}
 				break;
+			case CommandType.Item:
+				if(CheckIfSelectable(SelectedTile, true))
+				{
+					if(TileHasUnit(SelectedTile))
+					{
+						PlayerMaster.Instance.ActivateConfirmMenu();
+						return;
+					}
+					else
+					{
+						Sound.Play(Error);
+						Log.Info("No Unit On Tile");
+						return;
+					}
+					return;
+				}
+				break;
+			case CommandType.Magic:
+				break;
+			case CommandType.Skill:
+				break;
 			case CommandType.Wait:
 				PlayerMaster.Instance.ActivateConfirmMenu();
 				break;
 		}
 	}
 
+	//CURSOR SHOULD NOT BE COMMUNICATING WITH PLAYERMASTER
 	public void SendConfirmData()
 	{
-		if(!CheckIfSelectable(SelectedTile))
+		if(PlayerMaster.Instance.CurrentSelectedCommand == CommandType.Item)
 		{
-			Sound.Play(Error);
-			return;
+			BattleManager.Instance.ActiveUnit.Ability.MoveTempToFinalTiles();
+			Log.Info($"FinalTiles Count In Cursor{BattleManager.Instance.ActiveUnit.Ability.FinalTiles.Count()}");
 		}
-		PlayerMaster.Instance.ConfirmCommand(BattleManager.Instance.ActiveUnit, SelectedTile);
+		PlayerMaster.Instance.ConfirmCommand(BattleManager.Instance.ActiveUnit, SelectedTile, BattleManager.Instance.ActiveUnit.Ability.FinalTiles);
 	}
 
-	public bool CheckIfSelectable(TileData data)
+	//WHY IS THERE SO MANY IF STATEMENT DUDE. BAD SIGN. FIX THIS ASAP (READ TOP OF CLASS)
+	public bool CheckIfSelectable(TileData data, bool CurrentOk = false)
 	{
-		if(PlayerMaster.Instance.Mode == FocusMode.FreeLook && (PlayerMaster.Instance.cMode == CommandMode.MoveSelect || PlayerMaster.Instance.cMode == CommandMode.AttackSelect))
+		if(PlayerMaster.Instance.Mode == FocusMode.FreeLook && (PlayerMaster.Instance.cMode == CommandMode.MoveSelect || PlayerMaster.Instance.cMode == CommandMode.AttackSelect || PlayerMaster.Instance.cMode == CommandMode.AbilitySelect))
 		{
-			var tile = SelectedObject.GetComponent<TileData>();
-			if(tile.current == false && tile.selectable == true)
+			if(PlayerMaster.Instance.cMode == CommandMode.AbilitySelect)
 			{
+				PlayerMaster.Instance.CurrentUnit.Ability.ForceLastTileHighlight();
+			}
+			var tile = SelectedObject.GetComponent<TileData>();
+			//THERE MUST BE A BETTER WAY TO HANDLE THIS (CREATE SEPERATE SELECTION MANAGER CLASS WITH LOGIC DICTATED BY BATTLE STATE/ SMALL COMPONENTS)
+			if(tile.current == true && CurrentOk && tile.selectable == true)
+			{
+				if(PlayerMaster.Instance.cMode == CommandMode.AbilitySelect)
+				{
+					var item = (Item)PlayerMaster.Instance.CurrentCommandAbility;
+					if(item is not null)
+						Log.Info("We Made It");
+						PlayerMaster.Instance.CurrentUnit.Ability.SetTempFinalTiles(tile, new AOEData(item.Data.Shape, item.Data.ActionRange, item.Data.CanUseOnSelf));
+				}
+				Log.Info("Tile Selectable");
+				return true;				
+			}
+			else if(tile.current == false && tile.selectable == true)
+			{
+				if(PlayerMaster.Instance.cMode == CommandMode.AbilitySelect)
+				{
+					var item = (Item)PlayerMaster.Instance.CurrentCommandAbility;
+					if(item is not null)
+						Log.Info("We Made It");
+						PlayerMaster.Instance.CurrentUnit.Ability.SetTempFinalTiles(tile, new AOEData(item.Data.Shape, item.Data.ActionRange, item.Data.CanUseOnSelf));
+				}
 				Log.Info("Tile Selectable");
 				return true;
 			}
@@ -209,6 +259,7 @@ public sealed class GameCursor : Component
 		Log.Info("No Object Found");
 	}
 
+	//TILE MANAGER AND UNITMANAGER ALREADY DO THIS
 	public bool TileHasUnit(TileData tile)
 	{
 		Log.Info("Checking Units");
@@ -226,6 +277,7 @@ public sealed class GameCursor : Component
 		return false;
 	}
 
+	//TILE MANAGER AND UNITMANAGER ALREADY DO THIS
 	public Unit GetUnitOnTile(TileData tile)
 	{
 		var units = Scene.GetAll<Unit>();
@@ -239,6 +291,7 @@ public sealed class GameCursor : Component
 		return null;
 	}
 
+	//TILE MANAGER ALREADY DOES THIS
 	public Vector3 GetPositionFromVector(Vector2 vector)
 	{
 		TileData tile = TileMapManager.Instance.GetTileData(vector);

@@ -118,7 +118,7 @@ public sealed class InputManager : Component
 						return;
 					}
 				}
-				if(PlayerMaster.Instance.Mode == FocusMode.FreeLook && (PlayerMaster.Instance.cMode == CommandMode.MoveSelect || PlayerMaster.Instance.cMode == CommandMode.AttackSelect))
+				if(PlayerMaster.Instance.Mode == FocusMode.FreeLook && (PlayerMaster.Instance.cMode == CommandMode.MoveSelect || PlayerMaster.Instance.cMode == CommandMode.AttackSelect || PlayerMaster.Instance.cMode == CommandMode.AbilitySelect))
 				{
 					if(Input.Pressed("Chat"))
 					{

@@ -43,6 +43,12 @@ public class TileMapManager : Component
 		return TileList[index];
 	}
 
+	public bool TileIsValid(Vector2 vec)
+	{
+		var tile = GetTileData(vec);
+		if(tile is null) return false;
+		else return true;
+	}
 	public TileData FindTileFromIndex(int index)
 	{
 		foreach(TileData tile in TileList)
