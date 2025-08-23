@@ -49,7 +49,7 @@ public sealed class UnitBattle : Component
 
 	public void TakeDamage(int damage)
 	{
-		ThisUnit.Data.CurrentHP -= damage;
+		ThisUnit.Stats.CurrentHP -= damage;
 		DamageTaken?.Invoke(damage);
 	}
 
@@ -60,7 +60,7 @@ public sealed class UnitBattle : Component
 
 	public bool CheckIfDead()
 	{
-		if(ThisUnit.Data.CurrentHP <= 0 )
+		if(ThisUnit.Stats.CurrentHP <= 0 )
 		{
 			HasDied = true;
 			Sound.Play(DeathSound);

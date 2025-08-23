@@ -24,18 +24,18 @@
 
 		<div class="list2">
 			<h1>Map Data</h1>
-			<h1>@GameManager.Instance.Map.Name</h1>
-			<h1>Date: <span style="color: blue">@GameManager.Instance.Map.MonthDay</span></h1>
-			<h1>TimeOfDay: <span style="color: blue">@GameManager.Instance.Map.TimeOfDay</span></h1>
-			<h1>Weather: <span style="color: blue">@GameManager.Instance.Map.Weather</span></h1>
+			<h1>@BattleManager.Instance.Map.Data.Name</h1>
+			<h1>Date: <span style="color: blue">@BattleManager.Instance.Map.Data.MonthDay</span></h1>
+			<h1>TimeOfDay: <span style="color: blue">@BattleManager.Instance.Map.Data.TimeOfDay</span></h1>
+			<h1>Weather: <span style="color: blue">@BattleManager.Instance.Map.Data.Weather</span></h1>
 		</div>
 		@if(GameCursor.Instance.SelectedUnit.IsValid())
 		{
 			<div class="list3">
 				<h1>Unit Data</h1>
 				<h1>Name: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.Name</span></h1>
-				<h1>HP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.CurrentHP</span></h1>
-				<h1>MP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.CurrentMP</span></h1>
+				<h1>HP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Stats.CurrentHP</span></h1>
+				<h1>MP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Stats.CurrentMP</span></h1>
 			</div>
 		}	
 		@if(GameCursor.Instance.SelectedObject.IsValid())

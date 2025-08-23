@@ -15,6 +15,7 @@ public sealed class Unit : Component
 	[Property] public UnitAttack Attack {get; set;}
 	[Property] public UnitAbility Ability {get; set;}
 	[Property] public UnitData Data {get; set;}
+	[Property] public UnitStats Stats {get; set;}
 	[Property] public UnitAbilities UAbility {get; set;}
 	[Property] public UnitSpells USpell {get; set;}
 	[Property] public UnitSkills USkill {get; set;}
@@ -27,6 +28,7 @@ public sealed class Unit : Component
 
 	protected override void OnAwake()
 	{
+		Stats = GetComponent<UnitStats>();
 		Battle = GetComponent<UnitBattle>();
 		Move = GetComponent<UnitMove>();
 		Ability = GetComponent<UnitAbility>();

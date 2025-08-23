@@ -4,7 +4,7 @@ using System;
 namespace TacticsRPG;
 public abstract class State : Component
 {
-	protected StateMachine stateMachine;
+	public virtual StateMachine stateMachine {get; set;}
 
 	public virtual async void Enter()
 	{
@@ -15,6 +15,7 @@ public abstract class State : Component
 	public virtual async void Exit()
 	{
 		RemoveListeners();
+		this.Destroy();
 	}
 
 	protected virtual void AddListeners(){}
@@ -38,6 +39,7 @@ public class StateMachine : Component
 	{
 		if(_activeState == state || InTransition)
 		{
+			Log.Info($"Transition Null {_activeState}");
 			return;
 		}
 
@@ -52,8 +54,11 @@ public class StateMachine : Component
 
 		if(_activeState != null)
 		{
+
 			_activeState.Enter();
 		}
+		
+		InTransition = false;
 
 	}
 
@@ -68,6 +73,8 @@ public class StateMachine : Component
 		if(target == null)
 		{
 			target = AddComponent<T>();
+			target.stateMachine = this;
+			Log.Info(target);
 		}
 		return target;
 	}

@@ -27,11 +27,11 @@ public class UnitAbilities : Component
 
 	protected override void OnStart()
 	{
-		var ab = ResourceLibrary.Get<AbilityData>("Abilities/ItemAbility.Ability");
+		var ab = ResourceLibrary.Get<AbilityData>("resources/Abilities/ItemAbility.Ability");
 		var abi = new Ability(ab);
-		var ma = ResourceLibrary.Get<AbilityData>("Abilities/MagicAbility.Ability");
+		var ma = ResourceLibrary.Get<AbilityData>("resources/Abilities/MagicAbility.Ability");
 		var mag = new Ability(ma);
-		var sk = ResourceLibrary.Get<AbilityData>("Abilities/SkillAbility.Ability");
+		var sk = ResourceLibrary.Get<AbilityData>("resources/Abilities/SkillAbility.Ability");
 		var skl = new Ability(sk);
 		AddAbility(abi);
 		AddAbility(mag);

@@ -10,15 +10,15 @@ public class InventoryManager : Component
 
 	protected override void OnStart()
 	{
-		var potionData = ResourceLibrary.Get<ItemData>( "Items/Potion.Item" );
+		var potionData = ResourceLibrary.Get<ItemData>( "resources/Items/Potion.Item" );
 		var potion = new Item(potionData);
 		AddItem(potion, 3);
 
-		var reviveData = ResourceLibrary.Get<ItemData>( "Items/Revive.Item" );
+		var reviveData = ResourceLibrary.Get<ItemData>( "resources/Items/Revive.Item" );
 		var revive = new Item(reviveData);
 		AddItem(revive, 1);
 
-		var antidoteData = ResourceLibrary.Get<ItemData>( "Items/Antidote.Item" );
+		var antidoteData = ResourceLibrary.Get<ItemData>( "resources/Items/Antidote.Item" );
 		var antidote = new Item(antidoteData);
 		AddItem(antidote, 1);
 	}

@@ -29,9 +29,9 @@
 	protected override void OnUpdate()
 	{
 		if(!HealthFill.IsValid()) return;
-		if(ThisUnit.IsValid() && ThisUnit.Data.IsValid())
+		if(ThisUnit.IsValid() && ThisUnit.Stats.IsValid())
 		{
-			HealthFill.Style.Width = Length.Percent( (float)ThisUnit.Data.CurrentHP / (float)ThisUnit.Data.MaxHP * 100f);
+			HealthFill.Style.Width = Length.Percent( (float)ThisUnit.Stats.CurrentHP / (float)ThisUnit.Stats.MaxHP * 100f);
 		}
 		
 	}

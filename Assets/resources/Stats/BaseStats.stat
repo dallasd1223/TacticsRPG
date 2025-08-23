@@ -1,0 +1,20 @@
+{
+  "Stats": {
+    "LVL": 1,
+    "EXP": 0,
+    "MAXHP": 20,
+    "HP": 20,
+    "MAXMP": 10,
+    "MP": 10,
+    "CTR": 5,
+    "MOV": 5,
+    "ATK": 15,
+    "MAG": 2,
+    "DEF": 5,
+    "SPD": 3,
+    "ACC": 90,
+    "EV": 5
+  },
+  "__references": [],
+  "__version": 0
+}

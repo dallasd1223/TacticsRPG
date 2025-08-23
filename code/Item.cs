@@ -18,13 +18,13 @@ public class Item: IUsable, IAbilityItem
 		switch(Data.ItemEffect)
 		{
 			case Effect.Heal:
-				if(unit.Data.CurrentHP + Data.Value >= unit.Data.MaxHP)
+				if(unit.Stats.CurrentHP + Data.Value >= unit.Stats.MaxHP)
 				{
-					unit.Data.CurrentHP = unit.Data.MaxHP;
+					unit.Stats.CurrentHP = unit.Stats.MaxHP;
 				}
 				else
 				{
-					unit.Data.CurrentHP += Data.Value;
+					unit.Stats.CurrentHP += Data.Value;
 				}
 				break;
 			case Effect.Hurt:

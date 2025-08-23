@@ -5,6 +5,7 @@ namespace TacticsRPG;
 public sealed class BattleManager : Component
 {
 	public static BattleManager Instance {get; set;}
+
 	[Property] public BattleConfig Config {get; set;}
  	[Property] public MusicPlayer Music {get; set;}
 	[Property] public bool Initialized {get; set;} = false;
@@ -86,8 +87,7 @@ public sealed class BattleManager : Component
 			UnitTurnQueue.Enqueue(unit);
 		}
 		Initialized = true;
-		Log.Info("Units Processed");
-		Log.Info($"{UnitTurnQueue.Count()} Units in Turn Queue");
+
 		var seq = new EffectSequence();
 
 		seq.AddStep(new BetterCameraSpiralInStep{

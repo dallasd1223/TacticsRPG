@@ -6,12 +6,14 @@ public sealed class InputManager : Component
 	[Property] public InputMode Mode {get; set;} = InputMode.Battle;
 	[Property] public DeviceMode Device {get; set;} = DeviceMode.Keyboard;
 
+	public event Action<InputKey> InputPressed;
 	/*
 	-URGENT-
 	REFACTOR ALL INPUT HANDLING INTO APPROPRIATE STATE MACHINES
 	THIS IS RETARDED & LAZY
 	-URGENT-
 	*/
+
 
 	protected override void OnUpdate()
 	{
@@ -50,6 +52,7 @@ public sealed class InputManager : Component
 		if(Input.Pressed("Score"))
 		{
 			GameManager.Instance.SetDebug();
+			InputPressed?.Invoke(InputKey.TAB);
 			Log.Info("Score Pressed");
 		}
 		switch(BattleManager.Instance.CurrentBattleState)
@@ -59,6 +62,7 @@ public sealed class InputManager : Component
 				{
 					var b = EffectManager.Instance.TrySkipSequence();
 					BattleManager.Instance.IntroUI.Deactivate();
+					InputPressed?.Invoke(InputKey.BACKSPACE);
 					Log.Info($"Trying To Skip: {b}");
 				}
 				break;
@@ -142,6 +146,20 @@ public sealed class InputManager : Component
 				break;
 		}
 	}
+}
+
+public enum InputKey
+{
+	TAB,
+	BACKSPACE,
+	SPACE,
+	ESC,
+	ENTER,
+	LEFT,
+	RIGHT,
+	FORWARD,
+	BACKWARD,
+
 }
 
 public enum InputMode

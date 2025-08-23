@@ -25,7 +25,17 @@ public sealed class PlayerMaster : Component
 
 	protected override void OnAwake()
 	{
-		Instance = this;
+		if(Instance is null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Instance = null;
+			Instance = this;
+		}
+
+		BattleMachine.Instance.Turn.TurnStarted += OnTurnStart;
 	}
 
 	protected override void OnUpdate()
@@ -33,6 +43,19 @@ public sealed class PlayerMaster : Component
 
 	}
 
+	public void OnTurnStart(TurnEventArgs args)
+	{
+		if(args.team == TeamType.Alpha)
+		{
+			InitiateTurn(args.unit);
+		}
+	}
+	public void InitiateTurn(Unit u)
+	{
+			CurrentUnit = u;
+			Mode = FocusMode.Menu;
+			Menu.IsActive = true;
+	}
 	public void CancelCommand()
 	{
 		if(Mode == FocusMode.FreeLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect || cMode == CommandMode.AbilitySelect))

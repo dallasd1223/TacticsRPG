@@ -60,6 +60,8 @@ public class AttackCommand: Command
 
 	public void OnFinished()
 	{
+		ThisUnit.Turn.SetCommand("ATTACK", false);
+		ThisUnit.Turn.SetCommand("ABILITY", false);
 		IsFinished = true;
 		CombatController.Instance.ProcessFinished -= OnFinished;
 	}
@@ -70,6 +72,7 @@ public class AttackCommand: Command
 
 	public AttackCommand(Unit unit, Unit target)
 	{
+
 		ThisUnit = unit;
 		TargetUnit = target;
 	}

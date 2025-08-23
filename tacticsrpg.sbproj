@@ -1,7 +1,7 @@
 {
   "Title": "TacticsRPG",
   "Type": "game",
-  "Org": "local",
+  "Org": "nwr",
   "Ident": "tacticsrpg",
   "Schema": 1,
   "IncludeSourceFiles": false,
@@ -28,6 +28,7 @@
       "Keyboard": true,
       "VR": false,
       "Gamepad": false
-    }
+    },
+    "LaunchMode": "Normal"
   }
 }

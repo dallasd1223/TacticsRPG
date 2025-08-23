@@ -4,6 +4,7 @@ namespace TacticsRPG;
 
 public sealed class CommandHandler : Component
 {
+	[Property] public BattleMachine Machine {get; set;}
 	[Property] public BattleManager Manager {get; set;}
 	[Property] public Queue<Command> CommandList {get; set;}
 	[Property] public HandlerState CurrentState {get; set;} = HandlerState.WaitForCommands;
@@ -30,6 +31,11 @@ public sealed class CommandHandler : Component
 	public void StartProcessing()
 	{
 		ChangeHandlerState(HandlerState.ProcessCommands);
+		if(Machine.IsValid())
+		{
+			Machine.ChangeState<ExecuteActionState>();
+		}
+
 		Manager.ChangeCurrentState(BattleState.ProcessCommands);
 		IsProcessing = true;
 		CurrentCommand = CommandList.Dequeue();

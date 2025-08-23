@@ -382,8 +382,17 @@
             "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
             "component_type": "BackgroundController"
           },
-          "Data": null,
+          "Data": {
+            "_type": "component",
+            "component_id": "5c0775e7-9e93-41ae-a452-5f4502d44f9d",
+            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
+            "component_type": "MapData"
+          },
           "Model": null,
+          "Node": {
+            "_type": "gameobject",
+            "go": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a"
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -12733,13 +12742,29 @@
         {
           "__type": "TacticsRPG.BattleMachine",
           "__guid": "7b05d70e-7fce-4e95-88aa-e4d4fa997f70",
-          "__enabled": true,
+          "__enabled": false,
+          "Camera": null,
+          "commandHandler": null,
+          "Config": null,
+          "Data": {},
+          "EndUI": null,
+          "Input": {
+            "_type": "component",
+            "component_id": "04a6b8e6-0b93-4ba6-8f9d-89ab6b642df0",
+            "go": "38ceee52-4760-4936-8984-de0e55d87c75",
+            "component_type": "InputManager"
+          },
+          "IntroUI": null,
+          "Map": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "Turn": null,
+          "TurnQueue": null,
+          "WinCondition": null
         }
       ],
       "Children": []
@@ -12777,19 +12802,14 @@
             "component_type": "DebugUI"
           },
           "GameTime": 0,
-          "Map": {
-            "_type": "component",
-            "component_id": "5c0775e7-9e93-41ae-a452-5f4502d44f9d",
-            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
-            "component_type": "MapData"
-          },
           "ModeSound": "sounds/confirm_style_1_004.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "SaveLoad": null
         }
       ],
       "Children": []
@@ -12823,7 +12843,7 @@
           },
           "BattleEndTheme": "sounds/fft-complete.sound",
           "commandHandler": null,
-          "Config": "resources/battle.config",
+          "Config": "resources/configs/battle.config",
           "CurrentBattleState": "BattleStart",
           "EndGameStarted": false,
           "EndUI": {
@@ -12880,6 +12900,7 @@
           "CurrentCommand": null,
           "CurrentState": "WaitForCommands",
           "IsProcessing": false,
+          "Machine": null,
           "Manager": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -12889,6 +12910,23 @@
           "OnComponentUpdate": null
         }
       ],
+      "Children": []
+    },
+    {
+      "__guid": "70b5d38f-d4d4-4702-8a61-45c76b3017a5",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "DialogManager",
+      "Position": "-58.50172,-226.0571,184.5299",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [],
       "Children": []
     },
     {
@@ -13660,6 +13698,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "StartTileIndex": 1,
+          "Stats": null,
           "Team": "Alpha",
           "Turn": null,
           "UAbility": null,
@@ -13696,22 +13735,13 @@
           "__type": "UnitData",
           "__guid": "cc09f4ec-e59f-4b79-ab7e-196d8e9117d4",
           "__enabled": true,
-          "Accuracy": 90,
-          "CurrentHP": 20,
-          "CurrentMP": 10,
-          "Evasion": 5,
-          "Level": 1,
-          "MaxHP": 20,
-          "MaxMP": 10,
           "Name": "Player",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Speed": 3,
-          "Strength": 15
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.UnitAnimator",
@@ -13824,6 +13854,30 @@
           "OnComponentUpdate": null,
           "SkillCommands": [],
           "SpellCommands": []
+        },
+        {
+          "__type": "UnitStats",
+          "__guid": "60ce2c8c-58cf-421e-8902-7100cb23a23a",
+          "__enabled": true,
+          "_level": 1,
+          "Accuracy": 90,
+          "BaseData": "resources/stats/basestats.stat",
+          "ChargeTime": 5,
+          "CurrentHP": 20,
+          "CurrentMP": 10,
+          "Evasion": 5,
+          "EXP": 0,
+          "MaxHP": 20,
+          "MaxMP": 10,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Speed": 3,
+          "Stats": {},
+          "Strength": 15
         }
       ],
       "Children": [
@@ -13971,6 +14025,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "StartTileIndex": 97,
+          "Stats": null,
           "Team": "Omega",
           "Turn": null,
           "UAbility": null,
@@ -14007,22 +14062,13 @@
           "__type": "UnitData",
           "__guid": "7e58a634-8bb5-4e8f-a5f7-71ea150698e6",
           "__enabled": true,
-          "Accuracy": 90,
-          "CurrentHP": 20,
-          "CurrentMP": 10,
-          "Evasion": 5,
-          "Level": 1,
-          "MaxHP": 20,
-          "MaxMP": 10,
           "Name": "Enemy",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Speed": 3,
-          "Strength": 15
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.UnitAnimator",
@@ -14133,6 +14179,30 @@
           "OnComponentUpdate": null,
           "SkillCommands": [],
           "SpellCommands": []
+        },
+        {
+          "__type": "UnitStats",
+          "__guid": "8591d2db-4ee7-4997-b4e5-318395d625b0",
+          "__enabled": true,
+          "_level": 1,
+          "Accuracy": 90,
+          "BaseData": "resources/stats/basestats.stat",
+          "ChargeTime": 5,
+          "CurrentHP": 20,
+          "CurrentMP": 10,
+          "Evasion": 5,
+          "EXP": 0,
+          "MaxHP": 20,
+          "MaxMP": 10,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Speed": 3,
+          "Stats": {},
+          "Strength": 15
         }
       ],
       "Children": [
@@ -14279,7 +14349,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 8368.275
+            "Relative": 3943.9297
           }
         },
         {
