@@ -102,6 +102,20 @@ public sealed class PlayerMaster : Component
 			}
 
 		}
+		else if(Mode == FocusMode.ConfirmMenu)
+		{
+			switch(key)
+			{
+				case InputKey.BACKSPACE:
+					Cancel();
+					break;
+				case InputKey.ENTER:
+					Confirm();
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	public void CancelCommand()
