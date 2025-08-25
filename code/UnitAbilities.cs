@@ -3,6 +3,7 @@ using System;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public class UnitAbilities : Component
 {
 

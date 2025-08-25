@@ -6,7 +6,7 @@ namespace TacticsRPG;
 public sealed class TurnQueueController : Component
 {
 
-	private Queue<Unit> TurnQueue;
+	private Queue<Unit> TurnQueue = new();
 
 	public bool BuildQueue()
 	{

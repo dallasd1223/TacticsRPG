@@ -1,6 +1,6 @@
 using Sandbox;
 namespace TacticsRPG;
-public static class ActionLog
+public static partial class ActionLog
 {
 	private static List<ActionLogEntry> _entries = new();
 
@@ -8,7 +8,7 @@ public static class ActionLog
 
 	public static void Clear(){}
 
-	public static void Add(string type, Unit source, Unit? target, string desc, object? metadata = null)
+	public static void Add(string type, Unit source, Unit target, string desc, object metadata = null)
 	{
 		_entries.Add(new ActionLogEntry
 		{
@@ -19,6 +19,8 @@ public static class ActionLog
 			Metadata = metadata,
 			Timestamp = Time.Now,
 		});
+
+		Log.Info(desc);
 	}
 
 	public static void PrintToConsole()
@@ -35,10 +37,10 @@ public class ActionLogEntry
 {
 	public string ActionType;
 	public Unit Source;
-	public Unit? Target;
+	public Unit Target;
 	public string Description;
 	public float Timestamp;
-	public object? Metadata;
+	public object Metadata;
 
 	public override string ToString()
 	{

@@ -115,6 +115,8 @@ public sealed class GameCursor : Component
 		TargetPosition = GetPositionFromVector(SelectedVector);
 		
 	}
+
+	//Send Event Back To PlayerMaster Instead Of Going Back & Forth
 	public void PreCheck()
 	{
 		switch(PlayerMaster.Instance.CurrentSelectedCommand)
@@ -134,7 +136,7 @@ public sealed class GameCursor : Component
 			case CommandType.Attack:
 				if(CheckIfSelectable(SelectedTile))
 				{
-					if(TileHasUnit(SelectedTile))
+					if(UnitManager.Instance.TileHasUnit(SelectedTile))
 					{
 						PlayerMaster.Instance.ActivateConfirmMenu();
 						return;
@@ -145,7 +147,6 @@ public sealed class GameCursor : Component
 						Log.Info("No Attackable Unit On Tile");
 						return;
 					}
-					return;
 				}
 				else
 				{
@@ -153,11 +154,10 @@ public sealed class GameCursor : Component
 					Log.Info("Tile Not Selectable");
 					return;
 				}
-				break;
 			case CommandType.Item:
 				if(CheckIfSelectable(SelectedTile, true))
 				{
-					if(TileHasUnit(SelectedTile))
+					if(UnitManager.Instance.TileHasUnit(SelectedTile))
 					{
 						PlayerMaster.Instance.ActivateConfirmMenu();
 						return;
@@ -168,7 +168,6 @@ public sealed class GameCursor : Component
 						Log.Info("No Unit On Tile");
 						return;
 					}
-					return;
 				}
 				break;
 			case CommandType.Magic:
@@ -246,7 +245,7 @@ public sealed class GameCursor : Component
 			SelectedObject = obj.GameObject;
 			CameraManager.Instance.CursorObjectFocus(SelectedObject);
 			Border.WorldPosition = SelectedObject.WorldPosition + new Vector3(0,0,1);
-			if(TileHasUnit(obj))
+			if(UnitManager.Instance.TileHasUnit(obj))
 			{
 				SelectedUnit = GetUnitOnTile(obj);
 			}
@@ -260,7 +259,7 @@ public sealed class GameCursor : Component
 	}
 
 	//TILE MANAGER AND UNITMANAGER ALREADY DO THIS
-	public bool TileHasUnit(TileData tile)
+	/*public bool TileHasUnit(TileData tile)
 	{
 		Log.Info("Checking Units");
 		var units = Scene.GetAll<Unit>();
@@ -268,14 +267,14 @@ public sealed class GameCursor : Component
 		foreach(Unit unit in units)
 		{
 			Log.Info("Checking Units");
-			if(!unit.Move.IsValid()) break;
-			if(unit.Move.UnitTile == tile)
+			if(!unit.Interact.IsValid()) break;
+			if(unit.Interact.UnitTile == tile)
 			{
 				return true;
 			}
 		}
 		return false;
-	}
+	}*/
 
 	//TILE MANAGER AND UNITMANAGER ALREADY DO THIS
 	public Unit GetUnitOnTile(TileData tile)
@@ -283,7 +282,7 @@ public sealed class GameCursor : Component
 		var units = Scene.GetAll<Unit>();
 		foreach(Unit unit in units)
 		{
-			if(unit.Move.UnitTile == tile)
+			if(unit.Interact.UnitTile == tile)
 			{
 				return unit;
 			}
@@ -341,7 +340,7 @@ public sealed class GameCursor : Component
 
 	public void ResetCursor()
 	{
-		SelectedVector = TileMapManager.Instance.GetVector2FromTile(BattleManager.Instance.ActiveUnit.Move.UnitTile);
+		SelectedVector = TileMapManager.Instance.GetVector2FromTile(BattleMachine.Instance.Turn.ActiveUnit.Interact.UnitTile);
 		SelectedTile = TileMapManager.Instance.GetTileFromVector2(SelectedVector);
 		SelectedUnit = UnitManager.Instance.GetUnitFromTile(SelectedTile);
 		SetSelectedObject();

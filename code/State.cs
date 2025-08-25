@@ -6,13 +6,13 @@ public abstract class State : Component
 {
 	public virtual StateMachine stateMachine {get; set;}
 
-	public virtual async void Enter()
+	public virtual void Enter()
 	{
 		AddListeners();
 	}
 	public virtual void Update(){}
 
-	public virtual async void Exit()
+	public virtual void Exit()
 	{
 		RemoveListeners();
 		this.Destroy();
@@ -51,6 +51,10 @@ public class StateMachine : Component
 		}
 
 		_activeState = state;
+
+		//Hook Event Into State Transition
+		var bstate = (Battlestate)state;
+		BattleEvents.StateHasChanged(bstate);
 
 		if(_activeState != null)
 		{

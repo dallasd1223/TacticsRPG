@@ -35,7 +35,7 @@ public sealed class PlayerMaster : Component
 			Instance = this;
 		}
 
-		BattleMachine.Instance.Turn.TurnStarted += OnTurnStart;
+		BattleMachine.Instance.Turn.TurnEvent += OnTurnEvent;
 	}
 
 	protected override void OnUpdate()
@@ -43,33 +43,82 @@ public sealed class PlayerMaster : Component
 
 	}
 
-	public void OnTurnStart(TurnEventArgs args)
+	public void OnTurnEvent(TurnEventArgs args)
 	{
-		if(args.team == TeamType.Alpha)
+		switch(args.state)
 		{
-			InitiateTurn(args.unit);
+			case TurnState.Active:
+				if(args.team == TeamType.Alpha)
+				{
+					InitiateTurn(args.unit);
+				}
+				return;
+			default:
+				return;
 		}
+
 	}
 	public void InitiateTurn(Unit u)
 	{
 			CurrentUnit = u;
 			Mode = FocusMode.Menu;
-			Menu.IsActive = true;
+	
 	}
+
+	public void HandleInput(InputKey key)
+	{
+		if(Mode == FocusMode.Menu)
+		{
+			switch(key)
+			{
+				case InputKey.FORWARD:
+					Menu.DecreaseIndex();
+					break;
+				case InputKey.BACKWARD:
+					Menu.IncreaseIndex();
+					break;
+				case InputKey.BACKSPACE:
+					Menu.LastMenuState();
+					break;
+				case InputKey.ENTER:
+					if(!Menu.IsActive)
+					{
+						Menu.ActivateMenu(CurrentUnit);
+						return;
+					}
+					Menu.SelectItem();
+					break;
+			}
+		}
+		else if(Mode == FocusMode.FreeLook)
+		{
+			switch(key)
+			{
+				case InputKey.BACKSPACE:
+					CancelCommand();
+					break;
+				default:
+					break;
+			}
+
+		}
+	}
+
 	public void CancelCommand()
 	{
 		if(Mode == FocusMode.FreeLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect || cMode == CommandMode.AbilitySelect))
 		{
-			CurrentUnit.Move.IsMoveSelecting = false;
+			CurrentUnit.Interact.IsMoveSelecting = false;
 			CurrentUnit.Move.RemoveMoveableTiles();
-			CurrentUnit.Attack.IsAttackSelecting = false;
+			CurrentUnit.Interact.IsAttackSelecting = false;
 			CurrentUnit.Attack.RemoveAttackableTiles();
 			CurrentUnit.Attack.EndAttackSelection();
-			CurrentUnit.Ability.IsAbilitySelecting = false;
+			CurrentUnit.Interact.IsAbilitySelecting = false;
 			CurrentUnit.Ability.EndAbilitySelect();
 
 			Mode = FocusMode.Menu;
-			Menu.Reset();
+			Menu.DoReset();
+			PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 			GameCursor.Instance.DeactivateCursor();
 			CurrentSelectedCommand = null;
 			cMode = CommandMode.NA;
@@ -85,11 +134,13 @@ public sealed class PlayerMaster : Component
 				if(CurrentUnit.Turn.CommandIsActive("MOVE"))
 				{
 					Mode = FocusMode.FreeLook;
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					cMode = CommandMode.MoveSelect;
-					CurrentUnit.Move.FindMoveableTiles();
+					PlayerEvents.OnCommandModeChange(cMode);
+					CurrentUnit.Interact.FindMoveableTiles();
 					GameCursor.Instance.ActivateCursor();
-
-					CurrentUnit.Move.IsMoveSelecting = true;
+					//Menu.DeactivateMenu();
+					CurrentUnit.Interact.IsMoveSelecting = true;
 					CurrentSelectedCommand = command;
 				}
 				else
@@ -103,8 +154,8 @@ public sealed class PlayerMaster : Component
 					Mode = FocusMode.FreeLook;
 					cMode = CommandMode.AttackSelect;
 					GameCursor.Instance.ActivateCursor();
-					CurrentUnit.Attack.IsAttackSelecting = true;
-					CurrentUnit.Attack.FindAttackableTiles();
+					CurrentUnit.Interact.IsAttackSelecting = true;
+					CurrentUnit.Interact.FindAttackableTiles();
 					CurrentSelectedCommand = command;
 				}
 				else
@@ -123,13 +174,13 @@ public sealed class PlayerMaster : Component
 				Mode = FocusMode.FreeLook;
 				cMode = CommandMode.AbilitySelect;
 				GameCursor.Instance.ActivateCursor();
-				CurrentUnit.Ability.IsAbilitySelecting = true;
+				CurrentUnit.Interact.IsAbilitySelecting = true;
 				Log.Info("Were Before Data Part");
 				var item = (Item)cItem.AbilityItem;
 				if(item is not null)
 				{
 					Log.Info("Were inside data part");
-					CurrentUnit.Ability.FindAbilityTilesFromRange(item.Data.BaseRange, item.Data.CanUseOnSelf);
+					CurrentUnit.Interact.FindAbilityTilesFromRange(item.Data.BaseRange, item.Data.CanUseOnSelf);
 					CurrentSelectedCommand = command;
 					CurrentCommandAbility = item;
 					break;
@@ -204,7 +255,7 @@ public sealed class PlayerMaster : Component
 				CurrentUnit.Ability.EndAbilitySelect();
 				Mode = FocusMode.NA;
 				cMode = CommandMode.NA;
-				Menu.Reset();
+				Menu.DoReset();
 				GameCursor.Instance.DeactivateCursor();
 				Log.Info($"{tileList.Count()} TileList Count in Confirm Command");
 				BattleManager.Instance.commandHandler.AddCommand(new AbilityCommand(CurrentCommandAbility, unit, UnitManager.Instance.GetUnitFromTile(tile), CurrentUnit.Ability.FinalTiles));
@@ -259,7 +310,7 @@ public sealed class PlayerMaster : Component
 				GameCursor.Instance.SendConfirmData();
 				break;
 			case CommandType.Wait:
-				ConfirmCommand(CurrentUnit, CurrentUnit.Move.UnitTile, null);
+				ConfirmCommand(CurrentUnit, CurrentUnit.Interact.UnitTile, null);
 				break;
 		}
 	}

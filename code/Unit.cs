@@ -1,6 +1,7 @@
 using Sandbox;
 
 namespace TacticsRPG;
+[Category("Unit")]
 public sealed class Unit : Component
 {
 	[Property] public int StartTileIndex {get; set;}
@@ -11,6 +12,7 @@ public sealed class Unit : Component
 	[Property] int JumpRange {get; set;} = 3;
 	[Property] public FaceDirectionType FaceDirection = FaceDirectionType.North;
 	[Property] public UnitTurn Turn {get; set;}
+	[Property] public TileInteract Interact {get; set;}
 	[Property] public UnitMove Move {get; set;}
 	[Property] public UnitAttack Attack {get; set;}
 	[Property] public UnitAbility Ability {get; set;}
@@ -29,6 +31,7 @@ public sealed class Unit : Component
 	protected override void OnAwake()
 	{
 		Stats = GetComponent<UnitStats>();
+		Interact = GetComponent<TileInteract>();
 		Battle = GetComponent<UnitBattle>();
 		Move = GetComponent<UnitMove>();
 		Ability = GetComponent<UnitAbility>();

@@ -92,6 +92,8 @@ public class PotionEffect: EffectEvent
 
 	public PotionEffect(CombatObject co, EffectData e)
 	{
+		Log.Info(co);
+		Log.Info(e);
 		CObject = co;
 		Data = e;
 

@@ -7,13 +7,14 @@
 
 <root>
 	@if(!IsActive) return;
+	@if(!ActiveUnit.IsValid()) return;
 		<div class="@(IsGrey ? "menu grey-out" : "menu")" @ref="Menu">
 
-			@foreach(CommandItem com in BattleManager.Instance.ActiveUnit.Turn.CommandItems)
+			@foreach(CommandItem com in ActiveUnit.Turn.CommandItems)
 			{
 				if(IsGrey)
 				{
-					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+					<div class="button" style ="@(ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>	
 								
@@ -26,7 +27,7 @@
 				}
 				else if(com.Active)
 				{
-					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<div class="button" style ="@(ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>
 				}
@@ -37,10 +38,11 @@
 
 @code
 {
-	[Property] public bool IsActive {get; set;} = true;
+	public Unit ActiveUnit = null;
+	public bool IsActive {get; set;} = true;
 	[Property] public bool IsGrey {get; set;} = false;
 	public int MenuDepth = 0;
-	[Property] public int SelectedIndex {get; set;} = 0;
+	public int SelectedIndex {get; set;} = 0;
 	[Property] SoundEvent SelectSound {get; set;}
 	[Property] SoundEvent PressSound {get; set;}
 	public Panel Menu;
@@ -50,9 +52,10 @@
 		if(!firstTime) return;
 	}
 
-	public void Activate()
+	public void Activate(Unit u)
 	{
 		IsActive = true;
+		ActiveUnit = u;
 	}
 
 	public void Deactivate()
@@ -69,7 +72,7 @@
 
 	public void IncreaseIndex()
 	{
-		if(SelectedIndex == BattleManager.Instance.ActiveUnit.Turn.CommandItems.Count() - 1)
+		if(SelectedIndex == ActiveUnit.Turn.CommandItems.Count() - 1)
 		{
 			Log.Info("Out Of Range");
 			return;
@@ -95,9 +98,9 @@
 
 	public void SelectCommand()
 	{
-		Log.Info($"Selecting {BattleManager.Instance.ActiveUnit.Turn.CommandItems[SelectedIndex].Text} Command");
+		Log.Info($"Selecting {ActiveUnit.Turn.CommandItems[SelectedIndex].Text} Command");
 		Sound.Play(PressSound);
-		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(BattleManager.Instance.ActiveUnit.Turn.CommandItems[SelectedIndex].Text));
+		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(ActiveUnit.Turn.CommandItems[SelectedIndex].Text));
 
 	}
 

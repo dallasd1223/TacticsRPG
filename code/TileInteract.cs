@@ -2,6 +2,8 @@ using Sandbox;
 
 namespace TacticsRPG;
 
+//Somewhat Fixed After Decoupling, NOW just clean up reduntant tilefinding functions
+
 public class TileInteract: Component
 {
 	public List<TileData> moveableTiles = new List<TileData>();
@@ -9,7 +11,6 @@ public class TileInteract: Component
 	public List<TileData> abilityTiles = new List<TileData>();
 	public List<TileData> occupiedTiles = new List<TileData>();
 
-	GameObject[] tiles;
 	[Property] public TileData UnitTile;
 
 	public bool IsMoveSelecting = false;
@@ -20,10 +21,9 @@ public class TileInteract: Component
 	public bool attacking = false;
 	public int attackrange = 1;
 	public int move = 5;
-	public float moveSpeed = 2f;
+
 	
-	public float timeToLerp = 0.35f;
-	public float timeLerped = 0.0f;
+
 
 	[Property] public Unit ThisUnit;
 
@@ -83,16 +83,7 @@ public class TileInteract: Component
 	}
 
 	//Reset And Remove Tiles Inside moveableTiles List<TileData>
-	public void RemoveMoveableTiles()
-	{
 
-		foreach(TileData tile in moveableTiles)
-		{
-			Log.Info($"Tile {tile.TileIndex} Reset");
-			tile.ResetTile();
-		}
-		moveableTiles.Clear();
-	}
 
 	//Reset And Falsify IsOccupied on All Touched OccupiedTiles
 	public void ResetRemoveOccupiedTiles()
@@ -106,7 +97,7 @@ public class TileInteract: Component
 	}
 
 	//Remove & Reset This Units Current Tile
-	protected void RemoveUnitTile()
+	public void RemoveUnitTile()
 	{
 		Log.Info("Removing Current Tile");
 		

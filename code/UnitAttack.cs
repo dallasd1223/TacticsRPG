@@ -3,13 +3,15 @@ using System;
 
 namespace TacticsRPG;
 
-public sealed class UnitAttack : TileInteract
-{
-
+[Category("Unit")]
+public sealed class UnitAttack : Component
+{	
+	[Property] TileInteract Interact {get; set;}
 	public event Action AttackSelectionEnd;
 
 	protected override void OnAwake()
 	{
+		Interact = GetComponent<TileInteract>();
 		AttackSelectionEnd += OnAttackSelectionEnd;
 	}
 
@@ -21,17 +23,17 @@ public sealed class UnitAttack : TileInteract
 
 	public void OnAttackSelectionEnd()
 	{
-		IsAttackSelecting = false;
-		SetTileCurrent(UnitTile, false);
-		RemoveTileHighlights(attackableTiles);
+		Interact.IsAttackSelecting = false;
+		Interact.SetTileCurrent(Interact.UnitTile, false);
+		Interact.RemoveTileHighlights(Interact.attackableTiles);
 	}
 	public void RemoveAttackableTiles()
 	{
 		Log.Info("Removing Tiles");
-		foreach(TileData tile in attackableTiles)
+		foreach(TileData tile in Interact.attackableTiles)
 		{
 			tile.ResetTile();
 		}
-		attackableTiles.Clear();
+		Interact.attackableTiles.Clear();
 	}
 }

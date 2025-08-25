@@ -29,7 +29,7 @@ public sealed class DamageNumber : Component
 	}
 	protected override void OnUpdate()
 	{
-		Log.Info($"Tint Color: {sprite.Tint}");
+
 
 	}
 	public void DestroySelf()

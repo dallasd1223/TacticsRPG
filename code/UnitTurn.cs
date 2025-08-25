@@ -3,6 +3,7 @@ using System;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public class UnitTurn : Component
 {
 	[Property] public bool HasMoved {get; set;} = false;
@@ -61,7 +62,7 @@ public class UnitTurn : Component
 			{
 				ItemCommands.Add(new CommandItem(slot.SlotItem.Data.Name, slot.Quantity, slot.SlotItem));
 
-				Log.Info(slot.SlotItem.Data.Name);
+				Log.Info($"{slot.SlotItem.Data.Name} Item Command");
 			}
 		}
 
@@ -87,7 +88,7 @@ public class UnitTurn : Component
 	public void EndTurn()
 	{
 		var unit = GetComponent<Unit>();
-		unit.Move.UnitTile.current = false;
+		unit.Interact.UnitTile.current = false;
 		TurnEnded?.Invoke();
 	}
 

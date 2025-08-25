@@ -86,6 +86,7 @@ public sealed class BattleManager : Component
 		{
 			UnitTurnQueue.Enqueue(unit);
 		}
+		ActionLog.SetupEventHooks();
 		Initialized = true;
 
 		var seq = new EffectSequence();
@@ -112,7 +113,7 @@ public sealed class BattleManager : Component
 
 
 
-	public async void StartTurn()
+	public void StartTurn()
 	{
 		StateHasStarted = false;
 		if(UnitTurnQueue.Count() == 0)

@@ -19,14 +19,14 @@ public class MoveCommand: Command
 	public override void Execute()
 	{
 		Log.Info($"{ThisUnit.Data.Name} Moving to Tile {TargetTile.TileIndex} at {TargetTile.TilePosition}");
-		ThisUnit.Move.IsMoveSelecting = false;
+		ThisUnit.Interact.IsMoveSelecting = false;
 		ThisUnit.Move.MoveToTile(TargetTile);
 		ThisUnit.Animator.AssignAnimation();
 	}
 
 	public override void Tick()
 	{
-		if(!ThisUnit.Move.moving)
+		if(!ThisUnit.Move.Moving)
 		{
 			Log.Info("Unit Finished Moving");
 			ThisUnit.Turn.HasMoved = true;
@@ -54,8 +54,8 @@ public class AttackCommand: Command
 		CombatObject obj = new CombatObject(ThisUnit, TargetUnit, AffectType.Single, true);
 		Log.Info("Logging Combat Object Info");
 		Log.Info($"ComObj {obj.ActingUnit}, {obj.AffectedUnit}, {obj.Affect}, Basic Attack: {obj.BasicAttack}");
-		CombatController.Instance.Add(obj, true);
-		CombatController.Instance.ProcessFinished += OnFinished;
+		CombatMachine.Instance.Add(obj, true);
+		CombatMachine.Instance.ProcessFinished += OnFinished;
 	}
 
 	public void OnFinished()
@@ -63,7 +63,7 @@ public class AttackCommand: Command
 		ThisUnit.Turn.SetCommand("ATTACK", false);
 		ThisUnit.Turn.SetCommand("ABILITY", false);
 		IsFinished = true;
-		CombatController.Instance.ProcessFinished -= OnFinished;
+		CombatMachine.Instance.ProcessFinished -= OnFinished;
 	}
 	public override void Tick()
 	{
@@ -109,10 +109,10 @@ public class AbilityCommand: Command
 		}
 		CombatObject obj = new CombatObject(ThisUnit, TargetUnit, Type, false, targetUnits, AbilityItem);
 		Log.Info("Logging Combat Object Info");
-		Log.Info($"ComObj {obj.AbilityItem}{obj.ActingUnit}, {obj.AffectedUnit}, {obj.Affect} {targetUnits.Count()}");
-		Log.Info($"{CombatController.Instance.IsValid()} Controller Valid");
-		CombatController.Instance.Add(obj, true);
-		CombatController.Instance.ProcessFinished += OnFinished;		
+		Log.Info($"ComObj {obj.AbilityItem}, {obj.ActingUnit}, {obj.AffectedUnit}, {obj.Affect}, {targetUnits.Count()}");
+		Log.Info($"{CombatMachine.Instance.IsValid()} Controller Valid");
+		CombatMachine.Instance.Add(obj, true);
+		CombatMachine.Instance.ProcessFinished += OnFinished;		
 	}
 
 	public void OnFinished()
@@ -121,7 +121,7 @@ public class AbilityCommand: Command
 		IsFinished = true;
 		ThisUnit.Turn.SetCommand("ATTACK", false);
 		ThisUnit.Turn.SetCommand("ABILITY", false);
-		CombatController.Instance.ProcessFinished -= OnFinished;
+		CombatMachine.Instance.ProcessFinished -= OnFinished;
 	}
 	public override void Tick(){}
 

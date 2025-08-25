@@ -3,6 +3,7 @@ using System;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public sealed class UnitSkills : Component
 {
 	private List<Skill> _skills = new();

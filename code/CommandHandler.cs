@@ -11,9 +11,12 @@ public sealed class CommandHandler : Component
 	[Property] public Command CurrentCommand {get; set;}
 	[Property] public bool IsProcessing {get; set;}
 
+	public event Action ProcessComplete;
+
 	protected override void OnAwake()
 	{
-		Manager = this.GetComponent<BattleManager>();
+		Machine = this.GetComponent<BattleMachine>();
+		//Manager = this.GetComponent<BattleManager>();
 	}
 
 	public void CommandUpdate()
@@ -36,7 +39,7 @@ public sealed class CommandHandler : Component
 			Machine.ChangeState<ExecuteActionState>();
 		}
 
-		Manager.ChangeCurrentState(BattleState.ProcessCommands);
+		//Manager.ChangeCurrentState(BattleState.ProcessCommands);
 		IsProcessing = true;
 		CurrentCommand = CommandList.Dequeue();
 		CurrentCommand.Execute();
@@ -62,7 +65,8 @@ public sealed class CommandHandler : Component
 	{
 		IsProcessing = false;
 		CommandList.Clear();
-		Manager.DecideTurnState();
+		ProcessComplete?.Invoke();
+		//Manager.DecideTurnState();
 	}
 
 	public void CheckCommandList()

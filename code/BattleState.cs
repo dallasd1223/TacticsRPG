@@ -30,19 +30,22 @@ public class Battlestate : State
 }
 
 [Category("Battle State")]
-public class BattleMachine : StateMachine
+public partial class BattleMachine : StateMachine
 {
 
 	public static BattleMachine Instance;
-	//Core Data & Input
+	//Core Data (Resource)
 	[Property] public BattleConfig Config;
 	[Property] public BattleData Data;
+
+	//Input
 	[Property] public InputManager Input {get; set;}
 
 	//Visual
 	[Property] public CameraManager Camera;
 	[Property] public MapManager Map;
 
+	[Property] public PlayerMaster Player;
 	//Battle Drivers
 	[Property] public TurnManager Turn;
 	[Property] public TurnQueueController TurnQueue;
@@ -53,21 +56,11 @@ public class BattleMachine : StateMachine
 	[Property] public BattleIntroUI IntroUI;
 	[Property] public BattleEndUI EndUI;
 
-	protected override void OnAwake()
-	{
-		if(Instance is null)
-		{
-			Instance = this;
-		}
-		else
-		{
-			Instance = null;
-			Instance = this;
-		}
-	}
+
 	protected override void OnStart()
 	{
 		Log.Info("Init State Set");
+		ActionLog.SetupEventHooks();
 		ChangeState<BattleStartState>();
 	}
 
@@ -86,9 +79,14 @@ public class BattleStartState : Battlestate
 		base.Enter();
 		Log.Info("BattleStartState Entered");
 	}
-
+	protected override void OnStart()
+	{
+		InitializeBattle();
+	}
 	public void InitializeBattle()
 	{
+
+		Machine.TurnQueue.BuildQueue();
 		var seq = new EffectSequence();
 
 		seq.AddStep(new BetterCameraSpiralInStep{
@@ -108,6 +106,14 @@ public class BattleStartState : Battlestate
 	protected override void HandleInput(InputKey key)
 	{
 		base.HandleInput(key);
+		switch(key)
+		{
+			case InputKey.BACKSPACE:
+				var b = EffectManager.Instance.TrySkipSequence();
+				BattleMachine.Instance.IntroUI.Deactivate();
+				Log.Info($"Trying To Skip: {b}");
+				break;
+		}
 	}
 
 	public override void Update()
@@ -139,12 +145,12 @@ public class TurnStartState : Battlestate
 
 		CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
 
-		Machine.ChangeState<ActionCommandSelectState>();
+
 	}
 
 	public override void Update()
 	{
-		
+		Machine.ChangeState<ActionCommandSelectState>();		
 	}
 
 	public override void Exit()
@@ -155,27 +161,28 @@ public class TurnStartState : Battlestate
 	protected override void HandleInput(InputKey key)
 	{
 		base.HandleInput(key);
+
+	
 	}
 }
 
 [Category("Battle State")]
 public class ActionCommandSelectState : Battlestate
 {
-	public bool EnsureAITurn = false;
 	public override void Enter()
 	{
 		base.Enter();
 		Log.Info("ActionCommandSelectState Entered");
-		HandleTurnCommands();
+
 	}
 
 	public void HandleTurnCommands()
 	{
 		if(Machine.Turn.ActiveUnit.isAIControlled)
 		{
-			if(!Machine.Turn.ActiveUnit.AI.HasTakenTurn && !EnsureAITurn)
+			if(!Machine.Turn.ActiveUnit.AI.HasTakenTurn && !Machine.Turn.EnsureAITurn)
 			{
-				EnsureAITurn = true;
+				Machine.Turn.EnsureAITurn = true;
 				Log.Info("BattleManager AI Turn");
 				Machine.Turn.ActiveUnit.AI.TakeTurn();
 			}
@@ -185,7 +192,9 @@ public class ActionCommandSelectState : Battlestate
 
 	public override void Update()
 	{
-		
+			HandleTurnCommands();	
+
+
 	}
 
 	public override void Exit()
@@ -195,12 +204,24 @@ public class ActionCommandSelectState : Battlestate
 	protected override void HandleInput(InputKey key)
 	{
 		base.HandleInput(key);
+		Machine.Player.HandleInput(key);
 	}
 }
 
 [Category("Battle State")]
 public class ExecuteActionState : Battlestate
 {
+	protected override void AddListeners()
+	{
+		base.AddListeners();
+		Machine.commandHandler.ProcessComplete += OnProcessFinished;
+	}
+
+	public void OnProcessFinished()
+	{
+		Machine.ChangeState<PostActionState>();
+	}
+
 	public override void Enter()
 	{
 		base.Enter();
@@ -223,12 +244,28 @@ public class ExecuteActionState : Battlestate
 }
 
 [Category("Battle State")]
-public class FacingDirectionState : Battlestate
+public class PostActionState : Battlestate
 {
+
+
 	public override void Enter()
 	{
 		base.Enter();
-		Log.Info("FacingDirectionState Entered");
+		Log.Info("PostActionState Entered");
+		
+	}
+
+	public void DecideTurnState()
+	{
+		switch(Machine.Turn.CheckUnitTurnEnded())
+		{
+			case true:
+				Machine.ChangeState<TurnEndState>();
+				break;
+			case false:
+				Machine.ChangeState<ActionCommandSelectState>();
+				break;
+		}
 	}
 
 	public override void Update()

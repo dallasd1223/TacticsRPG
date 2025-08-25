@@ -6,7 +6,6 @@
 
 <root>
 	@if(!IsActive)return;
-	@if((BattleManager.Instance.CurrentBattleState == BattleState.WaitForCommands) && (PlayerMaster.Instance.Mode == FocusMode.Menu))
 	{
 		<img class="pointer" @ref="ImgPanel" src="ui/triangle.png" />
 		<CommandMenu @ref="CMenu" />
@@ -23,7 +22,8 @@
 	//CONDENSE ALL ABILITYITEM MENUS TO ONE MENU!!! (SKILL, SPELL, ITEM)
 	//Refactor Asap
 	
-	public bool IsActive {get; set;} = true;
+	public bool IsActive {get; set;} = false;
+	[Property] Unit ActiveUnit {get; set;} = null;
 	[Property] public MenuState? State {get; set;} = MenuState.Action;
 	[Property] public MenuState? LastState {get; set;} = null;
 	[Property] private int MenuLevel {get; set;} = 0;
@@ -36,16 +36,74 @@
 	[Property] SoundEvent PressSound {get; set;}
 	[Property] SoundEvent BackSound {get; set;}
 
+	public bool HasInjected = false;
+	public float InjectBufer = 1f;
+	public TimeSince SinceActivated;
+
+	public event Action<CommandType?, CommandItem> ActionSelected;
+
 	private Image ImgPanel;
+
+	protected override void OnAwake()
+	{
+		PlayerEvents.FocusModeChange += HandlePlayerFocusMode;
+	}
+	
+	public void HandlePlayerFocusMode(FocusMode? mode, Unit u)
+	{
+		Log.Info("Handling Focus Event");
+		switch(mode)
+		{
+			case FocusMode.Menu:
+				ActivateMenu(u);
+				break;
+			case FocusMode.FreeLook:
+				DeactivateMenu();
+				break;
+			default:
+				break;
+		}
+	}
+	public void ActivateMenu(Unit u)
+	{
+		IsActive = true;
+		ActiveUnit = u;
+		SinceActivated = 0f;
+
+	}
+
+	public void InjectUnit()
+	{
+		if(!IsActive) return;
+		CMenu.ActiveUnit = ActiveUnit;
+		AMenu.ActiveUnit = ActiveUnit;
+		IMenu.ActiveUnit = ActiveUnit;
+		SpMenu.ActiveUnit = ActiveUnit;
+		SkMenu.ActiveUnit = ActiveUnit;	
+
+		HasInjected = true;
+	}
+
+	public void DeactivateMenu()
+	{
+		IsActive = false;
+		HasInjected = false;
+	}
 
 	protected override void OnUpdate()
 	{
 		if(!IsActive) return;
+		if(!HasInjected && SinceActivated >= InjectBufer)
+		{
+			InjectUnit();
+		}
 		switch(State)
 		{
+
 			case MenuState.Action:
 				if(!CMenu.IsValid()) return;
 				if(!CMenu.IsActive) return;
+				if(!CMenu.ActiveUnit.IsValid()) return;
 				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
 				ImgPanel.Style.Left = CMenuPos.x -20 ;
@@ -82,7 +140,7 @@
 
 	}
 
-	public void Reset()
+	public void DoReset()
 	{
 		State = MenuState.Action;
 		LastState = null;
@@ -261,22 +319,27 @@
 		{
 			case MenuState.Action:
 				CMenu.SelectCommand();
+				ActionSelected?.Invoke(CMenu.GetCommandFromString(ActiveUnit.Turn.CommandItems[CMenu.SelectedIndex].Text), ActiveUnit.Turn.CommandItems[CMenu.SelectedIndex]);
 				Sound.Play(PressSound);
 				break;
 			case MenuState.Ability:
 				AMenu.SelectMenuItem();
+				ActionSelected?.Invoke(CommandType.Ability, ActiveUnit.Turn.AbilityCommands[AMenu.SelectedIndex]);
 				Sound.Play(PressSound);
 				break;
 			case MenuState.Item:
 				IMenu.SelectMenuItem();
+				ActionSelected?.Invoke(CommandType.Item, ActiveUnit.Turn.ItemCommands[IMenu.SelectedIndex]);
 				Sound.Play(PressSound);
 				break;
 			case MenuState.Magic:
 				SpMenu.SelectMenuItem();
+				ActionSelected?.Invoke(CommandType.Magic, ActiveUnit.Turn.SpellCommands[SpMenu.SelectedIndex]);
 				Sound.Play(PressSound);
 				break;
 			case MenuState.Skill:
 				SkMenu.SelectMenuItem();
+				ActionSelected?.Invoke(CommandType.Skill, ActiveUnit.Turn.SkillCommands[SkMenu.SelectedIndex]);
 				Sound.Play(PressSound);
 				break;
 		}

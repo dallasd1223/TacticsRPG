@@ -1,0 +1,17 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	<div>WOW</div>
+</root>
+
+@code
+{
+
+
+
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 namespace TacticsRPG;
 
+[Category("Unit")]
 public sealed class UnitAI : Component
 {
 
@@ -40,7 +41,7 @@ public sealed class UnitAI : Component
 		var actions = new List<AIAction>();
 		Log.Info("Getting Temp Move Tiles");
 		List<TileData> moveTiles = null;
-		moveTiles = Self.Move.ForceFindTempMoveableTiles();
+		moveTiles = Self.Interact.ForceFindTempMoveableTiles();
 		ResetMoveableTiles = moveTiles;
 		if(moveTiles is null) return null;
 		foreach(var tile in moveTiles)
@@ -55,7 +56,7 @@ public sealed class UnitAI : Component
 			Log.Info("Move Action Added");
 			actions.Add(moveaction);
 			Log.Info("Getting Temp Attack Tiles");
-			var targetTiles = Self.Attack.FindTempAttackableTilesFromTile(tile);
+			var targetTiles = Self.Interact.FindTempAttackableTilesFromTile(tile);
 			ResetAttackableTiles = targetTiles;
 			foreach(var targetTile in targetTiles)
 			{
@@ -73,7 +74,7 @@ public sealed class UnitAI : Component
 				Log.Info($"Action Added: Tile {action.MoveTile.TileIndex}, Unit {action.Target?.Data.Name}, Attack {action.Attack}");
 				actions.Add(action);
 			}
-			Self.Move.ResetTilesFromList(ResetAttackableTiles);
+			Self.Interact.ResetTilesFromList(ResetAttackableTiles);
 		}
 
 		return actions;
@@ -81,8 +82,8 @@ public sealed class UnitAI : Component
 
 	public void EndTurn()
 	{
-		Self.Move.ResetTilesFromList(ResetMoveableTiles);
-		Self.Move.GetUnitTile();
+		Self.Interact.ResetTilesFromList(ResetMoveableTiles);
+		Self.Interact.GetUnitTile();
 	}
 	
 	private AIAction SelectBestAndExecute(List<AIAction> possibleActions)
@@ -96,7 +97,7 @@ public sealed class UnitAI : Component
 
 public class AIAction
 {
-	public TileData? MoveTile;
+	public TileData MoveTile;
 	public Unit ThisUnit;
 	public Unit Target;
 	public bool Attack;

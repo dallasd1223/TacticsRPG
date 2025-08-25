@@ -2,6 +2,7 @@ using Sandbox;
 
 namespace TacticsRPG;
 
+[Category("Manager")]
 public sealed class UnitManager : Component
 {
 	public static UnitManager Instance {get; set;}
@@ -21,8 +22,8 @@ public sealed class UnitManager : Component
 	{
 		foreach(Unit unit in UnitList)
 		{
-			if(!unit.Move.IsValid()) break;
-			if(unit.Move.UnitTile == tile)
+			if(!unit.Interact.IsValid()) break;
+			if(unit.Interact.UnitTile == tile)
 			{
 				Log.Info("Unit Found");
 				return true;
@@ -41,7 +42,7 @@ public sealed class UnitManager : Component
 	{
 		foreach(Unit unit in UnitList)
 		{
-			if(unit.Move.UnitTile == data)
+			if(unit.Interact.UnitTile == data)
 			{
 				Log.Info($"{unit.Data.Name} Found At Tile {data.TileIndex}");
 				return unit;

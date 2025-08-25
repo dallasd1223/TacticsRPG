@@ -191,7 +191,7 @@ public class CameraManager: Component
 
 	public void ResetToActive()
 	{
-		GameObject obj = FocusList.Find(u => u == BattleManager.Instance.ActiveUnit.GameObject);
+		GameObject obj = FocusList.Find(u => u == BattleMachine.Instance.Turn.ActiveUnit.GameObject);
 		SelectedFocusIndex = FocusList.FindIndex(u => u == obj);
 		FocusPoint = FocusList[SelectedFocusIndex];
 

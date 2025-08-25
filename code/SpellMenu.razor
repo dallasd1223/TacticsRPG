@@ -6,13 +6,14 @@
 
 <root>
 	@if(!IsActive) return;
+	@if(!ActiveUnit.IsValid()) return;
 		<div class="spell-menu" @ref="Menu">
 
-			@foreach(CommandItem spell in BattleManager.Instance.ActiveUnit.Turn.SpellCommands)
+			@foreach(CommandItem spell in ActiveUnit.Turn.SpellCommands)
 			{
 				if(spell.Active)
 				{
-					<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.SpellCommands.IndexOf(spell) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<div class="button" style ="@(ActiveUnit.Turn.SpellCommands.IndexOf(spell) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@spell.Text</h1>
 					</div>
 				}
@@ -33,6 +34,7 @@
 
 	public bool IsActive = false;
 	public bool IsGrey = false;
+	[Property] public Unit ActiveUnit = null;
 	public int MenuDepth = 3;
 	public Panel Menu;
 	public int SelectedIndex = 0;

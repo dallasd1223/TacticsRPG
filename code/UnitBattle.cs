@@ -2,6 +2,7 @@ using Sandbox;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public sealed class UnitBattle : Component
 {
 	[Property] Unit ThisUnit {get; set;}

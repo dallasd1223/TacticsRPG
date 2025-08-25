@@ -2,6 +2,8 @@ using Sandbox;
 using System;
 using System.IO;
 using System.Text;
+
+[Category("Unit")]
 public sealed class UnitStats : Component
 {
 	[Property] private int _level = 1;
@@ -25,7 +27,7 @@ public sealed class UnitStats : Component
 	[Property] public int CurrentHP {get; set;} = 20;
 	[Property] public int MaxMP {get; set;} = 10;
 	[Property] public int CurrentMP {get; set;} = 10;
-	[Property] public int ChargeTime {get; set;} = 5;
+	[Property] public int CTR {get; set;} = 5;
 	[Property] public int Speed {get; set;} = 3;
 	[Property] public int Accuracy {get; set;} = 90;
 	[Property] public int Strength {get; set;} = 15;
@@ -121,33 +123,30 @@ public sealed class UnitStats : Component
 	{
 		switch(type)
 		{
+
 			case StatType.LVL:
 				_level = value;
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
 			case StatType.EXP:
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
 			case StatType.MAXHP:
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
 			case StatType.HP:
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
 			case StatType.MAXMP:
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
 			case StatType.MP:
 				StatHasChanged?.Invoke(new StatObject(type, value));
 				return true;
-				break;
+			default:
+				return false;
 		}
-		return false;
+
 	}
 }	
 

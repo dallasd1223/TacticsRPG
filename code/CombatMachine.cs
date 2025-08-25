@@ -1,15 +1,19 @@
 using Sandbox;
+using System;
 
 namespace TacticsRPG;
 
-public class CombatController : Component
+public class CombatMachine : StateMachine
 {
 	public Queue<CombatObject> CombatObjectList {get; set;} = new Queue<CombatObject>();
 	public List<EffectSequence> ActiveSequences {get; set;} = new List<EffectSequence>();
+
 	public CombatObject CurrentObject;
 	public bool IsProcessing = false;
+	
+
 	public event Action ProcessFinished;
-	public static CombatController Instance {get; set;}
+	public static CombatMachine Instance {get; set;}
 
 	protected override void OnAwake()
 	{
@@ -29,6 +33,11 @@ public class CombatController : Component
 		Log.Info("Combat Manager Has Started");
 	}
 
+	public void StartMachine()
+	{
+		ChangeState<InitialCombatState>();
+	}
+
 	public void Add(CombatObject obj, bool b)
 	{
 		Log.Info($"New Combat Object Added {obj}");
@@ -37,6 +46,7 @@ public class CombatController : Component
 		if(b)
 		{
 			StartQueuedObject();
+			StartMachine();
 		}
 	}
 
@@ -92,7 +102,7 @@ public class CombatController : Component
 					bool dead = CurrentObject.AffectedUnit.Battle.CheckIfDead();
 					if(dead) await Task.DelayRealtimeSeconds(1.5f);
 					CurrentObject.ActingUnit.Turn.HasActed = true;
-					CurrentObject.ActingUnit.Turn.SetCommand("ATTACK", false);
+
 					CurrentObject.ActingUnit.Battle.EndAttack();
 					CurrentObject.AffectedUnit.Animator.AssignAnimation();
 					CurrentObject.AffectedUnit.Animator.EndJitter();
@@ -109,18 +119,10 @@ public class CombatController : Component
 
 	protected override void OnUpdate()
 	{
-		if(!ActiveSequences.Any()) return;
-		foreach(EffectSequence seq in ActiveSequences)
+		if(ActiveState.IsValid())
 		{
-			seq.Update(Time.Delta);
-			if(seq.IsFinished)
-			{
-				Log.Info("Sequence Removed");
-				ActiveSequences.Remove(seq);
-				
-			}
+			ActiveState.Update();
 		}
-
 	}
 
 	public void CurrentObjectFinished()
@@ -156,17 +158,12 @@ public class CombatObject
 	}
 }
 
-public class SpecialAttack
-{
-
-}
 
 public enum ActionType
 {
 	BasicAttack,
 	SpecialAttack,
 	Ability,
-	Item,
 }
 
 public enum AffectType
@@ -174,4 +171,72 @@ public enum AffectType
 	Self,
 	Single,
 	Multi,
+}
+
+
+public class CombatState : State
+{
+	protected CombatMachine Machine {get; set;}
+
+	protected override void OnAwake()
+	{
+		Machine = GetComponent<CombatMachine>();
+	}
+
+
+}
+
+public class InitialCombatState : CombatState
+{
+	public override void Enter()
+	{
+		base.Enter();
+		Log.Info("InitialCombatState Entered");
+	}
+
+	public override void Update()
+	{
+		Machine.ChangeState<ReactionCombatState>();
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+	}	
+}
+public class ReactionCombatState : CombatState
+{
+	public override void Enter()
+	{
+		base.Enter();
+		Log.Info("ReactionCombatState Entered");
+	}
+
+	public override void Update()
+	{
+		Machine.ChangeState<ExperienceCombatState>();
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+	}
+}
+
+public class ExperienceCombatState : CombatState
+{
+	public override void Enter()
+	{
+
+	}
+
+	public override void Update()
+	{
+		
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+	}
 }

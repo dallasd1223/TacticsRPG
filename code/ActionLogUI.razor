@@ -1,0 +1,24 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+@attribute [StyleSheet]
+
+<root>
+	<div class="container">
+	@foreach(ActionLogEntry entry in ActionLog.Entries)
+	{
+		<LogEntry/>
+	}
+	</div>
+</root>
+
+@code
+{
+
+
+
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -18,6 +18,7 @@ public sealed class InputManager : Component
 	protected override void OnUpdate()
 	{
 		HandleMasterInput();
+		HandleInputEvents();
 	}
 
 
@@ -32,7 +33,7 @@ public sealed class InputManager : Component
 				HandleGameInput();
 				break;
 			case InputMode.Battle:
-				HandleBattleInput();
+				//HandleBattleInput();
 				break;
 		}
 	}
@@ -46,8 +47,38 @@ public sealed class InputManager : Component
 	{
 
 	}
-
-	public void HandleBattleInput()
+	public void HandleInputEvents()
+	{
+		if(Input.Pressed("Score"))
+		{
+			InputPressed?.Invoke(InputKey.TAB);
+		}
+		else if(Input.Pressed("Back"))
+		{
+			InputPressed?.Invoke(InputKey.BACKSPACE);
+		}
+		else if(Input.Pressed("Chat"))
+		{
+			InputPressed?.Invoke(InputKey.ENTER);
+		}
+		else if(Input.Pressed("Left"))
+		{
+			InputPressed?.Invoke(InputKey.LEFT);
+		}
+		else if(Input.Pressed("Right"))
+		{
+			InputPressed?.Invoke(InputKey.RIGHT);
+		}
+		else if(Input.Pressed("Forward"))
+		{
+			InputPressed?.Invoke(InputKey.FORWARD);
+		}
+		else if(Input.Pressed("Backward"))
+		{
+			InputPressed?.Invoke(InputKey.BACKWARD);			
+		}
+	}
+/*	public void HandleBattleInput()
 	{
 		if(Input.Pressed("Score"))
 		{
@@ -145,7 +176,7 @@ public sealed class InputManager : Component
 			case BattleState.BattleEnd:
 				break;
 		}
-	}
+	}*/
 }
 
 public enum InputKey

@@ -360,9 +360,9 @@ public class CameraSpiralInStep : IEffectStep
 	public float elapsed = 0f;
 
 	private Vector3 startPosition;
-	private Rotation startRotation;
+	//private Rotation startRotation;
 	private Vector3 finalPosition;
-	private Rotation finalRotation;
+	//private Rotation finalRotation;
 
 	private Vector3 center;
 

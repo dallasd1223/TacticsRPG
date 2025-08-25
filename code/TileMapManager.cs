@@ -2,6 +2,7 @@ using Sandbox;
 
 namespace TacticsRPG; 
 
+[Category("Manager")]
 public class TileMapManager : Component
 {
 	public static TileMapManager Instance;

@@ -7,11 +7,11 @@
 <root>
 	@if(!IsActive) return;
 	<div class = "skill-menu" @ref="Menu">
-		@foreach(CommandItem skill in BattleManager.Instance.ActiveUnit.Turn.SkillCommands)
+		@foreach(CommandItem skill in ActiveUnit.Turn.SkillCommands)
 		{
 			if(skill.Active)
 			{
-				<div class="button" style ="@( BattleManager.Instance.ActiveUnit.Turn.SkillCommands.IndexOf(skill) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+				<div class="button" style ="@(ActiveUnit.Turn.SkillCommands.IndexOf(skill) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 					<h1 class="button-text">@skill.Text</h1>
 				</div>
 			}
@@ -31,9 +31,12 @@
 
 	public bool IsActive = false;
 	public bool IsGrey = false;
+	[Property] public Unit ActiveUnit {get; set;} = null;
 	public int MenuDepth = 3;
 	public Panel Menu;
 	public int SelectedIndex = 0;
+
+	
 
 	public void Activate()
 	{

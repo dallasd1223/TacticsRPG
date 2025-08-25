@@ -3,6 +3,7 @@ using System;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public sealed class UnitSpells : Component
 {
 	private List<Spell> _spells = new();

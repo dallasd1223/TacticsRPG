@@ -1,0 +1,17 @@
+ActionLogUI
+{
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+
+	.container
+	{
+		background-color: rgba(0, 0, 0, 0.205);
+	}
+	.entry
+	{
+		font-size: 25px;
+		font-family: Poppins;
+		color: #fff;
+	}
+}

@@ -3,14 +3,17 @@ using System;
 
 namespace TacticsRPG;
 
-public class UnitAbility : TileInteract
+[Category("Unit")]
+public class UnitAbility : Component
 {
+	[Property] TileInteract Interact {get; set;}
 	public List<TileData> TempFinalTiles = new();
 	public List<TileData> FinalTiles = new();
 	public event Action AbilitySelectionEnd;
 
 	protected override void OnAwake()
 	{
+		Interact = GetComponent<TileInteract>();
 		AbilitySelectionEnd += OnAbilitySelectionEnd;
 	}
 
@@ -20,8 +23,8 @@ public class UnitAbility : TileInteract
 	}
 	public void OnAbilitySelectionEnd()
 	{
-		IsAbilitySelecting = false;
-		RemoveTileHighlights(abilityTiles);
+		Interact.IsAbilitySelecting = false;
+		Interact.RemoveTileHighlights(Interact.abilityTiles);
 		ResetRemoveAbilityTiles();
 	}
 
@@ -34,8 +37,8 @@ public class UnitAbility : TileInteract
 	public void SetTempFinalTiles(TileData target, AOEData aoe)
 	{
 		ForceLastTileHighlight();
-		TempFinalTiles = GetTilesInRangeFromShape(target, aoe);
-		HighlightTilesFromList(TempFinalTiles, HighlightType.Ability);
+		TempFinalTiles = Interact.GetTilesInRangeFromShape(target, aoe);
+		Interact.HighlightTilesFromList(TempFinalTiles, HighlightType.Ability);
 	}
 
 	public void ForceLastTileHighlight()
@@ -74,10 +77,10 @@ public class UnitAbility : TileInteract
 	public void ResetRemoveAbilityTiles()
 	{
 		Log.Info("Removing Tiles");
-		foreach(TileData tile in abilityTiles)
+		foreach(TileData tile in Interact.abilityTiles)
 		{
 			tile.ResetTile();
 		}
-		abilityTiles.Clear();
+		Interact.abilityTiles.Clear();
 	}
 }

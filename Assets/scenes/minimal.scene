@@ -127,6 +127,23 @@
           "UpdateStrategy": "OnEnabled",
           "ZFar": 4096,
           "ZNear": 16
+        },
+        {
+          "__type": "BackgroundSky",
+          "__guid": "73eb68ca-2d29-4f04-953d-a88771e0d2dd",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Skybox": {
+            "_type": "component",
+            "component_id": "de79e9e0-5c37-4c54-ac67-bfcdb1d5483b",
+            "go": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
+            "component_type": "SkyBox2D"
+          }
         }
       ],
       "Children": []
@@ -378,9 +395,9 @@
           "__enabled": true,
           "Background": {
             "_type": "component",
-            "component_id": "3217be97-b7f2-4211-82f9-f341505ae0d0",
-            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
-            "component_type": "BackgroundController"
+            "component_id": "73eb68ca-2d29-4f04-953d-a88771e0d2dd",
+            "go": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
+            "component_type": "BackgroundSky"
           },
           "Data": {
             "_type": "component",
@@ -430,23 +447,6 @@
           "OnComponentUpdate": null,
           "TimeOfDay": 11,
           "Weather": "Sunny"
-        },
-        {
-          "__type": "BackgroundController",
-          "__guid": "3217be97-b7f2-4211-82f9-f341505ae0d0",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Skybox": {
-            "_type": "component",
-            "component_id": "de79e9e0-5c37-4c54-ac67-bfcdb1d5483b",
-            "go": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
-            "component_type": "SkyBox2D"
-          }
         }
       ],
       "Children": []
@@ -12742,29 +12742,120 @@
         {
           "__type": "TacticsRPG.BattleMachine",
           "__guid": "7b05d70e-7fce-4e95-88aa-e4d4fa997f70",
-          "__enabled": false,
-          "Camera": null,
+          "__enabled": true,
+          "Camera": {
+            "_type": "component",
+            "component_id": "c508db43-bebd-4c6e-bec7-d6daf7724d81",
+            "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+            "component_type": "CameraManager"
+          },
           "commandHandler": null,
-          "Config": null,
+          "Config": "resources/configs/battle.config",
           "Data": {},
-          "EndUI": null,
+          "EndUI": {
+            "_type": "component",
+            "component_id": "09a32566-8285-4b62-b7af-ecec25247eeb",
+            "go": "8f62db97-56e6-4442-b918-b28d867d01ef",
+            "component_type": "BattleEndUI"
+          },
           "Input": {
             "_type": "component",
             "component_id": "04a6b8e6-0b93-4ba6-8f9d-89ab6b642df0",
             "go": "38ceee52-4760-4936-8984-de0e55d87c75",
             "component_type": "InputManager"
           },
-          "IntroUI": null,
-          "Map": null,
+          "IntroUI": {
+            "_type": "component",
+            "component_id": "6811508b-0a65-4550-85d7-f5ce0bf84006",
+            "go": "331cbf04-e19c-415e-9147-9ba8f3df1153",
+            "component_type": "BattleIntroUI"
+          },
+          "Map": {
+            "_type": "component",
+            "component_id": "50e9703e-2469-4941-b276-492fa1614735",
+            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
+            "component_type": "MapManager"
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "Player": {
+            "_type": "component",
+            "component_id": "5839b04d-eb94-47e9-aeb3-206955a3cd8e",
+            "go": "38ceee52-4760-4936-8984-de0e55d87c75",
+            "component_type": "PlayerMaster"
+          },
           "Turn": null,
           "TurnQueue": null,
           "WinCondition": null
+        },
+        {
+          "__type": "TacticsRPG.CommandHandler",
+          "__guid": "75369068-9977-4d81-944f-f83bc5cb0e3a",
+          "__enabled": true,
+          "CommandList": [],
+          "CurrentCommand": null,
+          "CurrentState": "WaitForCommands",
+          "IsProcessing": false,
+          "Machine": null,
+          "Manager": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.TurnManager",
+          "__guid": "fd013f1d-1aa2-4b95-be19-3d67a4b88e43",
+          "__enabled": true,
+          "ActiveUnit": null,
+          "CurrentTeam": "Alpha",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.TurnQueueController",
+          "__guid": "c39f8e97-2842-4fdf-ae1f-6b0faa45352e",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.WinController",
+          "__guid": "3e785aac-6230-45e1-9fda-61b233d2112e",
+          "__enabled": true,
+          "AlphaTeam": {
+            "_type": "component",
+            "component_id": "d0cbf101-265a-47e1-89b7-77e4389e0604",
+            "go": "37c17ce0-f068-4958-9e49-94cf23924619",
+            "component_type": "TeamManager"
+          },
+          "OmegaTeam": {
+            "_type": "component",
+            "component_id": "24ec8d90-dda8-460e-8355-9e7d8d928163",
+            "go": "67b27bba-caa9-4690-8c48-4b679298529d",
+            "component_type": "TeamManager"
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "WinningTeam": "Alpha"
         }
       ],
       "Children": []
@@ -12832,7 +12923,7 @@
         {
           "__type": "TacticsRPG.BattleManager",
           "__guid": "fa7b3582-ce81-4f83-b93b-18833fd90418",
-          "__enabled": true,
+          "__enabled": false,
           "ActiveUnit": null,
           "AllUnits": [],
           "AlphaTeam": {
@@ -12891,23 +12982,6 @@
           "TeamTurn": "Alpha",
           "UnitTurnQueue": [],
           "WinningTeam": null
-        },
-        {
-          "__type": "TacticsRPG.CommandHandler",
-          "__guid": "a16a3a66-f575-4625-b6b9-39d32fce7d3a",
-          "__enabled": true,
-          "CommandList": [],
-          "CurrentCommand": null,
-          "CurrentState": "WaitForCommands",
-          "IsProcessing": false,
-          "Machine": null,
-          "Manager": null,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -12976,8 +13050,8 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "TacticsRPG.CombatController",
-          "__guid": "5ffccdc9-d959-4f48-90bd-6e0bd5d62fb9",
+          "__type": "TacticsRPG.CombatMachine",
+          "__guid": "3c2328e6-1804-44b0-8975-9e25349e2a1f",
           "__enabled": true,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -13373,6 +13447,7 @@
           "__type": "Sandbox.ActionMenu",
           "__guid": "9f06951c-14fe-4429-b186-610ed82ba9d6",
           "__enabled": true,
+          "ActiveUnit": null,
           "BackSound": "sounds/ui-sound-18.sound",
           "LastState": null,
           "MenuLevel": 0,
@@ -13681,6 +13756,7 @@
             "component_type": "UnitData"
           },
           "FaceDirection": "North",
+          "Interact": null,
           "isAIControlled": false,
           "IsTurn": false,
           "JumpRange": 3,
@@ -13707,6 +13783,19 @@
           "USpell": null
         },
         {
+          "__type": "TacticsRPG.TileInteract",
+          "__guid": "def2a49a-0280-4649-8e28-fc431624e35c",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null,
+          "UnitTile": null
+        },
+        {
           "__type": "CameraFocusNode",
           "__guid": "d3c3917f-22ef-432e-be93-89317363d183",
           "__enabled": true,
@@ -13722,14 +13811,13 @@
           "__type": "TacticsRPG.UnitMove",
           "__guid": "d9d7150a-e827-4519-a73e-342b9bb512bf",
           "__enabled": true,
+          "Interact": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "ThisUnit": null,
-          "UnitTile": null
+          "OnComponentUpdate": null
         },
         {
           "__type": "UnitData",
@@ -13759,27 +13847,25 @@
           "__type": "TacticsRPG.UnitAttack",
           "__guid": "7b89b69c-8c5c-4122-8e71-6178f115ee9b",
           "__enabled": true,
+          "Interact": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "ThisUnit": null,
-          "UnitTile": null
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.UnitAbility",
           "__guid": "829b09ff-c0cd-407c-a7d1-c62bf5957b08",
           "__enabled": true,
+          "Interact": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "ThisUnit": null,
-          "UnitTile": null
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.UnitBattle",
@@ -13862,7 +13948,7 @@
           "_level": 1,
           "Accuracy": 90,
           "BaseData": "resources/stats/basestats.stat",
-          "ChargeTime": 5,
+          "CTR": 5,
           "CurrentHP": 20,
           "CurrentMP": 10,
           "Evasion": 5,
@@ -14008,6 +14094,7 @@
             "component_type": "UnitData"
           },
           "FaceDirection": "North",
+          "Interact": null,
           "isAIControlled": true,
           "IsTurn": false,
           "JumpRange": 3,
@@ -14034,6 +14121,19 @@
           "USpell": null
         },
         {
+          "__type": "TacticsRPG.TileInteract",
+          "__guid": "e29c3295-5058-44b0-a5f7-82fd643f72c3",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null,
+          "UnitTile": null
+        },
+        {
           "__type": "CameraFocusNode",
           "__guid": "9764d57d-fd67-46a2-b68c-e1cce1a17915",
           "__enabled": true,
@@ -14049,14 +14149,13 @@
           "__type": "TacticsRPG.UnitMove",
           "__guid": "41fec670-e1b1-4630-83bd-532bdb64447a",
           "__enabled": true,
+          "Interact": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "ThisUnit": null,
-          "UnitTile": null
+          "OnComponentUpdate": null
         },
         {
           "__type": "UnitData",
@@ -14086,14 +14185,13 @@
           "__type": "TacticsRPG.UnitAttack",
           "__guid": "ed579c55-257a-4af2-9c58-f8ca6120a380",
           "__enabled": true,
+          "Interact": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "ThisUnit": null,
-          "UnitTile": null
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.UnitAI",
@@ -14187,7 +14285,7 @@
           "_level": 1,
           "Accuracy": 90,
           "BaseData": "resources/stats/basestats.stat",
-          "ChargeTime": 5,
+          "CTR": 5,
           "CurrentHP": 20,
           "CurrentMP": 10,
           "Evasion": 5,
@@ -14349,7 +14447,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 3943.9297
+            "Relative": 2397.997
           }
         },
         {

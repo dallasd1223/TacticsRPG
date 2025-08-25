@@ -22,6 +22,7 @@ public sealed class EffectManager : Component
 				if(seq.IsFinished)
 				{
 					SequenceList.Remove(seq);
+					break;
 				}
 
 				seq.Update(Time.Delta);

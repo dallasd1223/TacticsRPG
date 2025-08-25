@@ -4,6 +4,7 @@ using System;
 
 namespace TacticsRPG;
 
+[Category("Unit")]
 public sealed class UnitAnimator : Component
 {
 	private Unit Self {get; set;}
@@ -37,7 +38,7 @@ public sealed class UnitAnimator : Component
 
 	public void AssignAnimation()
 	{
-		if(Self.Move.moving)
+		if(Self.Move.Moving)
 		{
 			UnitSprite.PlayAnimation("idle");
 			return;
@@ -69,6 +70,8 @@ public sealed class UnitAnimator : Component
 		{
 			UnitSprite.OnBroadcastEvent += act;
 		}
+		
+		AnimationEvent?.Invoke();
 		Log.Info($"Playing Animation {name}");
 	}
 
