@@ -22,11 +22,11 @@
 	//CONDENSE ALL ABILITYITEM MENUS TO ONE MENU!!! (SKILL, SPELL, ITEM)
 	//Refactor Asap
 	
-	public bool IsActive {get; set;} = false;
+	[Property] public bool IsActive {get; set;} = false;
 	[Property] Unit ActiveUnit {get; set;} = null;
 	[Property] public MenuState? State {get; set;} = MenuState.Action;
 	[Property] public MenuState? LastState {get; set;} = null;
-	[Property] private int MenuLevel {get; set;} = 0;
+	[Property] public int MenuLevel {get; set;} = 0;
 	public CommandMenu CMenu {get; set;}
 	public AbilityMenu AMenu {get; set;}
 	public ItemMenu IMenu {get; set;}
@@ -46,7 +46,15 @@
 
 	protected override void OnAwake()
 	{
+		PlayerEvents.FocusModeChange -= HandlePlayerFocusMode;	
 		PlayerEvents.FocusModeChange += HandlePlayerFocusMode;
+
+	}
+
+	protected override void OnDestroy()
+	{
+		Log.Info("Action Menu Destroyed");
+		PlayerEvents.FocusModeChange -= HandlePlayerFocusMode;	
 	}
 	
 	public void HandlePlayerFocusMode(FocusMode? mode, Unit u)
@@ -57,21 +65,21 @@
 			case FocusMode.Menu:
 				ActivateMenu(u);
 				break;
-			case FocusMode.FreeLook:
-				DeactivateMenu();
-				break;
 			default:
+				DeactivateMenu();
 				break;
 		}
 	}
 	public void ActivateMenu(Unit u)
 	{
+		Log.Info($"Menu {u}");
 		IsActive = true;
 		ActiveUnit = u;
 		SinceActivated = 0f;
 
 	}
 
+	//Hacky Solution
 	public void InjectUnit()
 	{
 		if(!IsActive) return;
@@ -97,6 +105,7 @@
 		{
 			InjectUnit();
 		}
+		if(!HasInjected) return;
 		switch(State)
 		{
 
@@ -104,6 +113,7 @@
 				if(!CMenu.IsValid()) return;
 				if(!CMenu.IsActive) return;
 				if(!CMenu.ActiveUnit.IsValid()) return;
+				if(!CMenu.Menu.IsVisible) return;
 				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
 				ImgPanel.Style.Left = CMenuPos.x -20 ;

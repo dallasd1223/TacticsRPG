@@ -44,7 +44,8 @@ public class UnitTurn : Component
 		{
 			foreach(Skill s in unit.USkill.Skills)
 			{
-				SkillCommands.Add(new CommandItem(s.Data.Name, 0, s, s.Data.ManaCost));
+				var d = (SkillData)s.Data;
+				SkillCommands.Add(new CommandItem(d.Name, 0, s, d.ManaCost));
 				Log.Info(s.Data.Name);
 			}
 		}
@@ -52,7 +53,8 @@ public class UnitTurn : Component
 		{
 			foreach(Spell s in unit.USpell.Spells)
 			{
-				SpellCommands.Add(new CommandItem(s.Data.Name, 0, s, s.Data.ManaCost));
+				var d = (SpellData)s.Data;
+				SpellCommands.Add(new CommandItem(d.Name, 0, s, d.ManaCost));
 				Log.Info(s.Data.Name);
 			}
 		}
@@ -60,9 +62,10 @@ public class UnitTurn : Component
 		{
 			foreach(InventorySlot slot in PlayerMaster.Instance.Inventory.Items)
 			{
-				ItemCommands.Add(new CommandItem(slot.SlotItem.Data.Name, slot.Quantity, slot.SlotItem));
+				var d = (ItemData)slot.SlotItem.Data;
+				ItemCommands.Add(new CommandItem(d.Name, slot.Quantity, slot.SlotItem));
 
-				Log.Info($"{slot.SlotItem.Data.Name} Item Command");
+				Log.Info($"{d.Name} Item Command");
 			}
 		}
 

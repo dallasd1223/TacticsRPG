@@ -9,10 +9,12 @@ public class Battlestate : State
 
 	protected override void OnAwake()
 	{
+		BattleEvents.StateHasChanged(this);
 		Machine = GetComponent<BattleMachine>();
 	}
 
-		protected override void AddListeners()
+
+	protected override void AddListeners()
 	{
 		Machine.Input.InputPressed += HandleInput;
 	}
@@ -32,7 +34,6 @@ public class Battlestate : State
 [Category("Battle State")]
 public partial class BattleMachine : StateMachine
 {
-
 	public static BattleMachine Instance;
 	//Core Data (Resource)
 	[Property] public BattleConfig Config;
@@ -56,7 +57,6 @@ public partial class BattleMachine : StateMachine
 	[Property] public BattleIntroUI IntroUI;
 	[Property] public BattleEndUI EndUI;
 
-
 	protected override void OnStart()
 	{
 		Log.Info("Init State Set");
@@ -69,6 +69,11 @@ public partial class BattleMachine : StateMachine
 		if(!_activeState.IsValid()) return;
 		_activeState.Update();
 	}
+
+	protected override void OnDestroy()
+	{
+		Instance = null;
+	}
 }
 
 [Category("Battle State")]
@@ -78,11 +83,15 @@ public class BattleStartState : Battlestate
 	{
 		base.Enter();
 		Log.Info("BattleStartState Entered");
+
+	
 	}
+
 	protected override void OnStart()
 	{
 		InitializeBattle();
 	}
+
 	public void InitializeBattle()
 	{
 
@@ -145,7 +154,6 @@ public class TurnStartState : Battlestate
 
 		CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
 
-
 	}
 
 	public override void Update()
@@ -193,8 +201,6 @@ public class ActionCommandSelectState : Battlestate
 	public override void Update()
 	{
 			HandleTurnCommands();	
-
-
 	}
 
 	public override void Exit()
@@ -204,7 +210,7 @@ public class ActionCommandSelectState : Battlestate
 	protected override void HandleInput(InputKey key)
 	{
 		base.HandleInput(key);
-		Machine.Player.HandleInput(key);
+		InputEvents.OnActionSelectPressed(key);
 	}
 }
 

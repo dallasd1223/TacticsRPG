@@ -114,5 +114,14 @@ public class TileMapManager : Component
 		return new Vector2(data.XIndex, data.YIndex);
 	}
 
-
+	public Vector3 GetTilePositionFromVector(Vector2 vec)
+	{
+		TileData tile = GetTileData(vec);
+		if(tile.IsValid())
+		{
+			return tile.TilePosition;
+		}
+		Log.Info("No TileFound");
+		return this.GameObject.WorldPosition;		
+	}
 }

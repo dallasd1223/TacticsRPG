@@ -1,9 +1,9 @@
 using Sandbox;
 using TacticsRPG;
 
-public class CameraManager: Component
+public class CameraManager: SingletonComponent<CameraManager>
 {
-	public static CameraManager Instance {get; set;}
+
 	
 	//Camera Component
 	[Property] public CameraComponent Camera {get; set;}
@@ -24,11 +24,13 @@ public class CameraManager: Component
 	[Property] public SoundEvent NodeSwitch {get; set;}
 	[Property] public bool EffectOverride {get; set;} = false;
 	[Property] public float ZoomValue {get; set;}
+	[Property] public bool IsFreeLook {get; set;} = false;
 	private Vector3 LastPosition {get; set;}
 
 	protected override void OnAwake()
 	{
-		Instance = this;
+		base.OnAwake();
+		PlayerEvents.FocusModeChange += HandleFocusMode;
 	}
 
 	protected override void OnStart()
@@ -41,6 +43,20 @@ public class CameraManager: Component
 
 		LastPosition = this.GameObject.LocalPosition;
 	}
+
+	public void HandleFocusMode(FocusMode? f, Unit u)
+	{
+		switch(f)
+		{
+			case FocusMode.FreeLook:
+				IsFreeLook = true;
+				return;
+			default:
+				IsFreeLook = false;
+				return;
+		}
+	}
+
 	protected override void OnUpdate()
 	{
 
@@ -51,7 +67,7 @@ public class CameraManager: Component
 		}
 
 
-		if(PlayerMaster.Instance.Mode == FocusMode.FreeLook)
+		if(IsFreeLook)
 		{
 			HandleCamInput();
 

@@ -53,27 +53,29 @@ public sealed class InputManager : Component
 		{
 			InputPressed?.Invoke(InputKey.TAB);
 		}
-		else if(Input.Pressed("Back"))
+		if(Input.Pressed("Back"))
 		{
 			InputPressed?.Invoke(InputKey.BACKSPACE);
 		}
-		else if(Input.Pressed("Chat"))
+		if(Input.Pressed("Chat"))
 		{
 			InputPressed?.Invoke(InputKey.ENTER);
 		}
-		else if(Input.Pressed("Left"))
+		if(Input.Pressed("Left"))
 		{
+			Log.Info("Input Left");
 			InputPressed?.Invoke(InputKey.LEFT);
 		}
-		else if(Input.Pressed("Right"))
+		if(Input.Pressed("Right"))
 		{
 			InputPressed?.Invoke(InputKey.RIGHT);
 		}
-		else if(Input.Pressed("Forward"))
+		if(Input.Pressed("Forward"))
 		{
+			Log.Info("Input Forward");
 			InputPressed?.Invoke(InputKey.FORWARD);
 		}
-		else if(Input.Pressed("Backward"))
+		if(Input.Pressed("Backward"))
 		{
 			InputPressed?.Invoke(InputKey.BACKWARD);			
 		}

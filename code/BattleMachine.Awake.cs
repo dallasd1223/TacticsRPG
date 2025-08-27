@@ -3,7 +3,7 @@ using System;
 
 namespace TacticsRPG;
 
-public partial class BattleMachine : StateMachine
+partial class BattleMachine
 {
 	protected override void OnAwake()
 	{
@@ -16,6 +16,7 @@ public partial class BattleMachine : StateMachine
 			Instance = null;
 			Instance = this;
 		}
+		base.OnAwake();
 		Log.Info("Machine Awake");
 		Turn = GetComponent<TurnManager>();
 		TurnQueue = GetComponent<TurnQueueController>();

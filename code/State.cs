@@ -21,7 +21,10 @@ public abstract class State : Component
 	protected virtual void AddListeners(){}
 	protected virtual void RemoveListeners(){}
 
-	public State() {}
+	protected override void OnDestroy()
+	{
+		RemoveListeners();
+	}
 
 }
 
@@ -35,8 +38,10 @@ public class StateMachine : Component
 	protected State _activeState;
 	public bool InTransition;
 
-	public void TransitionState(State state)
+	public virtual void TransitionState(State state)
 	{
+		Log.Info(state);
+		Log.Info(InTransition);
 		if(_activeState == state || InTransition)
 		{
 			Log.Info($"Transition Null {_activeState}");
@@ -53,8 +58,6 @@ public class StateMachine : Component
 		_activeState = state;
 
 		//Hook Event Into State Transition
-		var bstate = (Battlestate)state;
-		BattleEvents.StateHasChanged(bstate);
 
 		if(_activeState != null)
 		{

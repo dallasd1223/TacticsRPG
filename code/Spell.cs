@@ -5,12 +5,12 @@ namespace TacticsRPG;
 
 public interface IAbilityItem
 {
-
+	public AbilityItemData Data {get; set;}
 }
 
 public class Spell : IAbilityItem
 {
-	public SpellData Data;
+	public AbilityItemData Data {get; set;}
 
 	public Spell(SpellData data)
 	{
@@ -19,33 +19,46 @@ public class Spell : IAbilityItem
 }
 
 [GameResource("Spell", "spell", "Defines Data For Spells")]
-public class SpellData : GameResource
+public class SpellData : AbilityItemData
 {
-	public string Name {get; set;}
-	public string Description {get; set;}
-	public string IconPath {get; set;}
+	public override string Name {get; set;}
+	public override string Description {get; set;}
+	public override string IconPath {get; set;}
 
-	public EffectData effectData {get; set;}
+	public override EffectData effectData {get; set;}
 
 	public int ManaCost {get; set;}
 	public bool IsChargeSpell {get; set;}
 	public int TurnCost {get; set;}
 	public int Duration {get; set;}
 
-	public bool CanUseOnSelf {get; set;}
-	public RangeShape Shape {get; set;}
-	public int Range {get; set;}
+	public override bool CanUseOnSelf {get; set;}
+	public override RangeShape Shape {get; set;}
+	public override int BaseRange {get; set;}
+	public override int ActionRange {get; set;}
 
-	public int Value {get; set;}
+	public override int Value {get; set;}
 
 	public StatType Stat {get; set;}
 	public ElementType Element {get; set;}
 	public ModifierType Modifier {get; set;}
-
-
-
 }
 
+public class AbilityItemData : GameResource
+{
+	public virtual string Name {get; set;}
+	public virtual string Description {get; set;}
+	public virtual string IconPath {get; set;}
+
+	public virtual EffectData effectData {get; set;}
+
+	public virtual bool CanUseOnSelf {get; set;}
+	public virtual RangeShape Shape {get; set;}
+	public virtual int BaseRange {get; set;}
+	public virtual int ActionRange {get; set;}
+
+	public virtual int Value {get; set;}	
+}
 public enum ElementType
 {
 	Fire,

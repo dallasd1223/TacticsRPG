@@ -112,7 +112,7 @@ public sealed class GameCursor : Component
 
 	public void SetTargetPosition()
 	{
-		TargetPosition = GetPositionFromVector(SelectedVector);
+		TargetPosition = GetCursorPositionFromVector(SelectedVector);
 		
 	}
 
@@ -247,7 +247,7 @@ public sealed class GameCursor : Component
 			Border.WorldPosition = SelectedObject.WorldPosition + new Vector3(0,0,1);
 			if(UnitManager.Instance.TileHasUnit(obj))
 			{
-				SelectedUnit = GetUnitOnTile(obj);
+				SelectedUnit = UnitManager.Instance.GetUnitFromTile(obj);
 			}
 			else
 			{
@@ -277,7 +277,7 @@ public sealed class GameCursor : Component
 	}*/
 
 	//TILE MANAGER AND UNITMANAGER ALREADY DO THIS
-	public Unit GetUnitOnTile(TileData tile)
+	/*public Unit GetUnitOnTile(TileData tile)
 	{
 		var units = Scene.GetAll<Unit>();
 		foreach(Unit unit in units)
@@ -288,10 +288,11 @@ public sealed class GameCursor : Component
 			}
 		}
 		return null;
-	}
+	}*/
+
 
 	//TILE MANAGER ALREADY DOES THIS
-	public Vector3 GetPositionFromVector(Vector2 vector)
+	public Vector3 GetCursorPositionFromVector(Vector2 vector)
 	{
 		TileData tile = TileMapManager.Instance.GetTileData(vector);
 		if(tile.IsValid())

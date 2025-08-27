@@ -74,10 +74,10 @@ public class CombatMachine : StateMachine
 					await Task.DelayRealtimeSeconds(0.5f);
 					if(CurrentObject.AbilityItem is Item)
 					{
-						Item item = (Item)CurrentObject.AbilityItem;
-						EffectEvent COeffect = new PotionEffect(CurrentObject, item.Data.EffectData);
+						var item = CurrentObject.AbilityItem;
+						EffectEvent COeffect = new PotionEffect(CurrentObject, item.Data.effectData);
 						EffectManager.Instance.PlayEffect(COeffect);
-						await Task.DelayRealtimeSeconds(item.Data.EffectData.TotalDuration);
+						await Task.DelayRealtimeSeconds(item.Data.effectData.TotalDuration);
 					}
 					CurrentObject.ActingUnit.Turn.HasActed = true;
 					CurrentObject.ActingUnit.Battle.InCombat = false;

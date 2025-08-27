@@ -5,7 +5,7 @@ namespace TacticsRPG;
 
 public class Skill : IAbilityItem
 {
-	public SkillData Data;
+	public AbilityItemData Data {get; set;}
 
 	public Skill(SkillData data)
 	{
@@ -14,25 +14,25 @@ public class Skill : IAbilityItem
 }
 
 [GameResource("Skill", "skill", "Defines Data For Skill Abilties")]
-public class SkillData : GameResource
+public class SkillData : AbilityItemData
 {
-	public string Name {get; set;}
-	public string Description {get; set;}
-	public string IconPath {get; set;}
+	public override string Name {get; set;}
+	public override string Description {get; set;}
+	public override string IconPath {get; set;}
 
-	public EffectData effectData {get; set;}
+	public override EffectData effectData {get; set;}
 
 	public int ManaCost {get; set;}
 	public bool isChargeSkill {get; set;}
 	public int TurnCost {get; set;}
 	public int Duration {get; set;}
 
-	public bool CanUseOnSelf {get; set;}
-	public RangeShape Shape {get; set;}
-	public int BaseRange {get; set;}
-	public int ActionRange {get; set;}
+	public override bool CanUseOnSelf {get; set;}
+	public override RangeShape Shape {get; set;}
+	public override int BaseRange {get; set;}
+	public override int ActionRange {get; set;}
 
-	public int Value {get; set;}
+	public override int Value {get; set;}
 
 	public StatType Stat {get; set;}
 	public ModifierType Modifier {get; set;}

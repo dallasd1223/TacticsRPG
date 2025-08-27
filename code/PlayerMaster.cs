@@ -1,17 +1,16 @@
 using Sandbox;
 
 namespace TacticsRPG;
-public sealed class PlayerMaster : Component
+public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 {
 	//URGENT
 	//REFACTOR THIS CLASS: SPLIT RESPONSABILITIES WITH NEW BATTLEMANAGER STATES 
 	//& NEW SELECTOR MANAGER, AND MORE IF NEEDED
 	//URGENT
-
-	public static PlayerMaster Instance {get; set;}
 	[Property] public Unit CurrentUnit {get; set;} = null;
 	[Property] public FocusMode? LastMode {get; set;} = null;
 	[Property] public FocusMode? Mode {get; set;} = FocusMode.NA;
+	[Property] public SelectorManager Selector {get; set;}
 	[Property] public InventoryManager Inventory {get; set;}
 	[Property] public CommandMode? LastcMode {get; set;} = null;
 	[Property] public CommandMode? cMode {get; set;} = CommandMode.NA;
@@ -19,27 +18,33 @@ public sealed class PlayerMaster : Component
 	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
 	[Property] public ActionMenu Menu {get; set;}
 	[Property] public ConfirmUI ConfirmMenu {get; set;}
+	[Property] public ConfirmManager Confirm {get; set;}
 	[Property] public SoundEvent Error {get; set;}
 	[Property] public SoundEvent ConfirmSound {get; set;}
 	
-
+	protected override void OnDestroy()
+	{
+		Log.Info("PlayerMaster Destroyed");
+		BattleEvents.TurnEvent -= OnTurnEvent;
+		InputEvents.ActionSelectInputPressed -= HandleInput;	
+	}
 	protected override void OnAwake()
 	{
-		if(Instance is null)
+		base.OnAwake();
+		/*if(Instance is null)
 		{
 			Instance = this;
 		}
 		else
 		{
+			Log.Info("Yes We Breaking shit");
+		BattleEvents.TurnEvent -= OnTurnEvent;
+		InputEvents.ActionSelectInputPressed -= HandleInput;
 			Instance = null;
 			Instance = this;
-		}
-
-		BattleMachine.Instance.Turn.TurnEvent += OnTurnEvent;
-	}
-
-	protected override void OnUpdate()
-	{
+		}*/
+		BattleEvents.TurnEvent += OnTurnEvent;
+		InputEvents.ActionSelectInputPressed += HandleInput;
 
 	}
 
@@ -50,7 +55,8 @@ public sealed class PlayerMaster : Component
 			case TurnState.Active:
 				if(args.team == TeamType.Alpha)
 				{
-					InitiateTurn(args.unit);
+					Log.Info("Turn initiate");
+					InitiatePlayerMaster(args.unit);
 				}
 				return;
 			default:
@@ -58,64 +64,14 @@ public sealed class PlayerMaster : Component
 		}
 
 	}
-	public void InitiateTurn(Unit u)
+	
+	public void InitiatePlayerMaster(Unit u)
 	{
+		Log.Info($"Yes U {u}");
 			CurrentUnit = u;
 			Mode = FocusMode.Menu;
+			PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 	
-	}
-
-	public void HandleInput(InputKey key)
-	{
-		if(Mode == FocusMode.Menu)
-		{
-			switch(key)
-			{
-				case InputKey.FORWARD:
-					Menu.DecreaseIndex();
-					break;
-				case InputKey.BACKWARD:
-					Menu.IncreaseIndex();
-					break;
-				case InputKey.BACKSPACE:
-					Menu.LastMenuState();
-					break;
-				case InputKey.ENTER:
-					if(!Menu.IsActive)
-					{
-						Menu.ActivateMenu(CurrentUnit);
-						return;
-					}
-					Menu.SelectItem();
-					break;
-			}
-		}
-		else if(Mode == FocusMode.FreeLook)
-		{
-			switch(key)
-			{
-				case InputKey.BACKSPACE:
-					CancelCommand();
-					break;
-				default:
-					break;
-			}
-
-		}
-		else if(Mode == FocusMode.ConfirmMenu)
-		{
-			switch(key)
-			{
-				case InputKey.BACKSPACE:
-					Cancel();
-					break;
-				case InputKey.ENTER:
-					Confirm();
-					break;
-				default:
-					break;
-			}
-		}
 	}
 
 	public void CancelCommand()
@@ -131,11 +87,15 @@ public sealed class PlayerMaster : Component
 			CurrentUnit.Ability.EndAbilitySelect();
 
 			Mode = FocusMode.Menu;
-			Menu.DoReset();
+			cMode = CommandMode.NA;
 			PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+			PlayerEvents.OnCommandModeChange(cMode);
+			Menu.DoReset();
+
 			GameCursor.Instance.DeactivateCursor();
 			CurrentSelectedCommand = null;
-			cMode = CommandMode.NA;
+
+
 			Sound.Play(Error);
 		}
 	}
@@ -148,8 +108,8 @@ public sealed class PlayerMaster : Component
 				if(CurrentUnit.Turn.CommandIsActive("MOVE"))
 				{
 					Mode = FocusMode.FreeLook;
-					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					cMode = CommandMode.MoveSelect;
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentUnit.Interact.FindMoveableTiles();
 					GameCursor.Instance.ActivateCursor();
@@ -167,6 +127,8 @@ public sealed class PlayerMaster : Component
 				{
 					Mode = FocusMode.FreeLook;
 					cMode = CommandMode.AttackSelect;
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+					PlayerEvents.OnCommandModeChange(cMode);
 					GameCursor.Instance.ActivateCursor();
 					CurrentUnit.Interact.IsAttackSelecting = true;
 					CurrentUnit.Interact.FindAttackableTiles();
@@ -187,6 +149,8 @@ public sealed class PlayerMaster : Component
 				if(cItem is null) return;
 				Mode = FocusMode.FreeLook;
 				cMode = CommandMode.AbilitySelect;
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				PlayerEvents.OnCommandModeChange(cMode);
 				GameCursor.Instance.ActivateCursor();
 				CurrentUnit.Interact.IsAbilitySelecting = true;
 				Log.Info("Were Before Data Part");
@@ -197,6 +161,7 @@ public sealed class PlayerMaster : Component
 					CurrentUnit.Interact.FindAbilityTilesFromRange(item.Data.BaseRange, item.Data.CanUseOnSelf);
 					CurrentSelectedCommand = command;
 					CurrentCommandAbility = item;
+					PlayerEvents.OnAbilitItemSelected(CurrentCommandAbility);
 					break;
 				}
 				else
@@ -209,12 +174,16 @@ public sealed class PlayerMaster : Component
 				if(cItem is null) return;
 				Mode = FocusMode.FreeLook;
 				cMode = CommandMode.AbilitySelect;
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				PlayerEvents.OnCommandModeChange(cMode);
 				GameCursor.Instance.ActivateCursor();
 				break;
 			case CommandType.Skill:
 				if(cItem is null) return;
 				Mode = FocusMode.FreeLook;
 				cMode = CommandMode.AbilitySelect;
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				PlayerEvents.OnCommandModeChange(cMode);
 				GameCursor.Instance.ActivateCursor();
 	
 				break;
@@ -222,6 +191,7 @@ public sealed class PlayerMaster : Component
 				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
 				{
 					cMode = CommandMode.WaitSelect;
+					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentSelectedCommand = command;
 					ActivateConfirmMenu();
 				}
@@ -269,6 +239,8 @@ public sealed class PlayerMaster : Component
 				CurrentUnit.Ability.EndAbilitySelect();
 				Mode = FocusMode.NA;
 				cMode = CommandMode.NA;
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				PlayerEvents.OnCommandModeChange(cMode);
 				Menu.DoReset();
 				GameCursor.Instance.DeactivateCursor();
 				Log.Info($"{tileList.Count()} TileList Count in Confirm Command");
@@ -286,6 +258,8 @@ public sealed class PlayerMaster : Component
 
 		Mode = FocusMode.NA;
 		cMode = CommandMode.NA;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+		PlayerEvents.OnCommandModeChange(cMode);
 		GameCursor.Instance.DeactivateCursor();
 	}
 
@@ -294,6 +268,8 @@ public sealed class PlayerMaster : Component
 		LastMode = Mode;
 		Mode = FocusMode.ConfirmMenu;
 		LastcMode = cMode;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+		PlayerEvents.OnCommandModeChange(cMode);
 		ConfirmMenu.Activate();
 	}
 	
@@ -303,11 +279,13 @@ public sealed class PlayerMaster : Component
 		ConfirmMenu.IsActive = false;
 		Mode = LastMode;
 		cMode = LastcMode;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+		PlayerEvents.OnCommandModeChange(cMode);
 		Log.Info(ConfirmMenu.IsActive);
 
 	}
 
-	public void Confirm()
+	public void ConfirmFinish()
 	{
 		Sound.Play(ConfirmSound);
 		PlayerMaster.Instance.DeactivateConfirmMenu();
@@ -334,18 +312,23 @@ public sealed class PlayerMaster : Component
 		Sound.Play(Error);
 		PlayerMaster.Instance.DeactivateConfirmMenu();
 	}
+	
 	public void SwitchFocusMode()
 	{
 		switch(Mode)
 		{
 			case FocusMode.Menu:
 				Mode = FocusMode.FreeLook;
+				Log.Info(Mode);
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				GameCursor.Instance.ActiveToggle();
-				break;
+				return;
 			case FocusMode.FreeLook:
 				Mode = FocusMode.Menu;
+				Log.Info(Mode);
+				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				GameCursor.Instance.ActiveToggle();
-				break;
+				return;
 		}
 	}
 }

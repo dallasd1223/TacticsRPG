@@ -27,6 +27,7 @@ public sealed class TurnManager : Component
 		CurrentTurnState = TurnState.Active;
 		ActiveUnit.Turn.StartTurn();
 		BattleEvents.OnTurnStart(ActiveUnit);
+		BattleEvents.OnTurnEvent(new TurnEventArgs(ActiveUnit, CurrentTeam, CurrentTurnState));
 		TurnEvent?.Invoke(new TurnEventArgs(ActiveUnit, CurrentTeam, CurrentTurnState));
 	}
 
