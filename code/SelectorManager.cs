@@ -29,20 +29,28 @@ public partial class SelectorManager : StateMachine
 
 	[Property] public GameObject CursorPrefab {get; set;}
 
-	public void TrySetAll(Vector2 vec)
+	public void TrySetAll(Vector2 vec, bool fresh)
 	{
-		TrySetVector(vec);
+		TrySetVector(vec, fresh);
 		TrySetTile(HoveredVector);
 		TrySetUnit(HoveredTile);
 
 		//Send Event To Current SelectorState
 		HoverChange?.Invoke();
 	}
-	public void TrySetVector(Vector2 vec)
-	{
-		Vector2 NewVec = HoveredVector + vec;
+	public void TrySetVector(Vector2 vec, bool fresh)
+	{	
+		Vector2 NewVec;
+		if(fresh)
+		{
+			HoveredVector = vec;
+			VectorChange?.Invoke(HoveredVector);
+			return;
+		}
+		NewVec = HoveredVector + vec;
 		if(NewVec.x < 0 || NewVec.x > TileMapManager.Instance.MaxX) return;
 		if(NewVec.y < 0 || NewVec.y > TileMapManager.Instance.MaxY) return;
+		Log.Info("Why");
 		LastVector = HoveredVector;
 		HoveredVector = NewVec;
 		VectorChange?.Invoke(HoveredVector);	

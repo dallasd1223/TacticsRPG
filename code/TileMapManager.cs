@@ -124,4 +124,16 @@ public class TileMapManager : Component
 		Log.Info("No TileFound");
 		return this.GameObject.WorldPosition;		
 	}
+
+	public TileData GetTileFromUnit(Unit u)
+	{
+		foreach(TileData tile in TileList)
+		{
+			if(u.Interact.UnitTile == tile)
+			{
+				return tile;
+			}
+		}
+		return  null;
+	}
 }

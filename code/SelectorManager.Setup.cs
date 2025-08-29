@@ -32,7 +32,7 @@ public partial class SelectorManager
 	{
 		if(f == FocusMode.FreeLook)
 		{
-			ActivateSelector();
+			ActivateSelector(u);
 		}
 		else
 		{
@@ -64,10 +64,15 @@ public partial class SelectorManager
 		}
 	}
 
-	public void ActivateSelector()
+	public void ActivateSelector(Unit? u)
 	{
 		IsActive = true;
-		TrySetAll(HoveredVector);
+
+		TileData StartTile = TileMapManager.Instance.GetTileFromUnit(u);
+		Vector2 StartVec = TileMapManager.Instance.GetVector2FromTile(StartTile);
+		
+		Log.Info(StartVec);
+		TrySetAll(StartVec, true);
 		Log.Info("Selector Activated");
 	}
 
@@ -84,16 +89,16 @@ public partial class SelectorManager
 			case InputKey.ENTER:
 				break;
 			case InputKey.LEFT:
-				TrySetAll(new Vector2(-1,0));
+				TrySetAll(new Vector2(-1,0), false);
 				break;
 			case InputKey.RIGHT:
-				TrySetAll(new Vector2(1,0));
+				TrySetAll(new Vector2(1,0), false);
 				break;
 			case InputKey.FORWARD:
-				TrySetAll(new Vector2(0,1));
+				TrySetAll(new Vector2(0,1), false);
 				break;
 			case InputKey.BACKWARD:
-				TrySetAll(new Vector2(0,-1));
+				TrySetAll(new Vector2(0,-1), false);
 				break;
 		}
 	}

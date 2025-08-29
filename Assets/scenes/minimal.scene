@@ -13229,17 +13229,18 @@
           "__guid": "90832da8-c650-44a2-a89c-63116a0de365",
           "__enabled": true,
           "cMode": "NA",
+          "Confirm": null,
           "ConfirmMenu": {
             "_type": "component",
             "component_id": "b94deba2-0380-4e42-8021-a2a1c3e92438",
             "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
             "component_type": "ConfirmUI"
           },
-          "ConfirmSound": "sounds/cursor_style_3.sound",
+          "ConfirmSound": "sounds/ui-sound4.sound",
           "CurrentCommandAbility": null,
           "CurrentSelectedCommand": null,
           "CurrentUnit": null,
-          "Error": "sounds/bottle-open1.sound",
+          "Error": "sounds/ui-sound-18.sound",
           "Inventory": {
             "_type": "component",
             "component_id": "0b909bfe-992a-4587-bd40-44fe1a97e734",
@@ -13562,7 +13563,8 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "UI": null
         }
       ],
       "Children": []
@@ -14479,7 +14481,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 11493.57
+            "Relative": 313.01212
           }
         },
         {
