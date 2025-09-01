@@ -46,7 +46,10 @@ public partial class BattleMachine : StateMachine
 	[Property] public CameraManager Camera;
 	[Property] public MapManager Map;
 
+	//Player
 	[Property] public PlayerMaster Player;
+	[Property] public SelectorManager Selector {get; set;}
+	
 	//Battle Drivers
 	[Property] public TurnManager Turn;
 	[Property] public TurnQueueController TurnQueue;
@@ -152,7 +155,7 @@ public class TurnStartState : Battlestate
 	{
 		Machine.Turn.StartTurn(Machine.TurnQueue.NextInQueue());
 
-		CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
+		//CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
 
 	}
 

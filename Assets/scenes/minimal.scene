@@ -12726,10 +12726,323 @@
       ]
     },
     {
+      "__guid": "ced9da43-e903-4852-9979-68e9832e2ce6",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "DebugUI",
+      "Position": "-355.6176,-581.7693,470.3851",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "4e6e208c-4a29-4a93-8e45-3ac895d435fa",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.DebugUI",
+          "__guid": "49f310a2-ef7d-4a7e-bc3f-8511d57c2380",
+          "__enabled": true,
+          "IsActive": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "ActionMenu",
+      "Position": "-58.50172,-226.0571,184.5299",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ActionMenu",
+          "__guid": "9f06951c-14fe-4429-b186-610ed82ba9d6",
+          "__enabled": true,
+          "ActiveUnit": null,
+          "BackSound": "sounds/ui-sound-18.sound",
+          "IsActive": false,
+          "LastState": null,
+          "MenuLevel": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PressSound": "sounds/ui-sound4.sound",
+          "SelectSound": "sounds/ui-sound2.sound",
+          "State": "Action"
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "726c8007-77be-47c5-9753-b922dfc6c766",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Confirm",
+      "Position": "-58.50172,-226.0571,184.5299",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.ConfirmManager",
+          "__guid": "94bc64de-2525-49db-9211-88eea790f415",
+          "__enabled": true,
+          "IsConfirming": false,
+          "Mode": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "State": null,
+          "UI": null
+        },
+        {
+          "__type": "Sandbox.ConfirmUI",
+          "__guid": "b94deba2-0380-4e42-8021-a2a1c3e92438",
+          "__enabled": true,
+          "ActivateSound": "sounds/ui-sound3.sound",
+          "CancelSound": "sounds/ui-sound-18.sound",
+          "ChooseList": [
+            "YES",
+            "NO"
+          ],
+          "ConfirmSound": "sounds/ui-sound4.sound",
+          "IsActive": false,
+          "Manager": {
+            "_type": "component",
+            "component_id": "94bc64de-2525-49db-9211-88eea790f415",
+            "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
+            "component_type": "ConfirmManager"
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "SelectedIndex": 0,
+          "SelectSound": "sounds/ui-sound2.sound"
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "23bfebf9-2d91-41c9-923e-2c6214a693e4",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "66526032-6896-432b-a548-ebbaa34f96e0",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Selector",
+      "Position": "-58.50172,-226.0571,184.5299",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.SelectorManager",
+          "__guid": "be11142d-dbac-4097-a585-5979cf148afd",
+          "__enabled": true,
+          "ActiveCursor": null,
+          "ActiveCursorObject": null,
+          "CurrentUnit": null,
+          "CursorPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/selectcursorprefab.prefab"
+          },
+          "HoveredObject": null,
+          "HoveredTile": null,
+          "HoveredUnit": null,
+          "HoveredVector": "0,0",
+          "IsConfirming": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "State": null
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "38ceee52-4760-4936-8984-de0e55d87c75",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "PlayerMaster",
+      "Position": "-58.50172,-226.0571,184.5299",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.PlayerMaster",
+          "__guid": "90832da8-c650-44a2-a89c-63116a0de365",
+          "__enabled": true,
+          "cMode": "NA",
+          "Confirm": {
+            "_type": "component",
+            "component_id": "94bc64de-2525-49db-9211-88eea790f415",
+            "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
+            "component_type": "ConfirmManager"
+          },
+          "ConfirmMenu": {
+            "_type": "component",
+            "component_id": "b94deba2-0380-4e42-8021-a2a1c3e92438",
+            "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
+            "component_type": "ConfirmUI"
+          },
+          "ConfirmSound": "sounds/ui-sound4.sound",
+          "CurrentCommandAbility": null,
+          "CurrentSelectedCommand": null,
+          "CurrentUnit": null,
+          "Error": "sounds/ui-sound-18.sound",
+          "Inventory": {
+            "_type": "component",
+            "component_id": "0b909bfe-992a-4587-bd40-44fe1a97e734",
+            "go": "38ceee52-4760-4936-8984-de0e55d87c75",
+            "component_type": "InventoryManager"
+          },
+          "LastcMode": null,
+          "LastMode": null,
+          "Menu": {
+            "_type": "component",
+            "component_id": "9f06951c-14fe-4429-b186-610ed82ba9d6",
+            "go": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
+            "component_type": "ActionMenu"
+          },
+          "Mode": "NA",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Selector": {
+            "_type": "component",
+            "component_id": "be11142d-dbac-4097-a585-5979cf148afd",
+            "go": "66526032-6896-432b-a548-ebbaa34f96e0",
+            "component_type": "SelectorManager"
+          }
+        },
+        {
+          "__type": "InputManager",
+          "__guid": "04a6b8e6-0b93-4ba6-8f9d-89ab6b642df0",
+          "__enabled": true,
+          "Device": "Keyboard",
+          "Mode": "Battle",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.InventoryManager",
+          "__guid": "0b909bfe-992a-4587-bd40-44fe1a97e734",
+          "__enabled": true,
+          "Items": [],
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "fefb39c1-94fc-462c-968d-e20636392e19",
       "__version": 1,
       "Flags": 0,
-      "Name": "State",
+      "Name": "Battle State",
       "Position": "-1.899902,-217.7975,181.4816",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
@@ -12788,6 +13101,12 @@
             "component_id": "90832da8-c650-44a2-a89c-63116a0de365",
             "go": "38ceee52-4760-4936-8984-de0e55d87c75",
             "component_type": "PlayerMaster"
+          },
+          "Selector": {
+            "_type": "component",
+            "component_id": "be11142d-dbac-4097-a585-5979cf148afd",
+            "go": "66526032-6896-432b-a548-ebbaa34f96e0",
+            "component_type": "SelectorManager"
           },
           "Turn": null,
           "TurnQueue": null,
@@ -12907,87 +13226,6 @@
       "Children": []
     },
     {
-      "__guid": "e57f79f5-51ab-4577-a1c3-675029a7d5fd",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "BattleManager",
-      "Position": "-58.50172,-226.0571,184.5299",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.BattleManager",
-          "__guid": "fa7b3582-ce81-4f83-b93b-18833fd90418",
-          "__enabled": false,
-          "ActiveUnit": null,
-          "AllUnits": [],
-          "AlphaTeam": {
-            "_type": "component",
-            "component_id": "d0cbf101-265a-47e1-89b7-77e4389e0604",
-            "go": "37c17ce0-f068-4958-9e49-94cf23924619",
-            "component_type": "TeamManager"
-          },
-          "BattleEndTheme": "sounds/fft-complete.sound",
-          "commandHandler": null,
-          "Config": "resources/configs/battle.config",
-          "CurrentBattleState": "BattleStart",
-          "EndGameStarted": false,
-          "EndUI": {
-            "_type": "component",
-            "component_id": "09a32566-8285-4b62-b7af-ecec25247eeb",
-            "go": "8f62db97-56e6-4442-b918-b28d867d01ef",
-            "component_type": "BattleEndUI"
-          },
-          "Initialized": false,
-          "IntroUI": {
-            "_type": "component",
-            "component_id": "6811508b-0a65-4550-85d7-f5ce0bf84006",
-            "go": "331cbf04-e19c-415e-9147-9ba8f3df1153",
-            "component_type": "BattleIntroUI"
-          },
-          "Map": {
-            "_type": "component",
-            "component_id": "50e9703e-2469-4941-b276-492fa1614735",
-            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
-            "component_type": "MapManager"
-          },
-          "MapNode": {
-            "_type": "gameobject",
-            "go": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a"
-          },
-          "Music": {
-            "_type": "component",
-            "component_id": "a7d11b53-0c5c-4433-93f2-3b5ca7f3c80d",
-            "go": "4bde385e-aa58-4cb1-b4e9-55337b7bce8f",
-            "component_type": "MusicPlayer"
-          },
-          "OmegaTeam": {
-            "_type": "component",
-            "component_id": "24ec8d90-dda8-460e-8355-9e7d8d928163",
-            "go": "67b27bba-caa9-4690-8c48-4b679298529d",
-            "component_type": "TeamManager"
-          },
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "StateHasStarted": false,
-          "TeamTurn": "Alpha",
-          "UnitTurnQueue": [],
-          "WinningTeam": null
-        }
-      ],
-      "Children": []
-    },
-    {
       "__guid": "70b5d38f-d4d4-4702-8a61-45c76b3017a5",
       "__version": 1,
       "Flags": 0,
@@ -13049,7 +13287,19 @@
       "NetworkInterpolation": true,
       "NetworkOrphaned": 0,
       "OwnerTransfer": 1,
-      "Components": [],
+      "Components": [
+        {
+          "__type": "TacticsRPG.CombatMachine",
+          "__guid": "31b305d0-0f8e-4c1b-bf17-c3bdd591c360",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
       "Children": []
     },
     {
@@ -13205,366 +13455,6 @@
           "OnComponentUpdate": null,
           "Team": "Alpha",
           "TeamUnits": []
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "38ceee52-4760-4936-8984-de0e55d87c75",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "PlayerMaster",
-      "Position": "-58.50172,-226.0571,184.5299",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.PlayerMaster",
-          "__guid": "90832da8-c650-44a2-a89c-63116a0de365",
-          "__enabled": true,
-          "cMode": "NA",
-          "Confirm": null,
-          "ConfirmMenu": {
-            "_type": "component",
-            "component_id": "b94deba2-0380-4e42-8021-a2a1c3e92438",
-            "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
-            "component_type": "ConfirmUI"
-          },
-          "ConfirmSound": "sounds/ui-sound4.sound",
-          "CurrentCommandAbility": null,
-          "CurrentSelectedCommand": null,
-          "CurrentUnit": null,
-          "Error": "sounds/ui-sound-18.sound",
-          "Inventory": {
-            "_type": "component",
-            "component_id": "0b909bfe-992a-4587-bd40-44fe1a97e734",
-            "go": "38ceee52-4760-4936-8984-de0e55d87c75",
-            "component_type": "InventoryManager"
-          },
-          "LastcMode": null,
-          "LastMode": null,
-          "Menu": {
-            "_type": "component",
-            "component_id": "9f06951c-14fe-4429-b186-610ed82ba9d6",
-            "go": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
-            "component_type": "ActionMenu"
-          },
-          "Mode": "NA",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Selector": null
-        },
-        {
-          "__type": "InputManager",
-          "__guid": "04a6b8e6-0b93-4ba6-8f9d-89ab6b642df0",
-          "__enabled": true,
-          "Device": "Keyboard",
-          "Mode": "Battle",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        },
-        {
-          "__type": "TacticsRPG.InventoryManager",
-          "__guid": "0b909bfe-992a-4587-bd40-44fe1a97e734",
-          "__enabled": true,
-          "Items": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "66526032-6896-432b-a548-ebbaa34f96e0",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Selector",
-      "Position": "-58.50172,-226.0571,184.5299",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.SelectorManager",
-          "__guid": "be11142d-dbac-4097-a585-5979cf148afd",
-          "__enabled": true,
-          "CursorPrefab": null,
-          "HoveredTile": null,
-          "HoveredUnit": null,
-          "HoveredVector": "0,0",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "State": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Cursor",
-      "Position": "28,28,180",
-      "Rotation": "-1,0,-0,-0.00000004371139",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "155d7e55-4fc7-4e5d-8727-70997c970658",
-          "__enabled": false,
-          "BodyGroups": 18446744073709551615,
-          "CreateAttachments": false,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Materials": null,
-          "Model": "models/asset-quest/halloween/sword.vmdl",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "RenderOptions": {
-            "GameLayer": true,
-            "OverlayLayer": false,
-            "BloomLayer": false,
-            "AfterUILayer": false
-          },
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "TacticsRPG.GameCursor",
-          "__guid": "763d73b8-edd5-494e-bec2-8580e464f634",
-          "__enabled": true,
-          "Border": {
-            "_type": "gameobject",
-            "go": "757b4c0c-e7e8-4c26-86eb-d14e9776761a"
-          },
-          "CAngles": "0,0,180",
-          "Error": "sounds/beep-error.sound",
-          "HasUnit": false,
-          "IsActive": false,
-          "Model": {
-            "_type": "component",
-            "component_id": "155d7e55-4fc7-4e5d-8727-70997c970658",
-            "go": "3d4004b8-8bb5-4f62-844a-8ff5210d6203",
-            "component_type": "ModelRenderer"
-          },
-          "MoveSelect": "sounds/cursor_style_3.sound",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "RotateSpeed": 2,
-          "SelectedObject": null,
-          "SelectedTile": null,
-          "SelectedUnit": null,
-          "SelectedVector": "0,0",
-          "TargetPosition": "0,0,0"
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "ced9da43-e903-4852-9979-68e9832e2ce6",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "DebugUI",
-      "Position": "-355.6176,-581.7693,470.3851",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.ScreenPanel",
-          "__guid": "4e6e208c-4a29-4a93-8e45-3ac895d435fa",
-          "__enabled": true,
-          "AutoScreenScale": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Opacity": 1,
-          "Scale": 1,
-          "ScaleStrategy": "ConsistentHeight",
-          "TargetCamera": null,
-          "ZIndex": 100
-        },
-        {
-          "__type": "Sandbox.DebugUI",
-          "__guid": "49f310a2-ef7d-4a7e-bc3f-8511d57c2380",
-          "__enabled": true,
-          "IsActive": false,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "ActionMenu",
-      "Position": "-58.50172,-226.0571,184.5299",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.ActionMenu",
-          "__guid": "9f06951c-14fe-4429-b186-610ed82ba9d6",
-          "__enabled": true,
-          "ActiveUnit": null,
-          "BackSound": "sounds/ui-sound-18.sound",
-          "IsActive": false,
-          "LastState": null,
-          "MenuLevel": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PressSound": "sounds/ui-sound4.sound",
-          "SelectSound": "sounds/ui-sound2.sound",
-          "State": "Action"
-        },
-        {
-          "__type": "Sandbox.ScreenPanel",
-          "__guid": "726c8007-77be-47c5-9753-b922dfc6c766",
-          "__enabled": true,
-          "AutoScreenScale": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Opacity": 1,
-          "Scale": 1,
-          "ScaleStrategy": "ConsistentHeight",
-          "TargetCamera": null,
-          "ZIndex": 100
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "ConfirmUI",
-      "Position": "-58.50172,-226.0571,184.5299",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.ConfirmUI",
-          "__guid": "b94deba2-0380-4e42-8021-a2a1c3e92438",
-          "__enabled": true,
-          "ActivateSound": "sounds/ui-sound3.sound",
-          "ChooseList": [
-            "YES",
-            "NO"
-          ],
-          "IsActive": false,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "SelectedIndex": 0,
-          "SelectSound": "sounds/ui-sound2.sound"
-        },
-        {
-          "__type": "Sandbox.ScreenPanel",
-          "__guid": "23bfebf9-2d91-41c9-923e-2c6214a693e4",
-          "__enabled": true,
-          "AutoScreenScale": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Opacity": 1,
-          "Scale": 1,
-          "ScaleStrategy": "ConsistentHeight",
-          "TargetCamera": null,
-          "ZIndex": 100
-        },
-        {
-          "__type": "TacticsRPG.ConfirmManager",
-          "__guid": "94bc64de-2525-49db-9211-88eea790f415",
-          "__enabled": true,
-          "Mode": null,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "UI": null
         }
       ],
       "Children": []
@@ -14481,7 +14371,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 313.01212
+            "Relative": 1469.7965
           }
         },
         {
@@ -14665,8 +14555,6 @@
   "ResourceVersion": 3,
   "Title": "minimal",
   "Description": null,
-  "__references": [
-    "titanovsky.sword#78495"
-  ],
+  "__references": [],
   "__version": 3
 }

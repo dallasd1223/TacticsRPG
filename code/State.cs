@@ -40,11 +40,13 @@ public class StateMachine : Component
 
 	public virtual void TransitionState(State state)
 	{
-		Log.Info(state);
-		Log.Info(InTransition);
+		Log.Info($"Transitioning To: {state}");
+		Log.Info($"InTransition: {InTransition}");
+		
 		if(_activeState == state || InTransition)
 		{
-			Log.Info($"Transition Null {_activeState}");
+			Log.Info($"{this} Transition Null From {_activeState}");
+			InTransition = false;
 			return;
 		}
 
@@ -81,7 +83,6 @@ public class StateMachine : Component
 		{
 			target = AddComponent<T>();
 			target.stateMachine = this;
-			Log.Info(target);
 		}
 		return target;
 	}
@@ -89,5 +90,14 @@ public class StateMachine : Component
 	public virtual void ChangeState<T> () where T : State, new()
 	{
 		ActiveState = GetState<T>();
+	}
+
+	public virtual void NullState()
+	{
+		if(_activeState != null)
+		{
+			_activeState.Exit();
+			_activeState = null;
+		}
 	}
 }

@@ -104,7 +104,7 @@ public class PotionEffect: EffectEvent
 					StartTime = Data.stepData[0].StartTime,
 					Duration = Data.stepData[0].Duration,
 					ToColor = Data.stepData[0].Color,
-					Map = BattleManager.Instance.Map.Model,
+					Map = BattleMachine.Instance.Map.Model,
 				})
 				.AddStep(
 					new ColorSkyBoxStep
@@ -112,7 +112,7 @@ public class PotionEffect: EffectEvent
 						StartTime = Data.stepData[1].StartTime,
 						Duration = Data.stepData[1].Duration,
 						ToColor = Data.stepData[1].Color,
-						Skybox = BattleManager.Instance.Map.Background.Skybox,
+						Skybox = BattleMachine.Instance.Map.Background.Skybox,
 					}
 				)
 				.AddStep(
@@ -176,7 +176,7 @@ public class PotionEffect: EffectEvent
 						StartTime = Data.stepData[9].StartTime,
 						Duration = Data.stepData[9].Duration,
 						ToColor = Data.stepData[9].Color,
-						Map = BattleManager.Instance.Map.Model,						
+						Map = BattleMachine.Instance.Map.Model,						
 					}
 				)
 				.AddStep(
@@ -184,7 +184,7 @@ public class PotionEffect: EffectEvent
 						StartTime = Data.stepData[10].StartTime,
 						Duration = Data.stepData[10].Duration,
 						ToColor = Data.stepData[10].Color,
-						Skybox = BattleManager.Instance.Map.Background.Skybox,
+						Skybox = BattleMachine.Instance.Map.Background.Skybox,
 					}
 				)
 				.AddStep(

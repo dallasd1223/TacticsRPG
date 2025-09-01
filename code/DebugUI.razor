@@ -10,41 +10,41 @@
 		<div class="container">
 			<h1>DEBUG UI </h1>
 			<h1>GAMESTATE: @GameManager.Instance.CurrentState</h1>
-			<h1>BATTLESTATE: @BattleManager.Instance.CurrentBattleState</h1>
+			<h1>BATTLESTATE: @BattleMachine.Instance.ActiveState</h1>
 			<h1>PLAYERFOCUS: @PlayerMaster.Instance.Mode</h1>
 			<h1>COMMANDMODE: @PlayerMaster.Instance.cMode</h1>
 			<h1>TIME: @GameManager.Instance.GetTimeAsINT()</h1>
 		</div>
 		<div class="list">
 			<h1>Camera</h1>
-			<h1>State: <span style="color: blue">@GameManager.Instance.CamManager.CurrentState</span></h1>
-			<h1>Position: <span style="color: blue">@GameManager.Instance.CamManager.NodeList[GameManager.Instance.CamManager.SelectedNode].Name</span></h1>
-			<h1>Focus Point: <span style="color: blue">@GameManager.Instance.CamManager.FocusPoint.Name<span></h1>
+			<h1>State: <span style="color: blue">@CamManager.CurrentState</span></h1>
+			<h1>Position: <span style="color: blue">@CamManager.NodeList[GameManager.Instance.CamManager.SelectedNode].Name</span></h1>
+			<h1>Focus Point: <span style="color: blue">@CamManager.FocusPoint.Name<span></h1>
 		</div>
 
 		<div class="list2">
 			<h1>Map Data</h1>
-			<h1>@BattleManager.Instance.Map.Data.Name</h1>
-			<h1>Date: <span style="color: blue">@BattleManager.Instance.Map.Data.MonthDay</span></h1>
-			<h1>TimeOfDay: <span style="color: blue">@BattleManager.Instance.Map.Data.TimeOfDay</span></h1>
-			<h1>Weather: <span style="color: blue">@BattleManager.Instance.Map.Data.Weather</span></h1>
+			<h1>@Map.Data.Name</h1>
+			<h1>Date: <span style="color: blue">@Map.Data.MonthDay</span></h1>
+			<h1>TimeOfDay: <span style="color: blue">@Map.Data.TimeOfDay</span></h1>
+			<h1>Weather: <span style="color: blue">@Map.Data.Weather</span></h1>
 		</div>
-		@if(GameCursor.Instance.SelectedUnit.IsValid())
+		@if(Selector.HoveredUnit.IsValid())
 		{
 			<div class="list3">
 				<h1>Unit Data</h1>
-				<h1>Name: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Data.Name</span></h1>
-				<h1>HP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Stats.CurrentHP</span></h1>
-				<h1>MP: <span style="color: blue">@GameCursor.Instance.SelectedUnit.Stats.CurrentMP</span></h1>
+				<h1>Name: <span style="color: blue">@Selector.HoveredUnit.Data.Name</span></h1>
+				<h1>HP: <span style="color: blue">@Selector.HoveredUnit.Stats.CurrentHP</span></h1>
+				<h1>MP: <span style="color: blue">@Selector.HoveredUnit.Stats.CurrentMP</span></h1>
 			</div>
 		}	
-		@if(GameCursor.Instance.SelectedObject.IsValid())
+		@if(Selector.HoveredObject.IsValid())
 		{
 			<div class="list4">
 				<h1>Tile Data</h1>
-				<h1>Tile Index: <span style="color: blue">@GameCursor.Instance.SelectedTile.TileIndex</span></h1>
-				<h1>Surface Type: <span style="color: blue">@GameCursor.Instance.SelectedTile.SurfaceType</span></h1>
-				<h1>Height: <span style="color: blue">@GameCursor.Instance.SelectedTile.HeightIndex</span></h1>
+				<h1>Tile Index: <span style="color: blue">@Selector.HoveredTile.TileIndex</span></h1>
+				<h1>Surface Type: <span style="color: blue">@Selector.HoveredTile.SurfaceType</span></h1>
+				<h1>Height: <span style="color: blue">@Selector.HoveredTile.HeightIndex</span></h1>
 			</div>
 		}
 	}
@@ -54,6 +54,19 @@
 {
 
 	[Property] public bool IsActive {get; private set;}
+	private SelectorManager Selector;
+	private CameraManager CamManager;
+	private MapManager Map;
+	
+	protected override void OnStart()
+	{
+		if(BattleMachine.Instance is not null)
+		{
+			Selector = BattleMachine.Instance.Selector;
+			CamManager = BattleMachine.Instance.Camera;
+			Map = BattleMachine.Instance.Map;
+		}
+	}
 
 	public void Activate()
 	{

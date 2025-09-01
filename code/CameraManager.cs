@@ -33,6 +33,10 @@ public class CameraManager: SingletonComponent<CameraManager>
 		PlayerEvents.FocusModeChange += HandleFocusMode;
 	}
 
+	protected override void OnDestroy()
+	{
+		PlayerEvents.FocusModeChange -= HandleFocusMode;
+	}
 	protected override void OnStart()
 	{
 		var nodelist = Scene.GetAll<CameraFocusNode>();
@@ -46,13 +50,19 @@ public class CameraManager: SingletonComponent<CameraManager>
 
 	public void HandleFocusMode(FocusMode? f, Unit u)
 	{
+		Log.Info("Camera Manager Handling Focus");
 		switch(f)
 		{
 			case FocusMode.FreeLook:
 				IsFreeLook = true;
 				return;
-			default:
-				IsFreeLook = false;
+			case FocusMode.CommandSelectLook:
+				IsFreeLook = true;
+				return;
+			case FocusMode.ConfirmMenu:
+				return;
+			case FocusMode.Menu:
+				ResetToActive(u);
 				return;
 		}
 	}
@@ -205,12 +215,21 @@ public class CameraManager: SingletonComponent<CameraManager>
 		}
 	}
 
-	public void ResetToActive()
+	public void ResetToActive(Unit unit)
 	{
-		GameObject obj = FocusList.Find(u => u == BattleMachine.Instance.Turn.ActiveUnit.GameObject);
-		SelectedFocusIndex = FocusList.FindIndex(u => u == obj);
-		FocusPoint = FocusList[SelectedFocusIndex];
 
+		GameObject obj = FocusList.Find(u => u == unit.GameObject);
+		SelectedFocusIndex = FocusList.FindIndex(u => u == obj);
+		Log.Info($"Active Camera Focus Index: {SelectedFocusIndex}");
+		if(SelectedFocusIndex > 0)
+		{
+			FocusPoint = FocusList[SelectedFocusIndex];
+			return;
+		}
+		else
+		{
+			Log.Info("Invalid Camera Focus Index");
+		}
 	}
 
 	public void PlaySound()

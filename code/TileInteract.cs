@@ -22,9 +22,6 @@ public class TileInteract: Component
 	public int attackrange = 1;
 	public int move = 5;
 
-	
-
-
 	[Property] public Unit ThisUnit;
 
 	public Stack<TileData> path = new Stack<TileData>();

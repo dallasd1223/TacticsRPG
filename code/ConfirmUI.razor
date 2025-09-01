@@ -9,7 +9,7 @@
 	{
 		<div class="container">
 			<div class = "dialog-box">
-				<h1 class= "dialog-text">Confirm Command?</h1>
+				<h1 class= "dialog-text">@Manager.GetStringFromMode()</h1>
 			</div>
 			<div class="button-container">
 			@for(int i = 0; i < ChooseList.Count(); i++)
@@ -27,16 +27,27 @@
 @code
 {
 	[Property] public bool IsActive {get; set;} = false;
+	[Property] ConfirmManager Manager {get; set;}
+
 	[Property] public List<string> ChooseList {get; set;} = new List<string>{"YES", "NO"};
 	[Property] int SelectedIndex {get; set;} = 0;
+
 	[Property] SoundEvent SelectSound {get; set;}
 	[Property] SoundEvent ActivateSound {get; set;}
+	[Property] SoundEvent ConfirmSound {get; set;}
+	[Property] SoundEvent CancelSound {get; set;}
 
 	public void Activate()
 	{
 		IsActive = true;
 		SelectedIndex = 0;
 		Sound.Play(ActivateSound);
+	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+		SelectedIndex = 0;
 	}
 	
 	public void IncreaseIndex()
@@ -65,18 +76,12 @@
 		Log.Info($"ConfirmUI Index Set To {SelectedIndex}");
 	}
 
-	public void SelectOption()
+	public string SelectOption()
 	{
 		Log.Info($"Selecting Option {ChooseList[SelectedIndex]}");
-
-		if(ChooseList[SelectedIndex] == "YES")
-		{
-			PlayerMaster.Instance.ConfirmFinish();
-		}
-		else if(ChooseList[SelectedIndex] == "NO")
-		{
-			PlayerMaster.Instance.Cancel();
-		}
+		if(SelectedIndex == 0) Sound.Play(ConfirmSound);
+		else if(SelectedIndex == 1) Sound.Play(CancelSound);
+		return ChooseList[SelectedIndex];
 	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

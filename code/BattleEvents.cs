@@ -4,6 +4,7 @@ namespace TacticsRPG;
 
 public static class InputEvents
 {
+	//Specific To Each BattleState
 	public static event Action<InputKey> BattleStartInputPressed;
 	public static event Action<InputKey> TurnStartInputPressed;
 	public static event Action<InputKey> ActionSelectInputPressed;
@@ -48,16 +49,38 @@ public static class InputEvents
 		BattleEndInputPressed?.Invoke(key);
 	}
 }
+
 public static class PlayerEvents
 {
 	public static event Action<FocusMode?, Unit> FocusModeChange;
 	public static event Action<CommandMode?> CommandModeChange;
 	public static event Action<IAbilityItem> AbilityItemSelected;
-	public static event Action ValidSelection;
+	public static event Action<SelectorState> ValidSelection;
+	public static event Action<Unit> CancelCommand;
+	public static event Action CancelSelection;
+	public static event Action<Command> ConfirmAction;
+	public static event Action ActionConfirmed;
 
-	public static void OnValidSelection()
+	public static void OnCancelCommand(Unit u)
 	{
-		ValidSelection?.Invoke();
+		CancelCommand?.Invoke(u);
+	}
+	public static void OnActionConfirmed()
+	{
+		ActionConfirmed?.Invoke();
+	}
+	public static void OnConfirmAction(Command command)
+	{
+		ConfirmAction?.Invoke(command);
+	}
+
+	public static void OnCancelSelection()
+	{
+		CancelSelection?.Invoke();
+	}
+	public static void OnValidSelection(SelectorState state)
+	{
+		ValidSelection?.Invoke(state);
 	}
 
 	public static void OnAbilitItemSelected(IAbilityItem AItem)

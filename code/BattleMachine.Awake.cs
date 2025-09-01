@@ -16,6 +16,7 @@ partial class BattleMachine
 			Instance = null;
 			Instance = this;
 		}
+		
 		base.OnAwake();
 		Log.Info("Machine Awake");
 		Turn = GetComponent<TurnManager>();

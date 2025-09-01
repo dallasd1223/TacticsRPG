@@ -15,8 +15,14 @@ public sealed class CommandHandler : Component
 
 	protected override void OnAwake()
 	{
+		PlayerEvents.ConfirmAction += AddCommand;
 		Machine = this.GetComponent<BattleMachine>();
 		//Manager = this.GetComponent<BattleManager>();
+	}
+
+	protected override void OnDestroy()
+	{
+		PlayerEvents.ConfirmAction -= AddCommand;		
 	}
 
 	public void CommandUpdate()

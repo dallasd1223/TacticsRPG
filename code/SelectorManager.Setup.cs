@@ -7,6 +7,7 @@ public partial class SelectorManager
 	{
 		PlayerEvents.FocusModeChange += HandleFocusMode;
 		PlayerEvents.CommandModeChange += HandleCommandMode;
+		PlayerEvents.CancelSelection += CancelSelection;
 		InputEvents.ActionSelectInputPressed += HandleInput;
 	}
 
@@ -17,15 +18,21 @@ public partial class SelectorManager
 		InputEvents.ActionSelectInputPressed -= HandleInput;		
 	}
 
-	protected override void OnStart()
+	protected override void OnUpdate()
 	{
-		ChangeState<FreeLookSelectState>();
+		//Protect Frame One Input
+		if(JustTransitioned)
+		{
+			JustTransitioned = false;
+			return;
+		}
 	}
-
 	public override void TransitionState(State state)
 	{
 		base.TransitionState(state);
 		State = (SelectorState)ActiveState;
+		JustTransitioned = true;
+		Log.Info($"JustTransitioned: {JustTransitioned}");
 	}
 	
 	public void HandleFocusMode(FocusMode? f, Unit u)
@@ -33,10 +40,23 @@ public partial class SelectorManager
 		if(f == FocusMode.FreeLook)
 		{
 			ActivateSelector(u);
+			ChangeState<FreeLookSelectState>();
+			return;
 		}
-		else
+		else if(f == FocusMode.CommandSelectLook)
+		{
+			ActivateSelector(u);
+			return;
+		}
+		else if(f == FocusMode.ConfirmMenu)
+		{
+			return;
+		}
+		else if(f == FocusMode.Menu)
 		{
 			DeactivateSelector();
+			NullState();
+			return;
 		}
 	}
 
@@ -45,7 +65,7 @@ public partial class SelectorManager
 		switch(c)
 		{
 			case CommandMode.NA:
-				ChangeState<FreeLookSelectState>();
+				NullState();
 				break;
 			case CommandMode.MoveSelect:
 				ChangeState<MoveSelectState>();
@@ -60,6 +80,7 @@ public partial class SelectorManager
 				ChangeState<WaitSelectState>();
 				break;
 			default:
+				NullState();
 				break;
 		}
 	}
@@ -67,6 +88,8 @@ public partial class SelectorManager
 	public void ActivateSelector(Unit? u)
 	{
 		IsActive = true;
+		IsConfirming = false;
+		CurrentUnit = u;
 
 		TileData StartTile = TileMapManager.Instance.GetTileFromUnit(u);
 		Vector2 StartVec = TileMapManager.Instance.GetVector2FromTile(StartTile);
@@ -79,14 +102,47 @@ public partial class SelectorManager
 	public void DeactivateSelector()
 	{
 		IsActive = false;
+		IsConfirming = false;
+		Deactivate?.Invoke();
 		Log.Info("Selector Deactivated");
 	}
-	
+
+	public void BuildCursor()
+	{
+		Log.Info("Building Cursor");
+		var cursor = CursorPrefab.Clone();
+		ActiveCursorObject = cursor;
+		SelectCursor comp = cursor.GetComponent<SelectCursor>();
+		ActiveCursor = comp;
+		ActiveCursor.Selector = this;
+		ActiveCursor.Activate();
+	}
+
+	public void DestroyCursor()
+	{
+		if(ActiveCursor.IsValid())
+		{
+			Log.Info("Destorying Cursor");
+			ActiveCursorObject.Destroy();
+			ActiveCursor = null;
+		}
+	}
+
 	public void HandleInput(InputKey key)
 	{
+		//Prevent Past State First Frame Input Capture
+		if(JustTransitioned)
+		{
+			JustTransitioned = false;
+			Log.Info($"JustTransitioned: {JustTransitioned}");
+			return;
+		}
+		if(!IsActive) return;
+		if(IsConfirming) return;
 		switch(key)
 		{
 			case InputKey.ENTER:
+				TrySelect();
 				break;
 			case InputKey.LEFT:
 				TrySetAll(new Vector2(-1,0), false);

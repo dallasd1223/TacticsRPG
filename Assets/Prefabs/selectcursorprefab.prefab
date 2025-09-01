@@ -1,0 +1,183 @@
+{
+  "RootObject": {
+    "__guid": "f47f18e5-309b-407b-96ae-f6790a9400ad",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "selectcursorprefab",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "TacticsRPG.SelectCursor",
+        "__guid": "5ea41aeb-7a19-4a92-97ab-916483c7c391",
+        "__enabled": true,
+        "BorderObject": {
+          "_type": "gameobject",
+          "go": "f0f7f979-c581-45a6-8040-f1d9d115e428"
+        },
+        "BorderSprite": {
+          "_type": "component",
+          "component_id": "1cd85c81-5dac-4ebd-bc9f-2f3be00d084d",
+          "go": "f0f7f979-c581-45a6-8040-f1d9d115e428",
+          "component_type": "SpriteComponent"
+        },
+        "CAngles": "0,0,180",
+        "CursorModel": {
+          "_type": "component",
+          "component_id": "743533a2-5c9d-42df-b7c4-d386d89915ff",
+          "go": "c3a8df9a-43ee-4150-9a17-13e8c4a2d5b5",
+          "component_type": "ModelRenderer"
+        },
+        "CursorObject": {
+          "_type": "gameobject",
+          "go": "c3a8df9a-43ee-4150-9a17-13e8c4a2d5b5"
+        },
+        "NewPositionSound": "sounds/cursor_style_3.sound",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RotateSpeed": 2,
+        "Selector": null,
+        "TargetPosition": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "c3a8df9a-43ee-4150-9a17-13e8c4a2d5b5",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "Cursor",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "743533a2-5c9d-42df-b7c4-d386d89915ff",
+            "__enabled": false,
+            "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
+            "Model": "models/asset-quest/halloween/sword.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "f0f7f979-c581-45a6-8040-f1d9d115e428",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "Border",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "0.58,0.58,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "SpriteTools.SpriteComponent",
+            "__guid": "1cd85c81-5dac-4ebd-bc9f-2f3be00d084d",
+            "__enabled": false,
+            "__version": 1,
+            "BroadcastEvents": {},
+            "CastShadows": "On",
+            "CreateAttachPoints": false,
+            "FlashTint": "1,1,1,0",
+            "MaterialOverride": null,
+            "OnAnimationComplete": null,
+            "OnBroadcastEvent": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "PlaybackSpeed": 1,
+            "Sprite": "materials/border-sprite.sprite",
+            "SpriteFlags": "None",
+            "StartingAnimationName": "default",
+            "Tint": "1,1,1,1",
+            "UpDirection": "YPositive",
+            "UsePixelScale": false
+          },
+          {
+            "__type": "Border",
+            "__guid": "f409787a-1896-422e-9f6b-98149048c72e",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "titanovsky.sword#78495"
+  ],
+  "__version": 2
+}

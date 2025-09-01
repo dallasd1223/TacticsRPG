@@ -40,32 +40,26 @@ partial class PlayerMaster
 			switch(key)
 			{
 				case InputKey.BACKSPACE:
-					if(cMode == CommandMode.NA)
-					{
 						Log.Info("Focus");
 						SwitchFocusMode();
 						return;
-					}
-					else
-					{
-						CancelCommand();
-						return;
-					}
 				default:
 					break;
 			}
-
+		}
+		else if(Mode == FocusMode.CommandSelectLook)
+		{
+			switch(key)
+			{
+				case InputKey.BACKSPACE:
+					CancelCommand();
+					return;
+			}
 		}
 		else if(Mode == FocusMode.ConfirmMenu)
 		{
 			switch(key)
 			{
-				case InputKey.BACKSPACE:
-					Cancel();
-					break;
-				case InputKey.ENTER:
-					ConfirmFinish();
-					break;
 				default:
 					break;
 			}

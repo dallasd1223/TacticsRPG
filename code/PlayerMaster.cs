@@ -45,7 +45,9 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		}*/
 		BattleEvents.TurnEvent += OnTurnEvent;
 		InputEvents.ActionSelectInputPressed += HandleInput;
-
+		Confirm.ConfirmStart += OnConfirmStart;
+		Confirm.ConfirmEnd += OnConfirmEnd;
+		Confirm.ConfirmCancel += OnCancelConfirm;
 	}
 
 	public void OnTurnEvent(TurnEventArgs args)
@@ -76,7 +78,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 
 	public void CancelCommand()
 	{
-		if(Mode == FocusMode.FreeLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect || cMode == CommandMode.AbilitySelect))
+		if(Mode == FocusMode.CommandSelectLook && (cMode == CommandMode.MoveSelect || cMode == CommandMode.AttackSelect || cMode == CommandMode.AbilitySelect || cMode == CommandMode.WaitSelect))
 		{
 			CurrentUnit.Interact.IsMoveSelecting = false;
 			CurrentUnit.Move.RemoveMoveableTiles();
@@ -88,11 +90,14 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 
 			Mode = FocusMode.Menu;
 			cMode = CommandMode.NA;
+
 			PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 			PlayerEvents.OnCommandModeChange(cMode);
+			PlayerEvents.OnCancelCommand(CurrentUnit);
+
 			Menu.DoReset();
 
-			GameCursor.Instance.DeactivateCursor();
+			//GameCursor.Instance.DeactivateCursor();
 			CurrentSelectedCommand = null;
 
 
@@ -107,12 +112,12 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 			case CommandType.Move:
 				if(CurrentUnit.Turn.CommandIsActive("MOVE"))
 				{
-					Mode = FocusMode.FreeLook;
+					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.MoveSelect;
 					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentUnit.Interact.FindMoveableTiles();
-					GameCursor.Instance.ActivateCursor();
+					//GameCursor.Instance.ActivateCursor();
 					//Menu.DeactivateMenu();
 					CurrentUnit.Interact.IsMoveSelecting = true;
 					CurrentSelectedCommand = command;
@@ -125,11 +130,11 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 			case CommandType.Attack:
 				if(CurrentUnit.Turn.CommandIsActive("ATTACK"))
 				{
-					Mode = FocusMode.FreeLook;
+					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.AttackSelect;
 					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
-					GameCursor.Instance.ActivateCursor();
+					//GameCursor.Instance.ActivateCursor();
 					CurrentUnit.Interact.IsAttackSelecting = true;
 					CurrentUnit.Interact.FindAttackableTiles();
 					CurrentSelectedCommand = command;
@@ -147,21 +152,20 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				break;
 			case CommandType.Item:
 				if(cItem is null) return;
-				Mode = FocusMode.FreeLook;
+				Mode = FocusMode.CommandSelectLook;
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				PlayerEvents.OnCommandModeChange(cMode);
-				GameCursor.Instance.ActivateCursor();
+				//GameCursor.Instance.ActivateCursor();
 				CurrentUnit.Interact.IsAbilitySelecting = true;
-				Log.Info("Were Before Data Part");
 				var item = (Item)cItem.AbilityItem;
 				if(item is not null)
 				{
-					Log.Info("Were inside data part");
 					CurrentUnit.Interact.FindAbilityTilesFromRange(item.Data.BaseRange, item.Data.CanUseOnSelf);
 					CurrentSelectedCommand = command;
 					CurrentCommandAbility = item;
 					PlayerEvents.OnAbilitItemSelected(CurrentCommandAbility);
+					Log.Info($"{CurrentCommandAbility} Ability Item Event");
 					break;
 				}
 				else
@@ -172,28 +176,30 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 	
 			case CommandType.Magic:
 				if(cItem is null) return;
-				Mode = FocusMode.FreeLook;
+				Mode = FocusMode.CommandSelectLook;
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				PlayerEvents.OnCommandModeChange(cMode);
-				GameCursor.Instance.ActivateCursor();
+				//GameCursor.Instance.ActivateCursor();
 				break;
 			case CommandType.Skill:
 				if(cItem is null) return;
-				Mode = FocusMode.FreeLook;
+				Mode = FocusMode.CommandSelectLook;
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				PlayerEvents.OnCommandModeChange(cMode);
-				GameCursor.Instance.ActivateCursor();
+				//GameCursor.Instance.ActivateCursor();
 	
 				break;
 			case CommandType.Wait:
 				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
 				{
+					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.WaitSelect;
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentSelectedCommand = command;
-					ActivateConfirmMenu();
+//					ActivateConfirmMenu();
 				}
 				else
 				{
@@ -224,93 +230,29 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		}
 	}
 
-	public void ConfirmCommand(Unit unit, TileData tile, List<TileData> tileList)
-	{
-		switch(CurrentSelectedCommand)
-		{
-			case CommandType.Move:
-				BattleManager.Instance.commandHandler.AddCommand(new MoveCommand(unit, tile));
-				break;
-			case CommandType.Attack:
-				CurrentUnit.Attack.EndAttackSelection();
-				BattleManager.Instance.commandHandler.AddCommand(new AttackCommand(unit, UnitManager.Instance.GetUnitFromTile(tile)));
-				break;
-			case CommandType.Item:
-				CurrentUnit.Ability.EndAbilitySelect();
-				Mode = FocusMode.NA;
-				cMode = CommandMode.NA;
-				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-				PlayerEvents.OnCommandModeChange(cMode);
-				Menu.DoReset();
-				GameCursor.Instance.DeactivateCursor();
-				Log.Info($"{tileList.Count()} TileList Count in Confirm Command");
-				BattleManager.Instance.commandHandler.AddCommand(new AbilityCommand(CurrentCommandAbility, unit, UnitManager.Instance.GetUnitFromTile(tile), CurrentUnit.Ability.FinalTiles));
-				CurrentUnit.Ability.ResetRemoveFinalTiles();
-				break;
-			case CommandType.Magic:
-				break;
-			case CommandType.Skill:
-				break;
-			case CommandType.Wait:
-				BattleManager.Instance.commandHandler.AddCommand(new WaitCommand(unit));
-				break;
-		}
-
-		Mode = FocusMode.NA;
-		cMode = CommandMode.NA;
-		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-		PlayerEvents.OnCommandModeChange(cMode);
-		GameCursor.Instance.DeactivateCursor();
-	}
-
-	public void ActivateConfirmMenu()
+	public void OnConfirmStart()
 	{
 		LastMode = Mode;
 		Mode = FocusMode.ConfirmMenu;
 		LastcMode = cMode;
 		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 		PlayerEvents.OnCommandModeChange(cMode);
-		ConfirmMenu.Activate();
 	}
-	
-	public void DeactivateConfirmMenu()
+
+	public void OnCancelConfirm()
 	{
-		Log.Info("Deactivating Confirm Menu");
-		ConfirmMenu.IsActive = false;
 		Mode = LastMode;
 		cMode = LastcMode;
 		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 		PlayerEvents.OnCommandModeChange(cMode);
-		Log.Info(ConfirmMenu.IsActive);
-
-	}
-
-	public void ConfirmFinish()
-	{
-		Sound.Play(ConfirmSound);
-		PlayerMaster.Instance.DeactivateConfirmMenu();
-		switch(CurrentSelectedCommand)
-		{
-			case CommandType.Move:
-				GameCursor.Instance.SendConfirmData();
-				break;
-			case CommandType.Attack:
-				GameCursor.Instance.SendConfirmData();
-				break;
-			case CommandType.Item:
-				CurrentUnit.Ability.MoveTempToFinalTiles();
-				GameCursor.Instance.SendConfirmData();
-				break;
-			case CommandType.Wait:
-				ConfirmCommand(CurrentUnit, CurrentUnit.Interact.UnitTile, null);
-				break;
-		}
-	}
-
-	public void Cancel()
-	{
 		Sound.Play(Error);
-		PlayerMaster.Instance.DeactivateConfirmMenu();
+	}
+	public void OnConfirmEnd()
+	{
+		Mode = FocusMode.NA;
+		cMode = CommandMode.NA;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+		PlayerEvents.OnCommandModeChange(cMode);		
 	}
 	
 	public void SwitchFocusMode()
@@ -321,13 +263,13 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				Mode = FocusMode.FreeLook;
 				Log.Info(Mode);
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-				GameCursor.Instance.ActiveToggle();
+				//GameCursor.Instance.ActiveToggle();
 				return;
 			case FocusMode.FreeLook:
 				Mode = FocusMode.Menu;
 				Log.Info(Mode);
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-				GameCursor.Instance.ActiveToggle();
+				//GameCursor.Instance.ActiveToggle();
 				return;
 		}
 	}
@@ -339,6 +281,7 @@ public enum FocusMode
 	Menu,
 	ConfirmMenu,
 	FreeLook,
+	CommandSelectLook,
 }
 
 public enum CommandMode
