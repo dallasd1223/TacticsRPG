@@ -39,6 +39,7 @@
 	public bool IsActive = false;
 	public bool IsGrey = false;
 	[Property] public Unit ActiveUnit {get; set;} = null;
+	public ActionMenu RootMenu;
 	public int MenuDepth = 1;
 	public Panel Menu;
 	[Property] public int SelectedIndex {get; set;} = 0;
@@ -93,7 +94,7 @@
 
 	public void SelectMenuItem()
 	{
-		PlayerMaster.Instance.AbilityMenuSelect(ActiveUnit.Turn.AbilityCommands[SelectedIndex].Text);
+		RootMenu.AbilityMenuSelect(ActiveUnit.Turn.AbilityCommands[SelectedIndex].Text);
 		Log.Info($"{ActiveUnit.Turn.AbilityCommands[SelectedIndex].Text}");
 	}
 

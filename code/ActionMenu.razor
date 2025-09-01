@@ -92,6 +92,16 @@
 		HasInjected = true;
 	}
 
+	public void InjectRoot()
+	{
+		CMenu.RootMenu = this;
+		AMenu.RootMenu = this;
+		IMenu.RootMenu = this;
+		SpMenu.RootMenu = this;
+		SkMenu.RootMenu = this;
+	}
+
+
 	public void DeactivateMenu()
 	{
 		IsActive = false;
@@ -103,6 +113,7 @@
 		if(!IsActive) return;
 		if(!HasInjected && SinceActivated >= InjectBufer)
 		{
+			InjectRoot();
 			InjectUnit();
 		}
 		if(!HasInjected) return;
@@ -155,6 +166,22 @@
 		State = MenuState.Action;
 		LastState = null;
 		MenuLevel = 0;
+	}
+
+	public void AbilityMenuSelect(string text)
+	{
+		switch(text)
+		{
+			case "Item":
+				ChangeMenuState(MenuState.Item);
+				break;
+			case "Magic":
+				ChangeMenuState(MenuState.Magic);
+				break;
+			case "Skill":
+				ChangeMenuState(MenuState.Skill);
+				break;
+		}
 	}
 
 	public void ChangeMenuState(MenuState? state)

@@ -12972,12 +12972,6 @@
             "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
             "component_type": "ConfirmManager"
           },
-          "ConfirmMenu": {
-            "_type": "component",
-            "component_id": "b94deba2-0380-4e42-8021-a2a1c3e92438",
-            "go": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
-            "component_type": "ConfirmUI"
-          },
           "ConfirmSound": "sounds/ui-sound4.sound",
           "CurrentCommandAbility": null,
           "CurrentSelectedCommand": null,
@@ -13003,13 +12997,7 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Selector": {
-            "_type": "component",
-            "component_id": "be11142d-dbac-4097-a585-5979cf148afd",
-            "go": "66526032-6896-432b-a548-ebbaa34f96e0",
-            "component_type": "SelectorManager"
-          }
+          "OnComponentUpdate": null
         },
         {
           "__type": "InputManager",
@@ -13128,7 +13116,6 @@
           "CurrentState": "WaitForCommands",
           "IsProcessing": false,
           "Machine": null,
-          "Manager": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -13166,13 +13153,13 @@
           "__enabled": true,
           "AlphaTeam": {
             "_type": "component",
-            "component_id": "d0cbf101-265a-47e1-89b7-77e4389e0604",
+            "component_id": "83870616-9c9b-4f02-a554-8a3e1c406be4",
             "go": "37c17ce0-f068-4958-9e49-94cf23924619",
             "component_type": "TeamManager"
           },
           "OmegaTeam": {
             "_type": "component",
-            "component_id": "24ec8d90-dda8-460e-8355-9e7d8d928163",
+            "component_id": "53293967-e7bd-4ad5-bead-917ddc30a323",
             "go": "67b27bba-caa9-4690-8c48-4b679298529d",
             "component_type": "TeamManager"
           },
@@ -13418,8 +13405,8 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "TeamManager",
-          "__guid": "24ec8d90-dda8-460e-8355-9e7d8d928163",
+          "__type": "TacticsRPG.TeamManager",
+          "__guid": "53293967-e7bd-4ad5-bead-917ddc30a323",
           "__enabled": true,
           "AllUnitsDead": false,
           "OnComponentDestroy": null,
@@ -13450,8 +13437,8 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "TeamManager",
-          "__guid": "d0cbf101-265a-47e1-89b7-77e4389e0604",
+          "__type": "TacticsRPG.TeamManager",
+          "__guid": "83870616-9c9b-4f02-a554-8a3e1c406be4",
           "__enabled": true,
           "AllUnitsDead": false,
           "OnComponentDestroy": null,
@@ -14323,7 +14310,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 793.36945
+            "Relative": 1173.7571
           }
         },
         {

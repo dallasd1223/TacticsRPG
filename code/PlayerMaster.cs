@@ -3,16 +3,13 @@ using Sandbox;
 namespace TacticsRPG;
 public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 {
-	//URGENT --MISSION ACCOMPLISHED--
-	//REFACTOR THIS CLASS: SPLIT RESPONSABILITIES WITH NEW BATTLEMANAGER STATES 
-	//& NEW SELECTOR MANAGER, AND MORE IF NEEDED
-	//URGENT
+	//URGENT REFACTOR --MISSION ACCOMPLISHED--
+
 	[Property] public Unit CurrentUnit {get; set;} = null;
 
 	[Property] public FocusMode? LastMode {get; set;} = null;
 	[Property] public FocusMode? Mode {get; set;} = FocusMode.NA;
 
-	[Property] public SelectorManager Selector {get; set;}
 	[Property] public InventoryManager Inventory {get; set;}
 
 	[Property] public CommandMode? LastcMode {get; set;} = null;
@@ -22,7 +19,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
 
 	[Property] public ActionMenu Menu {get; set;}
-	[Property] public ConfirmUI ConfirmMenu {get; set;}
 	[Property] public ConfirmManager Confirm {get; set;}
 
 	[Property] public SoundEvent Error {get; set;}
@@ -190,23 +186,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				break;
 			case null:
 				Log.Info("Error With Command");
-				break;
-		}
-	}
-
-	//THIS IS TERRIBLE, KEEP THIS IN THE UI
-	public void AbilityMenuSelect(string text)
-	{
-		switch(text)
-		{
-			case "Item":
-				Menu.ChangeMenuState(MenuState.Item);
-				break;
-			case "Magic":
-				Menu.ChangeMenuState(MenuState.Magic);
-				break;
-			case "Skill":
-				Menu.ChangeMenuState(MenuState.Skill);
 				break;
 		}
 	}
