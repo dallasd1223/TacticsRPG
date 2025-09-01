@@ -298,6 +298,28 @@ public class AttackSelectState : SelectorState
 		return false;
 	}
 
+	public override void OnSelect()
+	{
+		//Might be redundant
+		if(IsSelectable)
+		{
+			SelectedTile = Selector.HoveredTile;
+			SelectedUnit = UnitManager.Instance.GetUnitFromTile(SelectedTile);
+		}
+
+		base.OnSelect();
+	}
+
+	public override void ConfirmSelection()
+	{
+		Selector.CurrentUnit.Attack.EndAttackSelection();
+		
+		Command command = new AttackCommand(Selector.CurrentUnit, SelectedUnit);
+		PlayerEvents.OnConfirmAction(command);
+
+		OnDeactivate();
+		base.ConfirmSelection();
+	}
 }
 
 public class AbilitySelectState : SelectorState

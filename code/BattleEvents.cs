@@ -106,10 +106,15 @@ public static class BattleEvents
 	public static event Action<Unit> TurnStart;
 	public static event Action<TurnEventArgs> TurnEvent;
 	public static event Action<Unit> TurnEnd;
+	public static event Action<Unit> ActionSelectStart;
 	public static event Action CombatStart;
 	public static event Action CombatEnd;
 
-
+	public static void OnActionSelectStart(Unit u)
+	{
+		ActionSelectStart?.Invoke(u);
+	}
+	
 	public static void StateHasChanged(Battlestate state)
 	{
 		StateChanged?.Invoke(state);

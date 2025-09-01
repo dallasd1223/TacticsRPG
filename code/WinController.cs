@@ -25,6 +25,7 @@ public sealed class WinController : Component
 			Log.Info("All Omega Team Units Killed. Game Over");
 			return true;
 		}
+		Log.Info("Units Still Alive, Battle Must Continue");
 		return false;
 	}
 }

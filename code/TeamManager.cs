@@ -1,6 +1,8 @@
 using Sandbox;
 using TacticsRPG;
 
+namespace TacticsRPG;
+
 public sealed class TeamManager : Component
 {
 	[Property] public TeamType Team {get; set;} = TeamType.Alpha;
@@ -20,4 +22,10 @@ public sealed class TeamManager : Component
 	{
 		return TeamUnits.All(p => p.Battle.HasDied);
 	}
+}
+
+public enum TeamType
+{
+	Alpha,
+	Omega,
 }

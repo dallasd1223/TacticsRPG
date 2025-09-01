@@ -168,6 +168,7 @@
           "__guid": "a7d11b53-0c5c-4433-93f2-3b5ca7f3c80d",
           "__enabled": true,
           "BattleTheme": "sounds/final fantasy tactics ost - antipyretic.sound",
+          "EndTheme": "sounds/fft-complete.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -13090,6 +13091,12 @@
             "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
             "component_type": "MapManager"
           },
+          "Music": {
+            "_type": "component",
+            "component_id": "a7d11b53-0c5c-4433-93f2-3b5ca7f3c80d",
+            "go": "4bde385e-aa58-4cb1-b4e9-55337b7bce8f",
+            "component_type": "MusicPlayer"
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -14285,61 +14292,6 @@
       ]
     },
     {
-      "__guid": "757b4c0c-e7e8-4c26-86eb-d14e9776761a",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "Border",
-      "Position": "28,28,25",
-      "Rotation": "0,0,0,1",
-      "Scale": "0.58,0.58,1",
-      "Tags": "",
-      "Enabled": false,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "SpriteTools.SpriteComponent",
-          "__guid": "7467cd77-347e-4887-8aa5-fbd155b23009",
-          "__enabled": true,
-          "__version": 1,
-          "BroadcastEvents": {},
-          "CastShadows": "On",
-          "CreateAttachPoints": false,
-          "FlashTint": "1,1,1,0",
-          "MaterialOverride": null,
-          "OnAnimationComplete": null,
-          "OnBroadcastEvent": null,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PlaybackSpeed": 1,
-          "Sprite": "materials/border-sprite.sprite",
-          "SpriteFlags": "None",
-          "StartingAnimationName": "default",
-          "Tint": "1,1,1,1",
-          "UpDirection": "YPositive",
-          "UsePixelScale": false
-        },
-        {
-          "__type": "Border",
-          "__guid": "5a5471d6-5462-4a07-9585-2260a2dfa61b",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
       "__guid": "331cbf04-e19c-415e-9147-9ba8f3df1153",
       "__version": 1,
       "Flags": 0,
@@ -14371,7 +14323,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 1469.7965
+            "Relative": 793.36945
           }
         },
         {

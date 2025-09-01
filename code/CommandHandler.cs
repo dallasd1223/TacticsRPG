@@ -5,7 +5,6 @@ namespace TacticsRPG;
 public sealed class CommandHandler : Component
 {
 	[Property] public BattleMachine Machine {get; set;}
-	[Property] public BattleManager Manager {get; set;}
 	[Property] public Queue<Command> CommandList {get; set;}
 	[Property] public HandlerState CurrentState {get; set;} = HandlerState.WaitForCommands;
 	[Property] public Command CurrentCommand {get; set;}
@@ -17,7 +16,6 @@ public sealed class CommandHandler : Component
 	{
 		PlayerEvents.ConfirmAction += AddCommand;
 		Machine = this.GetComponent<BattleMachine>();
-		//Manager = this.GetComponent<BattleManager>();
 	}
 
 	protected override void OnDestroy()
@@ -45,7 +43,6 @@ public sealed class CommandHandler : Component
 			Machine.ChangeState<ExecuteActionState>();
 		}
 
-		//Manager.ChangeCurrentState(BattleState.ProcessCommands);
 		IsProcessing = true;
 		CurrentCommand = CommandList.Dequeue();
 		CurrentCommand.Execute();

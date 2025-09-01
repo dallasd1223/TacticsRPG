@@ -63,7 +63,6 @@ public sealed class InputManager : Component
 		}
 		if(Input.Pressed("Left"))
 		{
-			Log.Info("Input Left");
 			InputPressed?.Invoke(InputKey.LEFT);
 		}
 		if(Input.Pressed("Right"))
@@ -72,7 +71,6 @@ public sealed class InputManager : Component
 		}
 		if(Input.Pressed("Forward"))
 		{
-			Log.Info("Input Forward");
 			InputPressed?.Invoke(InputKey.FORWARD);
 		}
 		if(Input.Pressed("Backward"))

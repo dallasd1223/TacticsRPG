@@ -105,8 +105,8 @@ public class AIAction
 
 	public void Execute()
 	{
-		BattleManager.Instance.commandHandler.AddCommand(new MoveCommand(ThisUnit, MoveTile));
-		BattleManager.Instance.commandHandler.AddCommand(new WaitCommand(ThisUnit));	
+		BattleMachine.Instance.commandHandler.AddCommand(new MoveCommand(ThisUnit, MoveTile));
+		BattleMachine.Instance.commandHandler.AddCommand(new WaitCommand(ThisUnit));	
 	}
 }
 

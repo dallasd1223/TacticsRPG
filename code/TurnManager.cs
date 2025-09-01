@@ -5,6 +5,7 @@ namespace TacticsRPG;
 
 public sealed class TurnManager : Component
 {
+	public Unit LastUnit;
 	[Property] public Unit ActiveUnit {get; set;}
 	[Property] public TeamType CurrentTeam {get; set;}
 
@@ -23,20 +24,16 @@ public sealed class TurnManager : Component
 
 		ActiveUnit = unit;
 		ActiveUnit.IsTurn = true;
+		ActiveUnit.Turn.StartTurn();
+
 		CurrentTeam = ActiveUnit.Team;
 		CurrentTurnState = TurnState.Active;
-		ActiveUnit.Turn.StartTurn();
+
 		BattleEvents.OnTurnStart(ActiveUnit);
 		BattleEvents.OnTurnEvent(new TurnEventArgs(ActiveUnit, CurrentTeam, CurrentTurnState));
 		TurnEvent?.Invoke(new TurnEventArgs(ActiveUnit, CurrentTeam, CurrentTurnState));
 	}
 
-	//Decide Turn Check End Condition Logic
-	//WinCondition Should CheckEndConditions
-	//I think DecideTurnState Should be 
-	//Either End Of CombatManager, In CommandHandler Or SubState For ActionExecution
-
-	
 	public bool CheckUnitTurnEnded()
 	{
 		if(ActiveUnit.Turn.HasMoved && !ActiveUnit.Turn.HasActed)
@@ -63,39 +60,25 @@ public sealed class TurnManager : Component
 		return false;
 	}
 
-
-
-
-	/*public bool CheckEndConditions()
+	public void EndTurn()
 	{
-		if(AlphaTeam.CheckAllDead())
-		{
-			Log.Info("All Alpha Team Units Killed. Game Over");
-			WinningTeam = TeamType.Alpha;
-			ChangeCurrentState(BattleState.BattleEnd);
-			return true;
-		}
-		else if(OmegaTeam.CheckAllDead())
-		{
-			ChangeCurrentState(BattleState.BattleEnd);
-			WinningTeam = TeamType.Omega;
-			Log.Info("All Omega Team Units Killed. Game Over");
-			return true;
-		}
-		return false;
-	}*/
+		ActiveUnit.IsTurn = false;
+		ActiveUnit.Turn.EndTurn();
 
-	public void EndTurn(Unit unit)
-	{
+		LastUnit = ActiveUnit;
+
+		if(ActiveUnit.isAIControlled)
+		{
+			ActiveUnit.AI.EndTurn();
+			EnsureAITurn = false;			
+		}
+
+
 		CurrentTurnState = TurnState.Finished;
 		TurnEvent?.Invoke(new TurnEventArgs(ActiveUnit, CurrentTeam, CurrentTurnState));
-		BattleEvents.OnTurnStart(ActiveUnit);
+		BattleEvents.OnTurnEnd(ActiveUnit);
 	}
 
-	public void ChangeTurn(Unit unit)
-	{
-
-	}
 }
 
 public class TurnEventArgs : EventArgs

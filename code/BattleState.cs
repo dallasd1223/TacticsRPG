@@ -42,10 +42,10 @@ public partial class BattleMachine : StateMachine
 	//Input
 	[Property] public InputManager Input {get; set;}
 
-	//Visual
+	//Visual & Audio
 	[Property] public CameraManager Camera;
 	[Property] public MapManager Map;
-
+	[Property] public MusicPlayer Music;
 	//Player
 	[Property] public PlayerMaster Player;
 	[Property] public SelectorManager Selector {get; set;}
@@ -155,7 +155,7 @@ public class TurnStartState : Battlestate
 	{
 		Machine.Turn.StartTurn(Machine.TurnQueue.NextInQueue());
 
-		//CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
+		CameraManager.Instance.DirectCameraFocus(Machine.Turn.ActiveUnit);
 
 	}
 
@@ -180,14 +180,23 @@ public class TurnStartState : Battlestate
 [Category("Battle State")]
 public class ActionCommandSelectState : Battlestate
 {
+	[Property] public bool HasHandledCommandStart {get; set;} = false;
+
 	public override void Enter()
 	{
 		base.Enter();
 		Log.Info("ActionCommandSelectState Entered");
 
 	}
-
-	public void HandleTurnCommands()
+	public void HandlePlayerTurnCommands()
+	{
+		if(Machine.Turn.ActiveUnit.Team == TeamType.Alpha)
+		{
+			BattleEvents.OnActionSelectStart(Machine.Turn.ActiveUnit);
+			HasHandledCommandStart = true;
+		}
+	}
+	public void HandleAITurnCommands()
 	{
 		if(Machine.Turn.ActiveUnit.isAIControlled)
 		{
@@ -203,7 +212,12 @@ public class ActionCommandSelectState : Battlestate
 
 	public override void Update()
 	{
-			HandleTurnCommands();	
+		if(!HasHandledCommandStart)
+		{
+			HandlePlayerTurnCommands();
+			HandleAITurnCommands();	
+		}
+
 	}
 
 	public override void Exit()
@@ -224,6 +238,11 @@ public class ExecuteActionState : Battlestate
 	{
 		base.AddListeners();
 		Machine.commandHandler.ProcessComplete += OnProcessFinished;
+	}
+
+	protected override void RemoveListeners()
+	{
+		Machine.commandHandler.ProcessComplete -= OnProcessFinished;		
 	}
 
 	public void OnProcessFinished()
@@ -263,7 +282,20 @@ public class PostActionState : Battlestate
 		Log.Info("PostActionState Entered");
 		
 	}
-
+	
+	//Check If Team Won Else Continue Turn
+	public void CheckIfWinCondition()
+	{
+		switch(Machine.WinCondition.CheckEndConditions())
+		{
+			case true:
+				Machine.ChangeState<BattleEndState>();
+				break;
+			case false:
+				DecideTurnState();
+				break;
+		}
+	}
 	public void DecideTurnState()
 	{
 		switch(Machine.Turn.CheckUnitTurnEnded())
@@ -279,7 +311,7 @@ public class PostActionState : Battlestate
 
 	public override void Update()
 	{
-		stateMachine.ChangeState<TurnEndState>();
+		CheckIfWinCondition();
 	}
 
 	public override void Exit()
@@ -296,6 +328,7 @@ public class PostActionState : Battlestate
 [Category("Battle State")]
 public class TurnEndState : Battlestate
 {
+	public bool HasBegunEndTurn = false;
 	public override void Enter()
 	{
 		base.Enter();
@@ -304,12 +337,23 @@ public class TurnEndState : Battlestate
 
 	public override void Update()
 	{
-		stateMachine.ChangeState<BattleEndState>();
+		if(HasBegunEndTurn) return;
+		EndTurnAndContinue();
+	}
+
+	public async void EndTurnAndContinue()
+	{
+		HasBegunEndTurn = true;
+		await Task.DelayRealtimeSeconds(1.5f);
+		Machine.Turn.EndTurn();
+		Machine.TurnQueue.AddToQueue(Machine.Turn.LastUnit);
+		Machine.ChangeState<TurnStartState>();
 	}
 
 	public override void Exit()
 	{
 		base.Exit();
+		HasBegunEndTurn = false;
 	}
 	protected override void HandleInput(InputKey key)
 	{
@@ -325,17 +369,38 @@ public class BattleEndState : Battlestate
 	{
 		base.Enter();
 		Log.Info("BattleEndState Entered");
+		EndSequence();
 	}
 
-	public override void Update()
+	private async void EndSequence()
 	{
+		Machine.Music.StopBattleTheme();
 
+		await Task.DelayRealtimeSeconds(2.5f);
+
+		var seq = new EffectSequence();
+
+		seq.AddStep(new CameraOrbitStep{
+			Target = CameraManager.Instance.FocusPoint,
+			StartTime = 0,
+			Revolutions = 4f,
+			Duration = 50f,
+			ZoomDistance = 10f,
+
+		});
+
+		EffectManager.Instance.AddSequence(seq);
+
+		//Sound.Play(BattleEndTheme);
+
+		await Task.DelayRealtimeSeconds(1f);
+		
+		Machine.Music.PlayEndTheme();
+		Machine.EndUI.IsActive = true;
+
+		Log.Info("Game Over");		
 	}
 
-	public override void Exit()
-	{
-		base.Exit();
-	}
 	protected override void HandleInput(InputKey key)
 	{
 		base.HandleInput(key);

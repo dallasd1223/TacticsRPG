@@ -3,6 +3,7 @@ using Sandbox;
 public sealed class MusicPlayer : Component
 {
 	[Property] public SoundEvent BattleTheme {get; set;}
+	[Property] public SoundEvent EndTheme {get; set;}
 	[Property] public bool PlayMusic {get; set;} = true;
 	public SoundHandle handle;
 
@@ -16,8 +17,13 @@ public sealed class MusicPlayer : Component
 	
 	}
 
-	public void StopTheme()
+	public void StopBattleTheme()
 	{
 		handle.Stop();
+	}
+
+	public void PlayEndTheme()
+	{
+		handle = Sound.Play(EndTheme);
 	}
 }

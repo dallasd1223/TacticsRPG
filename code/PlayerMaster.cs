@@ -3,77 +3,66 @@ using Sandbox;
 namespace TacticsRPG;
 public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 {
-	//URGENT
+	//URGENT --MISSION ACCOMPLISHED--
 	//REFACTOR THIS CLASS: SPLIT RESPONSABILITIES WITH NEW BATTLEMANAGER STATES 
 	//& NEW SELECTOR MANAGER, AND MORE IF NEEDED
 	//URGENT
 	[Property] public Unit CurrentUnit {get; set;} = null;
+
 	[Property] public FocusMode? LastMode {get; set;} = null;
 	[Property] public FocusMode? Mode {get; set;} = FocusMode.NA;
+
 	[Property] public SelectorManager Selector {get; set;}
 	[Property] public InventoryManager Inventory {get; set;}
+
 	[Property] public CommandMode? LastcMode {get; set;} = null;
 	[Property] public CommandMode? cMode {get; set;} = CommandMode.NA;
 	[Property] public CommandType? CurrentSelectedCommand {get; set;} = null;
+
 	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
+
 	[Property] public ActionMenu Menu {get; set;}
 	[Property] public ConfirmUI ConfirmMenu {get; set;}
 	[Property] public ConfirmManager Confirm {get; set;}
+
 	[Property] public SoundEvent Error {get; set;}
 	[Property] public SoundEvent ConfirmSound {get; set;}
 	
 	protected override void OnDestroy()
 	{
 		Log.Info("PlayerMaster Destroyed");
-		BattleEvents.TurnEvent -= OnTurnEvent;
-		InputEvents.ActionSelectInputPressed -= HandleInput;	
+		BattleEvents.ActionSelectStart -= OnActionSelectStart;
+		InputEvents.ActionSelectInputPressed -= HandleInput;
+
+		Confirm.ConfirmStart -= OnConfirmStart;
+		Confirm.ConfirmEnd -= OnConfirmEnd;
+		Confirm.ConfirmCancel -= OnCancelConfirm;	
 	}
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		/*if(Instance is null)
-		{
-			Instance = this;
-		}
-		else
-		{
-			Log.Info("Yes We Breaking shit");
-		BattleEvents.TurnEvent -= OnTurnEvent;
-		InputEvents.ActionSelectInputPressed -= HandleInput;
-			Instance = null;
-			Instance = this;
-		}*/
-		BattleEvents.TurnEvent += OnTurnEvent;
+
+		BattleEvents.ActionSelectStart += OnActionSelectStart;
 		InputEvents.ActionSelectInputPressed += HandleInput;
+
 		Confirm.ConfirmStart += OnConfirmStart;
 		Confirm.ConfirmEnd += OnConfirmEnd;
 		Confirm.ConfirmCancel += OnCancelConfirm;
 	}
 
-	public void OnTurnEvent(TurnEventArgs args)
+	public void OnActionSelectStart(Unit u)
 	{
-		switch(args.state)
-		{
-			case TurnState.Active:
-				if(args.team == TeamType.Alpha)
-				{
-					Log.Info("Turn initiate");
-					InitiatePlayerMaster(args.unit);
-				}
-				return;
-			default:
-				return;
-		}
-
+		InitiatePlayerMaster(u);
 	}
 	
 	public void InitiatePlayerMaster(Unit u)
 	{
-		Log.Info($"Yes U {u}");
-			CurrentUnit = u;
-			Mode = FocusMode.Menu;
-			PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-	
+		CurrentUnit = u;
+		Mode = FocusMode.Menu;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+		Menu.DoReset();
+
+		Log.Info("PlayerMaster Initiated");
 	}
 
 	public void CancelCommand()
@@ -117,8 +106,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentUnit.Interact.FindMoveableTiles();
-					//GameCursor.Instance.ActivateCursor();
-					//Menu.DeactivateMenu();
 					CurrentUnit.Interact.IsMoveSelecting = true;
 					CurrentSelectedCommand = command;
 				}
@@ -134,7 +121,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 					cMode = CommandMode.AttackSelect;
 					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
-					//GameCursor.Instance.ActivateCursor();
 					CurrentUnit.Interact.IsAttackSelecting = true;
 					CurrentUnit.Interact.FindAttackableTiles();
 					CurrentSelectedCommand = command;
@@ -156,7 +142,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				PlayerEvents.OnCommandModeChange(cMode);
-				//GameCursor.Instance.ActivateCursor();
 				CurrentUnit.Interact.IsAbilitySelecting = true;
 				var item = (Item)cItem.AbilityItem;
 				if(item is not null)
@@ -180,16 +165,13 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				PlayerEvents.OnCommandModeChange(cMode);
-				//GameCursor.Instance.ActivateCursor();
 				break;
 			case CommandType.Skill:
 				if(cItem is null) return;
 				Mode = FocusMode.CommandSelectLook;
 				cMode = CommandMode.AbilitySelect;
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
-				PlayerEvents.OnCommandModeChange(cMode);
-				//GameCursor.Instance.ActivateCursor();
-	
+				PlayerEvents.OnCommandModeChange(cMode);	
 				break;
 			case CommandType.Wait:
 				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
@@ -199,7 +181,6 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 					PlayerEvents.OnCommandModeChange(cMode);
 					CurrentSelectedCommand = command;
-//					ActivateConfirmMenu();
 				}
 				else
 				{
