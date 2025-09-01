@@ -62,6 +62,7 @@ public class CameraManager: SingletonComponent<CameraManager>
 			case FocusMode.ConfirmMenu:
 				return;
 			case FocusMode.Menu:
+				IsFreeLook = false;
 				ResetToActive(u);
 				return;
 		}
