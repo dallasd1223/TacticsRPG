@@ -1,0 +1,12 @@
+{
+  "Name": "Iron Armor",
+  "Description": null,
+  "IconPath": null,
+  "Slot": "Armor",
+  "Price": 0,
+  "Type": "Armor",
+  "HP": 10,
+  "MP": 0,
+  "__references": [],
+  "__version": 0
+}

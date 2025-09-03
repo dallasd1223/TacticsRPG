@@ -1,0 +1,13 @@
+{
+  "Name": "Iron Armor",
+  "Description": "A Set Of Iron Armor",
+  "IconPath": null,
+  "Slot": "Armor",
+  "EquipType": "Armor",
+  "Price": 100,
+  "Type": "Armor",
+  "HP": 10,
+  "MP": 0,
+  "__references": [],
+  "__version": 0
+}

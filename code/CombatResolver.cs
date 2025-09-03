@@ -50,12 +50,4 @@ public enum AttackResultType
 	Dodged,
 }
 
-public enum StatusEffectType
-{
-	Frozen,
-	Eletrocuted,
-	Burning,
-	Poisoned,
-	Charmed,
-	Blinded,
-}
+

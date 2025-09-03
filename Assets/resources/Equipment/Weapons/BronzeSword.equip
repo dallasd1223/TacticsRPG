@@ -1,0 +1,15 @@
+{
+  "Name": "Bronze Sword",
+  "Description": "A Trusty Bronze Sword",
+  "IconPath": null,
+  "Slot": "LeftHand",
+  "SecondarySlot": "RightHand",
+  "EquipType": "Weapon",
+  "Price": 50,
+  "Type": "Sword",
+  "WP": 10,
+  "Ev": 0,
+  "StatusEffects": [],
+  "__references": [],
+  "__version": 0
+}

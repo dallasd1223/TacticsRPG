@@ -35,5 +35,4 @@ public class SkillData : AbilityItemData
 	public override int Value {get; set;}
 
 	public StatType Stat {get; set;}
-	public ModifierType Modifier {get; set;}
 }

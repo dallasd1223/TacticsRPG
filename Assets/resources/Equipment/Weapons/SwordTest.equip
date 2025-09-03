@@ -1,0 +1,15 @@
+{
+  "Name": null,
+  "Description": null,
+  "IconPath": null,
+  "Slot": "LeftHand",
+  "SecondarySlot": "RightHand",
+  "EquipType": "Weapon",
+  "Price": 0,
+  "Type": "Sword",
+  "WP": 0,
+  "Ev": 0,
+  "StatusEffects": [],
+  "__references": [],
+  "__version": 0
+}

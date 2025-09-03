@@ -1,0 +1,16 @@
+{
+  "ID": 0,
+  "Name": null,
+  "Description": null,
+  "Type": "Frozen",
+  "Duration": 0,
+  "Modifiers": [
+    {
+      "Type": "Flat",
+      "Stat": "MAXHP",
+      "Value": 10
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

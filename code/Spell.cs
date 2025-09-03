@@ -41,7 +41,6 @@ public class SpellData : AbilityItemData
 
 	public StatType Stat {get; set;}
 	public ElementType Element {get; set;}
-	public ModifierType Modifier {get; set;}
 }
 
 public enum ElementType
@@ -55,10 +54,4 @@ public enum ElementType
 	Other,
 }
 
-public enum ModifierType
-{
-	Increase,
-	Decrease,
-	Buff,
-	Debuff,
-}
+

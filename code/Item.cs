@@ -4,7 +4,7 @@ using SpriteTools;
 
 namespace TacticsRPG;
 
-public class Item: IUsable, IAbilityItem
+public class Item: IUsable, IAbilityItem, IInventoryItem
 {
 	public AbilityItemData Data {get; set;}
 
@@ -79,6 +79,10 @@ public interface IUsable
 	}
 }
 
+public interface IInventoryItem
+{
+
+}
 public enum Effect
 {
 	Heal,

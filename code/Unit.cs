@@ -13,6 +13,7 @@ public sealed class Unit : Component
 	[Property] public FaceDirectionType FaceDirection = FaceDirectionType.North;
 	[Property] public UnitTurn Turn {get; set;}
 	[Property] public TileInteract Interact {get; set;}
+	[Property] public UnitEquipment Equipment {get; set;}
 	[Property] public UnitMove Move {get; set;}
 	[Property] public UnitAttack Attack {get; set;}
 	[Property] public UnitAbility Ability {get; set;}
@@ -31,6 +32,7 @@ public sealed class Unit : Component
 	protected override void OnAwake()
 	{
 		Stats = GetComponent<UnitStats>();
+		Equipment = GetComponent<UnitEquipment>();
 		Interact = GetComponent<TileInteract>();
 		Battle = GetComponent<UnitBattle>();
 		Move = GetComponent<UnitMove>();
@@ -43,6 +45,7 @@ public sealed class Unit : Component
 		UAbility.OnAbilityAdded += AbilityAdded;
 		USkill.OnSkillAdded += SkillAdded;
 		USpell.OnSpellAdded += SpellAdded;
+		Equipment.OnEquip += OnEquipped;
 	}
 
 	protected override void OnStart()
@@ -66,6 +69,11 @@ public sealed class Unit : Component
 	public void SpellAdded(Spell s)
 	{
 		Log.Info($"{Data.Name} Learned Spell {s.Data.Name}");
+	}
+
+	public void OnEquipped(EquipmentSlotType slot, Equipment equip)
+	{
+		Log.Info($"{Data.Name} Has Equipped {equip.Data.Name} in {equip.Data.Slot} Slot");
 	}
 }
 

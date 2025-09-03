@@ -1,0 +1,13 @@
+{
+  "Name": "Iron Helmet",
+  "Description": "An Iron Helmet",
+  "IconPath": null,
+  "Slot": "Helmet",
+  "EquipType": "Helmet",
+  "Price": 0,
+  "Type": "Helmet",
+  "HP": 0,
+  "MP": 0,
+  "__references": [],
+  "__version": 0
+}
