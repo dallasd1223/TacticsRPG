@@ -4,6 +4,7 @@ namespace TacticsRPG;
 [Category("Unit")]
 public sealed class Unit : Component
 {
+	[Property] public int ID {get; set;}
 	[Property] public int StartTileIndex {get; set;}
 	[Property] Vector2 CurrentTileXY {get; set;} = new Vector2(0,0);
 	[Property] public bool isAIControlled = false;
@@ -19,6 +20,7 @@ public sealed class Unit : Component
 	[Property] public UnitAbility Ability {get; set;}
 	[Property] public UnitData Data {get; set;}
 	[Property] public UnitStats Stats {get; set;}
+	[Property] public UnitJob Job {get; set;}
 	[Property] public UnitAbilities UAbility {get; set;}
 	[Property] public UnitSpells USpell {get; set;}
 	[Property] public UnitSkills USkill {get; set;}
@@ -32,6 +34,7 @@ public sealed class Unit : Component
 	protected override void OnAwake()
 	{
 		Stats = GetComponent<UnitStats>();
+		Job = GetComponent<UnitJob>(); 
 		Equipment = GetComponent<UnitEquipment>();
 		Interact = GetComponent<TileInteract>();
 		Battle = GetComponent<UnitBattle>();
@@ -46,6 +49,7 @@ public sealed class Unit : Component
 		USkill.OnSkillAdded += SkillAdded;
 		USpell.OnSpellAdded += SpellAdded;
 		Equipment.OnEquip += OnEquipped;
+		Job.OnJobExpChange += JobEXPChanged;
 	}
 
 	protected override void OnStart()
@@ -56,6 +60,11 @@ public sealed class Unit : Component
 		UnitPosition = WorldPosition;
 	}
 
+	public void JobEXPChanged(JobData job, int amount, JobExp exp)
+	{
+		Log.Info($"{Data.Name}'s Job {job.Name} CurrentJP has increased by {amount} JP, and now contains {exp.CurrentJP} CurrentJP");
+		Log.Info($"{exp.UntilLevel()} JP Until Level Up");
+	}
 	public void AbilityAdded(Ability a)
 	{
 		Log.Info($"{Data.Name} Learned Ability {a.Data.Name}");

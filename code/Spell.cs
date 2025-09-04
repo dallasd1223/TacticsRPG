@@ -18,14 +18,23 @@ public class Spell : IAbilityItem
 	}
 }
 
-[GameResource("Spell", "spell", "Defines Data For Spells")]
-public class SpellData : AbilityItemData
+public interface ILearnable
 {
+	public AbilityEnum ParentAbility {get; set;}
+	public int JPCost {get; set;}
+}
+[GameResource("Spell", "spell", "Defines Data For Spells")]
+public class SpellData : AbilityItemData, ILearnable
+{
+	public int ID {get; set;}
 	public override string Name {get; set;}
 	public override string Description {get; set;}
 	public override string IconPath {get; set;}
 
 	public override EffectData effectData {get; set;}
+
+	public AbilityEnum ParentAbility {get; set;}
+	public int JPCost {get; set;}
 
 	public int ManaCost {get; set;}
 	public bool IsChargeSpell {get; set;}

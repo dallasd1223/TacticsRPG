@@ -43,11 +43,11 @@ public sealed class UnitAnimator : Component
 			UnitSprite.PlayAnimation("idle");
 			return;
 		}
-		if(Self.Stats.CurrentHP >= 10)
+		if(Self.Stats.GetStat(StatType.HP) >= 10)
 		{
 			UnitSprite.PlayAnimation("idle");
 		}
-		else if(Self.Stats.CurrentHP > 0 && Self.Stats.CurrentHP < 10)
+		else if(Self.Stats.GetStat(StatType.HP) > 0 && Self.Stats.GetStat(StatType.HP) < 10)
 		{
 			UnitSprite.PlayAnimation("low");
 		}

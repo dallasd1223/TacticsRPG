@@ -6,9 +6,9 @@ public static class CombatResolver
 {
 	public static CombatResult ResolveAttack(Unit Attacker, Unit Target)
 	{
-		bool didhit = RollHitChance(Attacker.Stats.Accuracy, Target.Stats.Evasion);
+		bool didhit = RollHitChance(Attacker.Stats.GetStat(StatType.ACC), Target.Stats.GetStat(StatType.EV));
 		bool crit = RollCritChance();
-		int damage = Attacker.Stats.Strength;
+		int damage = Attacker.Stats.GetStat(StatType.ATK);
 		return new CombatResult
 		{
 			DidHit = didhit,

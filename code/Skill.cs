@@ -14,13 +14,17 @@ public class Skill : IAbilityItem
 }
 
 [GameResource("Skill", "skill", "Defines Data For Skill Abilties")]
-public class SkillData : AbilityItemData
+public class SkillData : AbilityItemData, ILearnable
 {
+	public int ID {get; set;}
 	public override string Name {get; set;}
 	public override string Description {get; set;}
 	public override string IconPath {get; set;}
 
 	public override EffectData effectData {get; set;}
+
+	public AbilityEnum ParentAbility {get; set;}
+	public int JPCost {get; set;}
 
 	public int ManaCost {get; set;}
 	public bool isChargeSkill {get; set;}

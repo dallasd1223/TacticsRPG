@@ -31,7 +31,7 @@
 		if(!HealthFill.IsValid()) return;
 		if(ThisUnit.IsValid() && ThisUnit.Stats.IsValid())
 		{
-			HealthFill.Style.Width = Length.Percent( (float)ThisUnit.Stats.CurrentHP / (float)ThisUnit.Stats.MaxHP * 100f);
+			HealthFill.Style.Width = Length.Percent( (float)ThisUnit.Stats.GetStat(StatType.HP) / (float)ThisUnit.Stats.GetStat(StatType.MAXHP) * 100f);
 		}
 		
 	}

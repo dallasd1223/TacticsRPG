@@ -3,37 +3,21 @@ using System;
 using System.IO;
 using System.Text;
 
+namespace TacticsRPG;
+
 [Category("Unit")]
-public sealed class UnitStats : Component
+public class UnitStats : Component
 {
-	[Property] private int _level = 1;
-	public int Level
-	{
-		get
-		{
-			return _level;
-		}
-		set
-		{
-			TryChangeStat(StatType.LVL, value);
-		}
-	 }
+
 	[Property] public StatData BaseData {get; set;}
 	[Property] [ReadOnly] private Dictionary<StatType, int> Stats {get; set;} = new();
 
+	private UnitEquipment equip;
 
-	[Property] [ReadOnly] public int EXP {get; set;} = 0;
-	[Property] public int MaxHP {get; set;} = 20;
-	[Property] public int CurrentHP {get; set;} = 20;
-	[Property] public int MaxMP {get; set;} = 10;
-	[Property] public int CurrentMP {get; set;} = 10;
-	[Property] public int CTR {get; set;} = 5;
-	[Property] public int Speed {get; set;} = 3;
-	[Property] public int Accuracy {get; set;} = 90;
-	[Property] public int Strength {get; set;} = 15;
-	[Property] public int Evasion {get; set;} = 5;
-
-	public event Func<StatObject, StatObject> StatHasChanged;
+	protected override void OnAwake()
+	{
+		equip = GetComponent<UnitEquipment>();
+	}
 
 	protected override void OnStart()
 	{
@@ -43,6 +27,52 @@ public sealed class UnitStats : Component
 		}
 
 	}
+
+	public int GetStat(StatType type)
+	{
+		int final = GetFinalValue(type);
+		return final;
+	}
+
+	public bool SetStat(StatType type, int amount)
+	{
+		Stats[type] += amount;
+		return true;
+	}
+
+	public int GetBaseStat(StatType type)
+	{
+		return Stats[type];		
+	}
+
+	public int GetFinalValue(StatType type)
+	{
+		int basev = Stats[type];
+
+		switch(type)
+		{
+			case StatType.MAXHP:
+				break;
+			case StatType.MAXMP:
+				break;
+			case StatType.MOV:
+				break;
+			case StatType.ATK:
+				break;
+			case StatType.DEF:
+				break;
+			case StatType.MAG:
+				break;
+			case StatType.SPD:
+				break;
+			case StatType.ACC:
+				break;
+			case StatType.EV:
+				break;
+		}
+		return basev;
+	}
+
 	public void LoadBaseStats()
 	{
 		if(!BaseData.IsValid()) return;
@@ -119,69 +149,4 @@ public sealed class UnitStats : Component
 			}
 		}
 	}
-	public bool TryChangeStat(StatType type, int value)
-	{
-		switch(type)
-		{
-
-			case StatType.LVL:
-				_level = value;
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			case StatType.EXP:
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			case StatType.MAXHP:
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			case StatType.HP:
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			case StatType.MAXMP:
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			case StatType.MP:
-				StatHasChanged?.Invoke(new StatObject(type, value));
-				return true;
-			default:
-				return false;
-		}
-
-	}
 }	
-
-public class StatObject
-{
-	StatType Type;
-	int Value;
-
-	public StatObject(StatType t, int v)
-	{
-		Type = t;
-		Value = v;
-	}
-}
-
-public enum StatType
-{
-	LVL, // LEVEL
-	EXP, // EXPERIENCE POINTS
-	MAXHP, // MAX HEALTH POINTS
-	HP,	// HEALTH POINTS
-	MAXMP, // MAX MANA POINTS
-	MP, // MANA POINTS
-	CTR, //CHARGE TIME
-	MOV, // MOVE RANGE
-	ATK, // ATTACK
-	MAG, // MAGIC
-	DEF, // DEFENSE
-	SPD, // SPEED
-	ACC, // ACCURACY
-	EV, // EVASION
-}
-
-[GameResource("Stat", "stat", "Defines Unit/Job Stats")]
-public class StatData : GameResource
-{
-	public Dictionary<StatType, int> Stats {get; set;}
-}

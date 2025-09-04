@@ -13335,15 +13335,9 @@
       "OwnerTransfer": 1,
       "Components": [
         {
-          "__type": "GameManager",
-          "__guid": "69105ab1-603e-415c-a2c2-93f3f484d848",
+          "__type": "TacticsRPG.GameManager",
+          "__guid": "ae54d1ec-b498-4854-b044-bb0de566c759",
           "__enabled": true,
-          "CamManager": {
-            "_type": "component",
-            "component_id": "c508db43-bebd-4c6e-bec7-d6daf7724d81",
-            "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
-            "component_type": "CameraManager"
-          },
           "CurrentState": "NA",
           "DebugVisual": {
             "_type": "component",
@@ -13352,14 +13346,47 @@
             "component_type": "DebugUI"
           },
           "GameTime": 0,
-          "ModeSound": "sounds/confirm_style_1_004.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "SaveLoad": null
+          "Save": {
+            "_type": "component",
+            "component_id": "a8b511a0-b162-4b93-a120-e87e566bccd0",
+            "go": "a077885a-5a65-4c43-b808-8fbcccc39023",
+            "component_type": "SaveManager"
+          }
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "a077885a-5a65-4c43-b808-8fbcccc39023",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "SaveManager",
+      "Position": "-278.4582,-798.4661,278.7249",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "SaveManager",
+          "__guid": "a8b511a0-b162-4b93-a120-e87e566bccd0",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -13823,6 +13850,7 @@
           "Interact": null,
           "isAIControlled": false,
           "IsTurn": false,
+          "Job": null,
           "JumpRange": 3,
           "Move": {
             "_type": "component",
@@ -14006,10 +14034,30 @@
           "SpellCommands": []
         },
         {
-          "__type": "TacticsRPG.UnitEquipment",
-          "__guid": "cdf0f42e-e8ea-4770-8c40-9ce119e743d8",
+          "__type": "TacticsRPG.UnitStats",
+          "__guid": "7c502766-1bfd-4dd7-8e64-858ff891d550",
           "__enabled": true,
-          "ActiveEquipment": {},
+          "BaseData": "resources/stats/base.stat",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": {}
+        },
+        {
+          "__type": "TacticsRPG.UnitJob",
+          "__guid": "58005801-3892-475e-882f-37df8e87d360",
+          "__enabled": true,
+          "CurrentJob": "resources/jobs/squire.job",
+          "JobExpDictionary": {
+            "Squire": {
+              "JobLevel": 1,
+              "CurrentJP": 0,
+              "TotalJP": 0
+            }
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -14018,28 +14066,16 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "UnitStats",
-          "__guid": "60ce2c8c-58cf-421e-8902-7100cb23a23a",
+          "__type": "TacticsRPG.UnitEquipment",
+          "__guid": "cdf0f42e-e8ea-4770-8c40-9ce119e743d8",
           "__enabled": true,
-          "_level": 1,
-          "Accuracy": 90,
-          "BaseData": "resources/stats/basestats.stat",
-          "CTR": 5,
-          "CurrentHP": 20,
-          "CurrentMP": 10,
-          "Evasion": 5,
-          "EXP": 0,
-          "MaxHP": 20,
-          "MaxMP": 10,
+          "_activeEquipment": {},
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Speed": 3,
-          "Stats": {},
-          "Strength": 15
+          "OnComponentUpdate": null
         }
       ],
       "Children": [
@@ -14174,6 +14210,7 @@
           "Interact": null,
           "isAIControlled": true,
           "IsTurn": false,
+          "Job": null,
           "JumpRange": 3,
           "Move": {
             "_type": "component",
@@ -14356,10 +14393,30 @@
           "SpellCommands": []
         },
         {
-          "__type": "TacticsRPG.UnitEquipment",
-          "__guid": "3545831b-7d8c-43e7-b3fc-c842c2dc9952",
+          "__type": "TacticsRPG.UnitStats",
+          "__guid": "a471c89a-70dd-452e-901f-f9fcc36d7518",
           "__enabled": true,
-          "ActiveEquipment": {},
+          "BaseData": "resources/stats/base.stat",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": {}
+        },
+        {
+          "__type": "TacticsRPG.UnitJob",
+          "__guid": "f5f2d9c5-fc40-44c7-88c1-e4eece5353d1",
+          "__enabled": true,
+          "CurrentJob": "resources/jobs/squire.job",
+          "JobExpDictionary": {
+            "Squire": {
+              "JobLevel": 1,
+              "CurrentJP": 0,
+              "TotalJP": 0
+            }
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -14368,28 +14425,16 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "UnitStats",
-          "__guid": "8591d2db-4ee7-4997-b4e5-318395d625b0",
+          "__type": "TacticsRPG.UnitEquipment",
+          "__guid": "3545831b-7d8c-43e7-b3fc-c842c2dc9952",
           "__enabled": true,
-          "_level": 1,
-          "Accuracy": 90,
-          "BaseData": "resources/stats/basestats.stat",
-          "CTR": 5,
-          "CurrentHP": 20,
-          "CurrentMP": 10,
-          "Evasion": 5,
-          "EXP": 0,
-          "MaxHP": 20,
-          "MaxMP": 10,
+          "_activeEquipment": {},
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Speed": 3,
-          "Stats": {},
-          "Strength": 15
+          "OnComponentUpdate": null
         }
       ],
       "Children": [
@@ -14481,7 +14526,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 8254.969
+            "Relative": 4028.176
           }
         },
         {

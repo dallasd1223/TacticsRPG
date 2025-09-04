@@ -1,0 +1,27 @@
+{
+  "ID": 0,
+  "Name": "Squire",
+  "Description": "A Lowly Squire",
+  "Type": "Squire",
+  "Stats": "resources/jobs/squirestats.jstat",
+  "JobAbilities": [
+    "resources/abilities/skillability.ability"
+  ],
+  "WeaponRestrictions": [
+    "Sword",
+    "Axe"
+  ],
+  "ArmorRestrictions": [
+    "Armor"
+  ],
+  "HelmetRestrictions": [
+    "Helmet"
+  ],
+  "AccessoryRestrictions": [
+    "Shoes",
+    "Rings",
+    "Amulet"
+  ],
+  "__references": [],
+  "__version": 0
+}

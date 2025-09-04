@@ -1,12 +1,13 @@
 using Sandbox;
+using System;
+
+namespace TacticsRPG;
 
 public sealed class GameManager : Component
 {
 	public static GameManager Instance;
 	[Property] public GameState CurrentState {get; set;} = GameState.NA;
-	[Property] public CameraManager CamManager {get; set;}
-	[Property] public SaveLoadManager SaveLoad {get; set;}
-	[Property] public SoundEvent ModeSound {get; set;}
+	[Property] public SaveManager Save {get; set;}
 	[Property] public DebugUI DebugVisual {get; set;}
 	 
 	private float RealStartTime {get; set;}
@@ -28,7 +29,8 @@ public sealed class GameManager : Component
 	protected override void OnStart()
 	{
 		RealStartTime = RealTime.Now;
-		CurrentState = GameState.Playing;	
+		CurrentState = GameState.Playing;
+		JobDatabase.Initialize();
 	}
 
 	protected override void OnUpdate()

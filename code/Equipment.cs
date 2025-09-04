@@ -60,6 +60,7 @@ public class WeaponData : EquipmentData
 public enum WeaponType
 {
 	Sword,
+	Axe,
 	Shield,
 	Dagger,
 	Staff,

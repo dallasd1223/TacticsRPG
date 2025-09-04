@@ -16,8 +16,10 @@ public class Ability: IActivate
 [GameResource("Ability", "ability", "Defines Ability Data")]
 public class AbilityData : GameResource
 {
+	public int ID {get; set;}
 	public string Name {get; set;}
 	public string Description {get; set;}
+	public JobEnum Job {get; set;}
 	public int EffectID {get; set;}
 	public Effect EffectType {get; set;}
 	public bool IsPassive {get; set;}
@@ -30,4 +32,11 @@ public class AbilityData : GameResource
 public interface IActivate
 {
 	public void Activate(){}
+}
+
+public enum AbilityEnum
+{
+	Magic,
+	Skill,
+	Inventory,
 }

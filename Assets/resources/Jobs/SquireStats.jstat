@@ -1,0 +1,12 @@
+{
+  "ID": 0,
+  "Type": "Squire",
+  "StatMultiplier": {
+    "MAXHP": 10,
+    "MAXMP": 5,
+    "MOV": 0
+  },
+  "StatGrowthConstant": {},
+  "__references": [],
+  "__version": 0
+}

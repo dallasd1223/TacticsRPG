@@ -6,14 +6,14 @@
     "HP": 20,
     "MAXMP": 10,
     "MP": 10,
-    "CTR": 5,
+    "CTR": 99,
     "MOV": 5,
     "ATK": 15,
-    "MAG": 2,
-    "DEF": 5,
-    "SPD": 3,
-    "ACC": 90,
-    "EV": 5
+    "MAG": 5,
+    "DEF": 10,
+    "SPD": 5,
+    "ACC": 99,
+    "EV": 3
   },
   "__references": [],
   "__version": 0
