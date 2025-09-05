@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace TacticsRPG;
 
-public sealed class DialogManager : Component
+public class DialogManager : Component
 {
 
 }

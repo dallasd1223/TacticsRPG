@@ -19,4 +19,10 @@ public static partial class ActionLog
 	{
 		Add("Moved", u, null, $"{u.Data.Name} Has Moved To Tile {t.TileIndex} **LOG", null);
 	}
+
+	public static void DestoryEventHooks()
+	{
+		UnitEvents.LeveledUp -= OnUnitLevelUp;
+		UnitEvents.Moved -= OnUnitMoved;		
+	}
 }

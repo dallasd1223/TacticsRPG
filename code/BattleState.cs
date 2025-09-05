@@ -75,6 +75,7 @@ public partial class BattleMachine : StateMachine
 
 	protected override void OnDestroy()
 	{
+		ActionLog.DestoryEventHooks();
 		Instance = null;
 	}
 }
@@ -95,7 +96,7 @@ public class BattleStartState : Battlestate
 		InitializeBattle();
 	}
 
-	public void InitializeBattle()
+	public async void InitializeBattle()
 	{
 
 		Machine.TurnQueue.BuildQueue();
@@ -112,7 +113,9 @@ public class BattleStartState : Battlestate
 
 		});
 
-		EffectManager.Instance.AddSequence(seq,() => Machine.ChangeState<TurnStartState>());
+		EffectManager.Instance.AddSequence(seq);
+		await seq.WaitForCompletion();
+		Machine.ChangeState<TurnStartState>();
 	}
 
 	protected override void HandleInput(InputKey key)

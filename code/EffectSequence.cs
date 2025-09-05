@@ -1,6 +1,7 @@
 using Sandbox;
 using System;
 using SpriteTools;
+using System.Threading.Tasks;
 
 namespace TacticsRPG;
 public class EffectSequence
@@ -15,6 +16,10 @@ public class EffectSequence
 	public void RemoveStep(IEffectStep step) => steps.Remove(step);
 	public void SetAllComplete(Action act) => AllComplete = act;
 
+	public Task WaitForCompletion() => tsc.Task;
+
+	public TaskCompletionSource<bool> tsc;
+
 	public event Action AllComplete;
 
 	public void Start(Action act = null)
@@ -22,7 +27,7 @@ public class EffectSequence
 		Log.Info("Sequence Started");
 		IsPlaying = true;
 		elapsed = 0f;
-
+		tsc = new TaskCompletionSource<bool>();
 		if (act is not null)
 		{
 			AllComplete += act;
@@ -61,6 +66,7 @@ public class EffectSequence
 		{
 			IsFinished = true;
 			AllComplete?.Invoke();
+			tsc?.TrySetResult(true);
 			Log.Info("Sequence Finished");
 		}
 	}

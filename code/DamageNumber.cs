@@ -27,11 +27,7 @@ public sealed class DamageNumber : Component
 			.OnCompleteCall(() => DestroySelf());
 		
 	}
-	protected override void OnUpdate()
-	{
 
-
-	}
 	public void DestroySelf()
 	{
 		this.GameObject.Destroy();

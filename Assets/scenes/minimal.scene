@@ -13846,7 +13846,9 @@
             "component_type": "UnitData"
           },
           "Equipment": null,
+          "Experience": null,
           "FaceDirection": "North",
+          "ID": 0,
           "Interact": null,
           "isAIControlled": false,
           "IsTurn": false,
@@ -14047,6 +14049,19 @@
           "Stats": {}
         },
         {
+          "__type": "TacticsRPG.UnitExperience",
+          "__guid": "8a7a61cf-4e1e-4e43-ba6c-8df9120529d8",
+          "__enabled": true,
+          "HasLeveledUp": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": null
+        },
+        {
           "__type": "TacticsRPG.UnitJob",
           "__guid": "58005801-3892-475e-882f-37df8e87d360",
           "__enabled": true,
@@ -14206,7 +14221,9 @@
             "component_type": "UnitData"
           },
           "Equipment": null,
+          "Experience": null,
           "FaceDirection": "North",
+          "ID": 0,
           "Interact": null,
           "isAIControlled": true,
           "IsTurn": false,
@@ -14406,6 +14423,19 @@
           "Stats": {}
         },
         {
+          "__type": "TacticsRPG.UnitExperience",
+          "__guid": "74e84b38-5549-4776-aa30-39686298e04a",
+          "__enabled": true,
+          "HasLeveledUp": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": null
+        },
+        {
           "__type": "TacticsRPG.UnitJob",
           "__guid": "f5f2d9c5-fc40-44c7-88c1-e4eece5353d1",
           "__enabled": true,
@@ -14526,7 +14556,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 4028.176
+            "Relative": 1358.676
           }
         },
         {
@@ -14682,6 +14712,58 @@
             "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
             "component_type": "Unit"
           }
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "84858191-1382-416f-b225-d5b0d3028723",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "FloatingValueTest",
+      "Position": "-20.30322,-36.27721,-0.556778",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "f490a6be-3aff-4f76-b0c5-ed90710d854c",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.FloatingValue",
+          "__guid": "3afdcda3-56d9-4e3b-815c-37f30d784f11",
+          "__enabled": true,
+          "color": "1,0,0,1",
+          "Obj": {
+            "_type": "gameobject",
+            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac"
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Value": "POWER"
         }
       ],
       "Children": []

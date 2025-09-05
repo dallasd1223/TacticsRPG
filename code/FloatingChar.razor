@@ -1,0 +1,72 @@
+@using Sandbox;
+@using Sandbox.UI;
+@attribute [StyleSheet]
+@inherits Panel
+@namespace Sandbox
+
+
+<root>
+	<label class="value" @ref ="now">@value.ToString()</label>
+	<label class="outline" @ref ="Out">@value.ToString()</label>
+</root>
+
+@code
+{
+	Panel now;
+	Panel Out;
+	public float Gap;
+	public float Delay;
+	public float Age = 0;
+	public Char value;
+	public Vector2 Position;
+
+	public void Update(float delta)
+	{
+		Age += delta;
+		Position = Position + new Vector2(now.Box.Rect.Width * Gap / ScaleToScreen, 0);
+		Position = Position + new Vector2(0, (float)Math.Sin((Time.Now - (Delay * 0.1f ))* 3f) * 10f);
+		var Position1 = Position + new Vector2(8, 8);
+		now.Style.Left = Position.x;
+		now.Style.Top = Position.y;
+		Out.Style.Left = Position1.x;
+		Out.Style.Top = Position1.y;
+		now.Style.FontColor = GetRainbow();
+	}
+
+	public FloatingChar(char c, float delay, float gap)
+	{
+		value = c;
+		Delay = delay;
+		Gap = gap;
+	}
+
+	public Color GetRainbow()
+	{
+		float hue = (((float)RealTime.Now - Delay * 0.4f)* 0.2f) % 1f;
+		return HSVToRGB(hue, 1f, 1f);
+	}
+
+	public Color HSVToRGB(float h, float s, float v)
+    {
+        int i = (int)Math.Floor(h * 6f);
+        float f = h * 6f - i;
+        float p = v * (1f - s);
+        float q = v * (1f - f * s);
+        float t = v * (1f - (1f - f) * s);
+
+        float r = 0, g = 0, b = 0;
+        switch (i % 6)
+        {
+            case 0: r = v; g = t; b = p; break;
+            case 1: r = q; g = v; b = p; break;
+            case 2: r = p; g = v; b = t; break;
+            case 3: r = p; g = q; b = v; break;
+            case 4: r = t; g = p; b = v; break;
+            case 5: r = v; g = p; b = q; break;
+        }
+
+        return new Color(r, g, b, 1f); // full alpha
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

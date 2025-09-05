@@ -455,20 +455,20 @@ public class SelectCursor : Component
 {
 	[Property] public SelectorManager Selector {get; set;}
 
+	private bool OnFirstRender = true;
+
 	[Property] GameObject CursorObject {get; set;}
 	[Property] ModelRenderer CursorModel {get; set;}
 	[Property] GameObject BorderObject {get; set;}
 	[Property] SpriteComponent BorderSprite {get; set;}
 
-	private bool OnFirstRender = true;
-
-	[Property] SoundEvent NewPositionSound {get; set;}
-	
 	private Vector3 LastPosition;
 	[Property] public Vector3 TargetPosition {get; set;}
 	[Property] public Angles CAngles {get; set;} = new Angles(0,0,180);
 	[Property] public float RotateSpeed {get; set;} = 2f;
 
+	[Property] SoundEvent NewPositionSound {get; set;}
+	
 	public void Activate()
 	{
 		SetListeners();
@@ -517,7 +517,7 @@ public class SelectCursor : Component
 	private void TryPlaySound()
 	{
 		if(LastPosition != TargetPosition )
-		{
+		{	
 			Sound.Play(NewPositionSound);
 		}
 	}

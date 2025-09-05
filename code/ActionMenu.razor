@@ -124,6 +124,7 @@
 				if(!CMenu.IsValid()) return;
 				if(!CMenu.IsActive) return;
 				if(!CMenu.ActiveUnit.IsValid()) return;
+				if(CMenu.Menu is null) return;
 				if(!CMenu.Menu.IsVisible) return;
 				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
@@ -144,6 +145,7 @@
 				ImgPanel.Style.Left = IMenuPos.x -20 ;
 				break;
 			case MenuState.Magic:
+			Log.Info("Magic Why");
 				if(!SpMenu.IsValid()) return;
 				if(!SpMenu.IsActive) return;
 				var SpMenuPos = SpMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;

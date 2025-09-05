@@ -1,0 +1,76 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+
+</root>
+
+@code
+{
+
+	[Property] List<FloatingChar> chars {get; set;} = new();
+	[Property] public string Value {get; set;}
+	[Property] public GameObject Obj {get; set;}
+	[Property] public Color color {get; set;}
+	private Panel Div;
+	private Panel Out;
+
+	public void Start()
+	{
+		int i = 0;
+		foreach(Char c in Value)
+		{
+			var p = new FloatingChar(c, i, i);
+			chars.Add(p);
+			Panel.AddChild(p);
+			Log.Info($"i: {i}");
+			i++;
+		}
+	}
+	protected override void OnStart()
+	{
+		Start();
+		Log.Info("FloatingValue OnAwake");
+	}
+	protected override void OnUpdate()
+	{
+		if(!chars.Any()) return;
+		foreach(FloatingChar c in chars)
+		{
+			var point = Scene.Camera.PointToScreenPixels(Obj.WorldPosition + new Vector3(0,0,100));
+			point = point + new Vector2(-((chars.Count() * 18) / 2),0);
+			point = point / Panel.ScaleToScreen;
+			c.Position = point;
+			c.Update(Time.Delta);
+		}
+	}
+
+
+	/*
+	<div class="value" @ref="Div">@Value</div>
+	<div class="outline" @ref="Out">@Value</div>
+
+	protected override void OnUpdate()
+	{
+		if(!Obj.IsValid()) return;
+		var point = Scene.Camera.PointToScreenPixels(Obj.WorldPosition + new Vector3(0,0,100));
+		var point1 = point;
+		var point2 = point;
+		point1 = point1 + new Vector2(-Div.Box.Rect.Width / 2, 0);
+		point1 = point1 + new Vector2(0, (float)Math.Sin(Time.Now * 3) * 5f);
+		point1 = point1 / Panel.ScaleToScreen;
+		point2 = point2 + new Vector2(-Out.Box.Rect.Width / 2 + 2, 2);
+		point2 = point2 + new Vector2(0, (float)Math.Sin(Time.Now * 3) * 5f);
+		point2 = point2 / Panel.ScaleToScreen;
+		Div.Style.FontColor = GetRainbow();
+		Div.Style.Top = point1.y;
+		Div.Style.Left = point1.x;
+		Out.Style.Top = point2.y;
+		Out.Style.Left = point2.x;
+	}*/
+
+
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
+}

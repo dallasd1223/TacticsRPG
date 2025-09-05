@@ -8,10 +8,13 @@ public sealed class Unit : Component
 	[Property] public int StartTileIndex {get; set;}
 	[Property] Vector2 CurrentTileXY {get; set;} = new Vector2(0,0);
 	[Property] public bool isAIControlled = false;
+
 	[Property] int MoveRange {get; set;} = 6;
 	[Property] int AttackRange {get; set;} = 1;
 	[Property] int JumpRange {get; set;} = 3;
+
 	[Property] public FaceDirectionType FaceDirection = FaceDirectionType.North;
+	
 	[Property] public UnitTurn Turn {get; set;}
 	[Property] public TileInteract Interact {get; set;}
 	[Property] public UnitEquipment Equipment {get; set;}
@@ -20,6 +23,7 @@ public sealed class Unit : Component
 	[Property] public UnitAbility Ability {get; set;}
 	[Property] public UnitData Data {get; set;}
 	[Property] public UnitStats Stats {get; set;}
+	[Property] public UnitExperience Experience {get; set;}
 	[Property] public UnitJob Job {get; set;}
 	[Property] public UnitAbilities UAbility {get; set;}
 	[Property] public UnitSpells USpell {get; set;}
@@ -34,6 +38,7 @@ public sealed class Unit : Component
 	protected override void OnAwake()
 	{
 		Stats = GetComponent<UnitStats>();
+		Experience = GetComponent<UnitExperience>();
 		Job = GetComponent<UnitJob>(); 
 		Equipment = GetComponent<UnitEquipment>();
 		Interact = GetComponent<TileInteract>();
@@ -45,6 +50,7 @@ public sealed class Unit : Component
 		UAbility = GetComponent<UnitAbilities>();
 		USpell = GetComponent<UnitSpells>();
 		USkill = GetComponent<UnitSkills>();
+		Experience.OnLevelUp += LeveledUp;
 		UAbility.OnAbilityAdded += AbilityAdded;
 		USkill.OnSkillAdded += SkillAdded;
 		USpell.OnSpellAdded += SpellAdded;
@@ -60,6 +66,10 @@ public sealed class Unit : Component
 		UnitPosition = WorldPosition;
 	}
 
+	public void LeveledUp(int i)
+	{
+		Log.Info($"{Data.Name} Has Leveled Up To LVL {i}");
+	}
 	public void JobEXPChanged(JobData job, int amount, JobExp exp)
 	{
 		Log.Info($"{Data.Name}'s Job {job.Name} CurrentJP has increased by {amount} JP, and now contains {exp.CurrentJP} CurrentJP");
