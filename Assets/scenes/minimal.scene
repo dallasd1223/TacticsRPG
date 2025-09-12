@@ -14556,7 +14556,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 1358.676
+            "Relative": 146.47498
           }
         },
         {
@@ -14763,7 +14763,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Value": "POWER"
+          "Value": "SUPER"
         }
       ],
       "Children": []
