@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace SpriteTools;
 
-[GameResource( "2D Sprite", "sprite", "A 2D sprite atlas", Icon = "emoji_emotions" )]
+[AssetType( Name = "2D Sprite", Extension = "spr", Category = "SpriteTools" )]
 public partial class SpriteResource : GameResource
 {
 	/// <summary>
@@ -63,7 +63,7 @@ public partial class SpriteResource : GameResource
 	{
 		var anim = Animations.FirstOrDefault();
 		if ( anim is null || anim.Frames.Count == 0 ) return Texture.Transparent;
-		if ( anim.Frames.Count == 1 ) return Texture.Load( FileSystem.Mounted, anim.Frames[0].FilePath );
+		if ( anim.Frames.Count == 1 ) return Texture.LoadFromFileSystem( anim.Frames[0].FilePath, FileSystem.Mounted );
 		var atlas = TextureAtlas.FromAnimation( anim );
 		return atlas.GetTextureFromFrame( 0 );
 	}
@@ -84,6 +84,11 @@ public partial class SpriteResource : GameResource
 			}
 		}
 		return paths;
+	}
+
+	protected override Bitmap CreateAssetTypeIcon ( int width, int height )
+	{
+		return CreateSimpleAssetTypeIcon( "emoji_emotions", width, height, "#67ac5c", "#1a2c17" );
 	}
 
 	/// <summary>
@@ -123,13 +128,13 @@ public class SpriteAnimation
 	/// <summary>
 	/// The speed of the animation. This is the number of frames per second.
 	/// </summary>
-	[Property, Range( 0f, 999f, 0.01f, true, false )]
+	[Property, Range( 0f, 999f, true, false ), Step( 0.01f )]
 	public float FrameRate { get; set; } = 15.0f;
 
 	/// <summary>
 	/// The origin of the sprite. This is used to determine where the sprite is drawn relative to/scaled around.
 	/// </summary>
-	[Property, Range( 0f, 1f, 0.01f, true, false )] public Vector2 Origin { get; set; } = new Vector2( 0.5f, 0.5f );
+	[Property, Range( 0f, 1f, true, false ), Step( 0.01f )] public Vector2 Origin { get; set; } = new Vector2( 0.5f, 0.5f );
 
 	/// <summary>
 	/// Whether or not the animation should loop. Replaced with LoopMode.

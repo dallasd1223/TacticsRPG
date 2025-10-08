@@ -1,7 +1,10 @@
 using Editor;
 using Sandbox;
-using System;
+using SpriteTools.ProjectConverter;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 
 namespace SpriteTools;
 
@@ -16,44 +19,59 @@ public static class ToolbarMenuOptions
 		PixmapCache.ClearCache();
 	}
 
-	[Menu( "Editor", "Sprite Tools/Curve Test" )]
-	public static void UltimateCurveTest ()
+	[Menu( "Editor", "Sprite Tools/Convert Project" )]
+	public static void OpenConverterWindow ()
 	{
-		List<int> keyframes = [1, 2, 5, 25, 50, 100, 1000];
-		List<float> evaluateVals = [];
-		int valsToEvaluate = 2000000;
-		for ( int i = 0; i < valsToEvaluate; i++ )
-		{
-			evaluateVals.Add( Random.Shared.Float() );
-		}
+		List<string> outdatedSprites = new();
 
-		foreach ( var keyframeCount in keyframes )
+		// Loop over all files names .sprite in the project since ResourceLibrary.GetAll<Sprite>() might not catch all of them
+		var allFiles = Editor.FileSystem.Content.FindFile( "", "*.sprite", true );
+		foreach ( var file in allFiles )
 		{
-			var frames = new List<Curve.Frame>();
-			for ( int i = 0; i < keyframeCount; i++ )
+			var jsonStr = Editor.FileSystem.Content.ReadAllText( file );
+			if ( string.IsNullOrWhiteSpace( jsonStr ) )
+				continue;
+
+			var json = Json.ParseToJsonObject( jsonStr );
+			if ( json.TryGetPropertyValue( "Animations", out var animationsNode ) )
 			{
-				// Create a frame with a random time and value
-				var frame = new Curve.Frame
+				foreach ( var animEntry in animationsNode.AsArray() )
 				{
-					Time = i / keyframeCount,
-					Value = Random.Shared.Float()
-				};
-				frames.Add( frame );
+					if ( animEntry.AsObject().TryGetPropertyValue( "Frames", out var framesNode ) && framesNode is not null )
+					{
+						if ( framesNode.AsArray().Any( x => x is JsonObject && x.AsObject().TryGetPropertyValue( "FilePath", out var _ ) ) )
+						{
+							outdatedSprites.Add( file );
+							break; // No need to check further frames, we found one that needs conversion
+						}
+					}
+				}
 			}
-			var curve = new Curve( frames );
-
-			// Create a timer and benchmark the curve evaluation
-			var timer = new System.Diagnostics.Stopwatch();
-			timer.Start();
-			for ( int i = 0; i < valsToEvaluate; i++ )
-			{
-				var evalTime = evaluateVals[i];
-				curve.Evaluate( evalTime );
-			}
-			timer.Stop();
-			Log.Info( $"Curve with {keyframeCount} keyframes took {timer.ElapsedMilliseconds} ms to evaluate {valsToEvaluate} times." );
 		}
 
+		if ( outdatedSprites.Count == 0 )
+		{
+			Log.Info( "No outdated sprites found, nothing to convert." );
+			return;
+		}
+
+		var dialog = new ProjectConverterDialog( outdatedSprites );
+		dialog.HasMaximizeButton = false;
+		dialog.Window.HasMaximizeButton = false;
+		dialog.Show();
+		dialog.Raise();
+	}
+
+
+	[Event( "editor.created" )]
+	[Event( "package.changed" )]
+	static async void OnEditorCreated ( EditorMainWindow mainWindow )
+	{
+		// Give the user a sec to breathe
+		await Task.Delay( 5000 );
+
+		// Automatically open the converter window if the project needs an upgrade
+		OpenConverterWindow();
 	}
 
 }

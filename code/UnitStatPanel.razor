@@ -1,0 +1,15 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@namespace Sandbox
+@attribute [StyleSheet]
+
+<root>
+	
+</root>
+
+@code
+{
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

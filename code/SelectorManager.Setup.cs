@@ -123,6 +123,7 @@ public partial class SelectorManager
 		if(ActiveCursor.IsValid())
 		{
 			Log.Info("Destorying Cursor");
+			ActiveCursor.RemoveListeners();
 			ActiveCursorObject.Destroy();
 			ActiveCursor = null;
 		}

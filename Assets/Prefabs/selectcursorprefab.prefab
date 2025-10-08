@@ -129,7 +129,7 @@
             "OnComponentStart": null,
             "OnComponentUpdate": null,
             "PlaybackSpeed": 1,
-            "Sprite": "materials/border-sprite.sprite",
+            "Sprite": "materials/border-sprite.spr",
             "SpriteFlags": "None",
             "StartingAnimationName": "default",
             "Tint": "1,1,1,1",

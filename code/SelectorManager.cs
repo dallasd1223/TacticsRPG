@@ -468,7 +468,13 @@ public class SelectCursor : Component
 	[Property] public float RotateSpeed {get; set;} = 2f;
 
 	[Property] SoundEvent NewPositionSound {get; set;}
-	
+
+	public void RemoveListeners()
+	{
+		Selector.VectorChange -= HandleVector;
+		Selector.Deactivate -= HandleDeactivate;
+	}
+
 	public void Activate()
 	{
 		SetListeners();
@@ -482,10 +488,9 @@ public class SelectCursor : Component
 	protected override void OnUpdate()
 	{
 
-		CursorObject.WorldPosition = TargetPosition + new Vector3(0,0,(float)Math.Sin(Time.Now * 3) * 5f);
-		CAngles = CAngles + new Angles(0,RotateSpeed,0);
-		CursorObject.WorldRotation = CAngles;	
-
+		CursorObject.WorldPosition = TargetPosition /*+ new Vector3(0,0,(float)Math.Sin(Time.Now * 3) * 5f)*/;
+		/*CAngles = CAngles + new Angles(0,RotateSpeed,0);
+		CursorObject.WorldRotation = CAngles;*/
 
 		//Prevents Weird Visual PopIn 
 		if(OnFirstRender)
@@ -508,7 +513,7 @@ public class SelectCursor : Component
 
 	private void EnableVisual()
 	{
-		CursorModel.Enabled = true;
+		//CursorModel.Enabled = true;
 		BorderSprite.Enabled = true;
 
 		OnFirstRender = false;
@@ -518,6 +523,7 @@ public class SelectCursor : Component
 	{
 		if(LastPosition != TargetPosition )
 		{	
+			Log.Info("Playing Sound");
 			Sound.Play(NewPositionSound);
 		}
 	}
@@ -554,7 +560,7 @@ public class SelectCursor : Component
 			{
 				height = (tile.HeightIndex - 1) * 28;
 			}
-			return tile.TilePosition + new Vector3(0,0,155 + height);
+			return tile.TilePosition + new Vector3(0,0,125 + height);
 		}
 		Log.Info("No TileFound");
 		return this.GameObject.WorldPosition;

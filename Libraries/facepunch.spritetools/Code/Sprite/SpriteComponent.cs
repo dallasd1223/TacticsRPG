@@ -249,7 +249,7 @@ public sealed class SpriteComponent : Component, Component.ExecuteInEditor
 		{
 			var ratio = CurrentTexture?.AspectRatio ?? 1;
 			var size = new Vector2( 50, 50 );
-			if ( UsePixelScale )
+			if ( UsePixelScale && CurrentTexture is not null )
 			{
 				var scl = CurrentTexture.FrameSize.x < CurrentTexture.FrameSize.x ? CurrentTexture.FrameSize.y : CurrentTexture.FrameSize.y;
 				size *= new Vector2( scl, scl ) / 100f;
@@ -455,7 +455,9 @@ public sealed class SpriteComponent : Component, Component.ExecuteInEditor
 		_flipVertical = _spriteFlags.HasFlag( SpriteFlags.VerticalFlip );
 		var targetModel = _spriteFlags.HasFlag( SpriteFlags.DrawBackface ) ? "models/sprite_quad_2_sided.vmdl" : "models/sprite_quad_1_sided.vmdl";
 		if ( SceneObject is not null && SceneObject.Model.ResourcePath != targetModel )
+		{
 			SceneObject.Model = Model.Load( targetModel );
+		}
 		ApplyMaterialOffset();
 	}
 

@@ -17,6 +17,9 @@
 	public float Gap;
 	public float Delay;
 	public float Age = 0;
+	public string Font;
+	public int Size;
+	public Color color;
 	public Char value;
 	public Vector2 Position;
 
@@ -30,14 +33,20 @@
 		now.Style.Top = Position.y;
 		Out.Style.Left = Position1.x;
 		Out.Style.Top = Position1.y;
+		now.Style.FontFamily = Font;
+		Out.Style.FontFamily = Font;
+		now.Style.FontSize = Length.Pixels(Size);
+		Out.Style.FontSize = Length.Pixels(Size);
 		now.Style.FontColor = GetRainbow();
 	}
 
-	public FloatingChar(char c, float delay, float gap)
+	public FloatingChar(char c, float delay, float gap, Color col)
 	{
 		value = c;
 		Delay = delay;
 		Gap = gap;
+		color = col;
+		Log.Info($"char: {c}, gap: {gap}");
 	}
 
 	public Color GetRainbow()

@@ -21,7 +21,7 @@ class PreviewTileset : AssetPreview
 		if ( filePath is null || !Editor.FileSystem.Content.FileExists( filePath ) )
 			return;
 
-		var image = Texture.Load( Editor.FileSystem.Content, tileset?.FilePath );
+		var image = Texture.LoadFromFileSystem( tileset?.FilePath, Editor.FileSystem.Content );
 		if ( image is not null )
 		{
 			texture = image;
@@ -37,8 +37,15 @@ class PreviewTileset : AssetPreview
 
 			if ( texture is not null )
 			{
-				var sprite = PrimaryObject.AddComponent<SpriteRenderer>();
-				sprite.Texture = texture;
+				var sprite = PrimaryObject.AddComponent<Sandbox.SpriteRenderer>();
+				var resource = new Sprite();
+				var anim = new Sprite.Animation();
+				var frame = new Sprite.Frame();
+				frame.Texture = texture;
+
+				anim.Frames.Add( frame );
+				resource.Animations.Add( anim );
+				sprite.Sprite = resource;
 
 				var aspect = (float)texture.Width / (float)texture.Height;
 				sprite.Size = new Vector2( 16 * aspect, 16 );

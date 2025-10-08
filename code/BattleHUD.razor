@@ -1,0 +1,15 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<UnitStatPanel />
+</root>
+
+@code
+{
+
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -3,7 +3,7 @@
     "__guid": "47bffda6-6c5a-48cb-ab12-58a8ca7215af",
     "__version": 1,
     "Flags": 0,
-    "Name": "PotionObject",
+    "Name": "potionobject",
     "Position": "0,0,0",
     "Rotation": "0.00000001580507,0.00000001580507,-0.7071068,0.7071068",
     "Scale": "0.3,0.3,0.2",
@@ -33,7 +33,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "PlaybackSpeed": 1,
-        "Sprite": "sprites/potion.sprite",
+        "Sprite": "sprites/potion.spr",
         "SpriteFlags": "None",
         "StartingAnimationName": "default",
         "Tint": "1,1,1,1",
@@ -41,7 +41,26 @@
         "UsePixelScale": false
       }
     ],
-    "Children": []
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
   },
   "ResourceVersion": 2,
   "ShowInMenu": false,

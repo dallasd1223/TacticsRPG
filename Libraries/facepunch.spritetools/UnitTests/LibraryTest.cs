@@ -4,7 +4,7 @@ using Sandbox;
 public partial class LibraryTests
 {
 	[TestMethod]
-	public void SceneTest ()
+	public void SceneTest()
 	{
 		var scene = new Scene();
 		using ( scene.Push() )

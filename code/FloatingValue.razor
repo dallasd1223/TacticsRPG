@@ -12,6 +12,8 @@
 
 	[Property] List<FloatingChar> chars {get; set;} = new();
 	[Property] public string Value {get; set;}
+	[Property] public string Font {get; set;}
+	[Property]public int Size {get; set;}
 	[Property] public GameObject Obj {get; set;}
 	[Property] public Color color {get; set;}
 	private Panel Div;
@@ -22,12 +24,15 @@
 		int i = 0;
 		foreach(Char c in Value)
 		{
-			var p = new FloatingChar(c, i, i);
+			var p = new FloatingChar(c, i, i, color);
 			chars.Add(p);
 			Panel.AddChild(p);
-			Log.Info($"i: {i}");
+			p.Font = Font;
+			p.Size = Size;
+			Log.Info($"i: {i} w/ Font: {Font}");
 			i++;
 		}
+
 	}
 	protected override void OnStart()
 	{
@@ -47,6 +52,10 @@
 		}
 	}
 
+	void SetStyle()
+	{
+
+	}
 
 	/*
 	<div class="value" @ref="Div">@Value</div>

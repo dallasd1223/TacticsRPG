@@ -1,0 +1,166 @@
+{
+  "RootObject": {
+    "__guid": "f695917b-e960-43de-845f-1d0768f27ea0",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "finger",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "TacticsRPG.SelectCursor",
+        "__guid": "9e74fc81-9968-4880-90f1-7d9789d21478",
+        "__enabled": true,
+        "BorderObject": {
+          "_type": "gameobject",
+          "go": "d2a1ab04-8ded-4762-8676-da2a7c3a419d"
+        },
+        "BorderSprite": {
+          "_type": "component",
+          "component_id": "1c0c4d1d-36b2-4901-afbe-1084456c4bc1",
+          "go": "d2a1ab04-8ded-4762-8676-da2a7c3a419d",
+          "component_type": "SpriteComponent"
+        },
+        "CAngles": "0,0,180",
+        "CursorModel": null,
+        "CursorObject": {
+          "_type": "gameobject",
+          "go": "74428891-a0df-4ead-b75e-bd00a1606ad6"
+        },
+        "NewPositionSound": "sounds/cursor_style_3.sound",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RotateSpeed": 2,
+        "Selector": null,
+        "TargetPosition": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "74428891-a0df-4ead-b75e-bd00a1606ad6",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "cursor",
+        "Position": "0,0,0",
+        "Rotation": "0.7071068,0,0,0.7071068",
+        "Scale": "0.5,0.5,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "SpriteTools.SpriteComponent",
+            "__guid": "4e673195-ffba-4227-b574-990129d4db54",
+            "__enabled": true,
+            "__version": 1,
+            "BroadcastEvents": {},
+            "CastShadows": "On",
+            "CreateAttachPoints": false,
+            "FlashTint": "1,1,1,0",
+            "MaterialOverride": null,
+            "OnAnimationComplete": null,
+            "OnBroadcastEvent": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "PlaybackSpeed": 1,
+            "Sprite": "sprites/finger/finger_cursor1.spr",
+            "SpriteFlags": "None",
+            "StartingAnimationName": "default",
+            "Tint": "1,1,1,1",
+            "UpDirection": "YPositive",
+            "UsePixelScale": false
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "d2a1ab04-8ded-4762-8676-da2a7c3a419d",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "Border",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "0.58,0.58,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "SpriteTools.SpriteComponent",
+            "__guid": "1c0c4d1d-36b2-4901-afbe-1084456c4bc1",
+            "__enabled": false,
+            "__version": 1,
+            "BroadcastEvents": {},
+            "CastShadows": "On",
+            "CreateAttachPoints": false,
+            "FlashTint": "1,1,1,0",
+            "MaterialOverride": null,
+            "OnAnimationComplete": null,
+            "OnBroadcastEvent": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "PlaybackSpeed": 1,
+            "Sprite": "materials/border-sprite.spr",
+            "SpriteFlags": "None",
+            "StartingAnimationName": "default",
+            "Tint": "1,1,1,1",
+            "UpDirection": "YPositive",
+            "UsePixelScale": false
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

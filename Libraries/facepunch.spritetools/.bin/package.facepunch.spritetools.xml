@@ -88,6 +88,58 @@
             <param name="animationName">The name of the animation</param>
             <param name="force">Whether or not the animation should be forced. If true this will restart the animation from frame index 0 even if the specified animation is equal to the current animation.</param>
         </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.Sprite">
+            <summary>
+            The sprite resource that this component uses.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.Tint">
+            <summary>
+            The color tint of the Sprite.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.FlashTint">
+            <summary>
+            The color of the sprite when it is flashing.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.PlaybackSpeed">
+            <summary>
+            The playback speed of the animation.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.UsePixelScale">
+            <summary>
+            Whether or not the object should scale based on the resolution of the Sprite.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.CastShadows">
+            <summary>
+            Whether or not the sprite should render itself/its shadows.
+            </summary>
+        </member>
+        <member name="F:SpriteTools.SpriteRendererLayer.BroadcastEvents">
+            <summary>
+            A dictionary of broadcast events that this component will send (populated based on the Sprite resource)
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.CurrentAnimation">
+            <summary>
+            The sprite animation that is currently playing.
+            </summary>
+        </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.CurrentFrameIndex">
+            <summary>
+            The current frame index of the animation playing.
+            </summary>
+        </member>
+        <member name="M:SpriteTools.SpriteRendererLayer.PlayAnimation(System.String,System.Boolean)">
+            <summary>
+            Plays an animation from the current Sprite by it's name.
+            </summary>
+            <param name="animationName">The name of the animation</param>
+            <param name="force">Whether or not the animation should be forced. If true this will restart the animation from frame index 0 even if the specified animation is equal to the current animation.</param>
+        </member>
         <member name="P:SpriteTools.SpriteResource.Animations">
             <summary>
             A list of animations that are available for this sprite.

@@ -282,7 +282,7 @@ public partial class MainWindow : DockWindow, IAssetEditor
 			return false;
 		}
 
-		MainAssetBrowser.Instance.Local?.UpdateAssetList();
+		MainAssetBrowser.Instance?.Local?.UpdateAssetList();
 		TileAtlas.ClearCache( Tileset );
 
 		return true;
@@ -336,7 +336,7 @@ public partial class MainWindow : DockWindow, IAssetEditor
 
 	string GetSavePath ( string title = "Save Tileset" )
 	{
-		var lastDirectory = Cookie.GetString( "LastSaveTilesetLocation", "" );
+		var lastDirectory = EditorCookie.GetString( "LastSaveTilesetLocation", "" );
 		var fd = new FileDialog( null )
 		{
 			Title = title,
@@ -351,7 +351,7 @@ public partial class MainWindow : DockWindow, IAssetEditor
 		if ( !fd.Execute() ) return null;
 
 		var selectedFile = fd.SelectedFile;
-		Cookie.SetString( "LastSaveTilesetLocation", System.IO.Path.GetDirectoryName( selectedFile ) );
+		EditorCookie.SetString( "LastSaveTilesetLocation", System.IO.Path.GetDirectoryName( selectedFile ) );
 		return selectedFile;
 	}
 
@@ -446,7 +446,7 @@ public partial class MainWindow : DockWindow, IAssetEditor
 		int y = 0;
 		int framesPerRow = (int)preview.TextureSize.x / Tileset.TileSize.x;
 		int framesPerHeight = (int)preview.TextureSize.y / Tileset.TileSize.y;
-		var pixels = Texture.Load( Editor.FileSystem.Mounted, Tileset.FilePath ).GetPixels();
+		var pixels = Texture.LoadFromFileSystem( Tileset.FilePath, Editor.FileSystem.Mounted ).GetPixels();
 
 		while ( y < framesPerHeight )
 		{

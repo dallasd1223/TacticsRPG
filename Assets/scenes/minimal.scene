@@ -97,7 +97,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "SkyIndirectLighting": true,
-          "SkyMaterial": "materials/skystyle.vmat",
+          "SkyMaterial": "materials/skyboxmat.vmat",
           "Tint": "1,1,1,1"
         },
         {
@@ -167,7 +167,7 @@
           "__type": "MusicPlayer",
           "__guid": "a7d11b53-0c5c-4433-93f2-3b5ca7f3c80d",
           "__enabled": true,
-          "BattleTheme": "sounds/final fantasy tactics ost - antipyretic.sound",
+          "BattleTheme": "sounds/music1_slowed.sound",
           "EndTheme": "sounds/fft-complete.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -259,6 +259,7 @@
           "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
           "__enabled": true,
           "__version": 1,
+          "Filter": "Bilinear",
           "Gamma": 2.2,
           "Mode": "Additive",
           "OnComponentDestroy": null,
@@ -300,7 +301,8 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Scale": 0.2
+          "Scale": 0.2,
+          "TexelSize": 1
         },
         {
           "__type": "CameraManager",
@@ -408,7 +410,12 @@
             "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
             "component_type": "MapData"
           },
-          "Model": null,
+          "Model": {
+            "_type": "component",
+            "component_id": "171c0eed-f75f-4873-b231-64a1bf1b96ff",
+            "go": "6b43fcc0-9e44-4154-9ece-4f66c9bef032",
+            "component_type": "ModelRenderer"
+          },
           "Node": {
             "_type": "gameobject",
             "go": "8c49fce4-c9b2-4769-bdb1-1a90bd389b6a"
@@ -13073,7 +13080,7 @@
           "CurrentUnit": null,
           "CursorPrefab": {
             "_type": "gameobject",
-            "prefab": "prefabs/selectcursorprefab.prefab"
+            "prefab": "prefabs/finger.prefab"
           },
           "HoveredObject": null,
           "HoveredTile": null,
@@ -13087,6 +13094,52 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "State": null
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "61a3b783-358f-454a-8fc8-9669cf6a931f",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "BattleUI",
+      "Position": "-34.08145,-108.7646,41.07192",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.BattleHUD",
+          "__guid": "17582296-ffe1-413e-820f-a5398654bdf7",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "9bb2b829-171e-48ea-a11e-d10c3f8d9de8",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
         }
       ],
       "Children": []
@@ -13811,7 +13864,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "PlaybackSpeed": 1,
-          "Sprite": "materials/player/unitsprite.sprite",
+          "Sprite": "materials/player/unitsprite.spr",
           "SpriteFlags": "HorizontalFlip",
           "StartingAnimationName": "idle",
           "Tint": "1,1,1,1",
@@ -14186,7 +14239,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "PlaybackSpeed": 1,
-          "Sprite": "materials/player/unitsprite.sprite",
+          "Sprite": "materials/player/unitsprite.spr",
           "SpriteFlags": "None",
           "StartingAnimationName": "idle",
           "Tint": "1,1,1,1",
@@ -14556,7 +14609,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 146.47498
+            "Relative": 4165.716
           }
         },
         {
@@ -14752,7 +14805,8 @@
           "__type": "Sandbox.FloatingValue",
           "__guid": "3afdcda3-56d9-4e3b-815c-37f30d784f11",
           "__enabled": true,
-          "color": "1,0,0,1",
+          "color": "0.3,0,1,1",
+          "Font": "ThaleahFat",
           "Obj": {
             "_type": "gameobject",
             "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac"
@@ -14763,7 +14817,8 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Value": "SUPER"
+          "Size": 100,
+          "Value": "MOMMY"
         }
       ],
       "Children": []
