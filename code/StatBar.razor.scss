@@ -1,12 +1,41 @@
-MyElement
+StatBar
 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	position: relative;
 
-	justify-content: center;
-	align-items: center;
+	.StatBar
+	{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 2px 2px 0px black;
+	}
+	
+	.Text
+	{
+		font-size: 30px;
+		width: 50px;
+		text-align: right;
+	}
 
+	.Bar
+	{
+		position: relative;
+		width: 200px;
+		height: 20px;
+		border: 2px solid black;
+		box-shadow: 2px 2px 0px black;
+	}
+
+	.Fill
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		background-color: red;
+		height: 100%;
+	}
 }

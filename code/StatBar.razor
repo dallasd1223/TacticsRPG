@@ -4,11 +4,21 @@
 @namespace Sandbox
 @attribute [StyleSheet]
 <root>
-	
+		<div class="StatBar">
+			<div class="Text">@Text</div>
+			<div class="Bar">
+				<div class="Fill" style="width: @((float)CurrentValue / (float)MaxValue * 100f)%; background-color: @(Color);"></div>
+			</div>
+			<div class="Value">@CurrentValue / @MaxValue</div>
+		</div>
 </root>
 
 @code
 {
+	public string Text;
+	public int CurrentValue;
+	public int MaxValue;
+	public string Color;
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

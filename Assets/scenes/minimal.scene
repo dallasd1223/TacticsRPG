@@ -235,6 +235,7 @@
           "__enabled": true,
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
           "ClearFlags": "All",
+          "EnablePostProcessing": true,
           "FieldOfView": 60,
           "FovAxis": "Horizontal",
           "IsMainCamera": true,
@@ -246,6 +247,7 @@
           "OnComponentUpdate": null,
           "Orthographic": false,
           "OrthographicHeight": 1204,
+          "PostProcessAnchor": null,
           "Priority": 1,
           "RenderExcludeTags": "",
           "RenderTags": "",
@@ -13117,6 +13119,12 @@
           "__type": "Sandbox.BattleHUD",
           "__guid": "17582296-ffe1-413e-820f-a5398654bdf7",
           "__enabled": true,
+          "CurrentUnit": {
+            "_type": "component",
+            "component_id": "39968a51-ae2c-4575-91e5-a2b547660143",
+            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
+            "component_type": "Unit"
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -13976,7 +13984,8 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "PortraitPath": "materials/player/marche_portrait.png"
         },
         {
           "__type": "TacticsRPG.UnitAnimator",
@@ -14351,7 +14360,8 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "PortraitPath": null
         },
         {
           "__type": "TacticsRPG.UnitAnimator",
@@ -14609,7 +14619,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 4165.716
+            "Relative": 2639.6208
           }
         },
         {

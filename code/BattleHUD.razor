@@ -1,15 +1,80 @@
 @using Sandbox;
 @using Sandbox.UI;
+@using TacticsRPG;
 @inherits PanelComponent
 @namespace Sandbox
 
 <root>
-	<UnitStatPanel />
+
 </root>
 
 @code
 {
+	[Property] public Unit CurrentUnit {get; set;}
+	[Property] public Unit EnemyUnit {get; set;}
+	[Property] public TileData CurrentTile {get; set;}
+	private UnitStatPanel _UnitStatPanel;
+	private MapDataPanel _MapDataPanel;
+	private bool FirstGameTurn = false;
 
+	void AddListeners()
+	{
+		PlayerEvents.FocusModeChange += HandleFocusModeChange;
+		BattleEvents.StateChanged += HandleBattleStateChange;
+	}
+
+	void RemoveListeners()
+	{
+		PlayerEvents.FocusModeChange -= HandleFocusModeChange;
+		BattleEvents.StateChanged -= HandleBattleStateChange;
+	}
+
+	void HandleBattleStateChange(Battlestate state)
+	{
+		if(state is TurnStartState && !FirstGameTurn)
+		{
+			_MapDataPanel = Panel.AddChild<MapDataPanel>();
+			_MapDataPanel.MapName = BattleMachine.Instance.Map.Data.Name;
+			_MapDataPanel.Start();
+			FirstGameTurn = true;
+		}
+	}
+	void HandleFocusModeChange(FocusMode? mode, Unit u)
+	{
+		CurrentUnit = u;
+		if(mode == FocusMode.Menu)
+		{
+			_UnitStatPanel.IsActive = true;
+			_UnitStatPanel.BackdropActive = true;
+			_UnitStatPanel._Unit = CurrentUnit;
+		}
+		else if(mode == FocusMode.CommandSelectLook)
+		{
+			_UnitStatPanel.IsActive = true;
+			_UnitStatPanel.BackdropActive = false;
+			_UnitStatPanel._Unit = CurrentUnit;
+		}
+		else
+		{
+			_UnitStatPanel.IsActive = false;
+			_UnitStatPanel.BackdropActive = false;
+			_UnitStatPanel._Unit = null;
+		}
+	}
+	protected override void OnAwake()
+	{
+		AddListeners();
+	}
+	protected override void OnDestroy()
+	{
+		RemoveListeners();
+	}
+	protected override void OnStart()
+	{
+
+		_UnitStatPanel = Panel.AddChild<UnitStatPanel>();
+		_UnitStatPanel._Unit = CurrentUnit;
+	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

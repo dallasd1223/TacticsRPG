@@ -131,6 +131,17 @@
             "Tint": "1,1,1,1",
             "UpDirection": "YPositive",
             "UsePixelScale": false
+          },
+          {
+            "__type": "Border",
+            "__guid": "f23ffd47-96e3-486e-bd9b-4a6137988802",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
         ],
         "Children": []

@@ -5,11 +5,13 @@
 @attribute [StyleSheet]
 
 <root>
-	
+	<div class="Container">
+		<img class="Portrait" src="@Path" />
+	</div>
 </root>
 
 @code
 {
-
+	public string Path;
 	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
 }

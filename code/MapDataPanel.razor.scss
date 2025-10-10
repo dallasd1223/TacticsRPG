@@ -1,0 +1,28 @@
+MapDataPanel
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	transition: opacity 1s ease-in-out;
+	justify-content: center;
+	align-items: center;
+
+	.text
+	{
+		font-size: 85px;
+		font-family: "ThaleahFat";
+		color: #fff;
+	}
+
+	&:intro
+	{
+		opacity: 0;
+	}
+
+	&:outro
+	{
+		opacity: 0;
+	}
+}

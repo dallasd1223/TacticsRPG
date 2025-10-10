@@ -1,0 +1,30 @@
+@using System.Threading.Tasks;
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	<div>
+	<p class="text">@MapName</p>
+	</div>
+</root>
+
+@code
+{
+	public string MapName;
+
+	public void Start()
+	{
+		_ = FadeOutAndDelete();
+	}
+
+	private async Task FadeOutAndDelete()
+	{
+		await GameTask.DelaySeconds(3.0f);
+		Delete();
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
+}

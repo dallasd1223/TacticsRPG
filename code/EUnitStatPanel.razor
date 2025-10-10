@@ -9,17 +9,16 @@
 	@if(!IsActive) return;
 	@if(_Unit is null) return;
 	<div class = "MainContainer">
-		<PortraitPanel Path=@_Unit.Data.PortraitPath />
 		<div class="SubContainer">
 			<div class="DataContainer">
 				<div class="Data">@_Unit.Data.Name</div>
 				<div class="Data">Lv. @_Unit.Stats.GetStat(StatType.LVL)</div>
-				<div class="Data">Exp. @_Unit.Stats.GetStat(StatType.EXP)</div>
 			</div>
 			<StatBar Text="HP" CurrentValue=@_Unit.Stats.GetStat(StatType.HP) MaxValue=@_Unit.Stats.GetStat(StatType.MAXHP) Color="red"/>
 			<StatBar Text="MP" CurrentValue=@_Unit.Stats.GetStat(StatType.MP) MaxValue=@_Unit.Stats.GetStat(StatType.MAXMP) Color= "blue"/>
 			<StatBar Text="CT" CurrentValue=@_Unit.Stats.GetStat(StatType.CTR) MaxValue=@_Unit.Stats.GetStat(StatType.CTR) Color= "green"/>
 		</div>
+		<PortraitPanel Path=@_Unit.Data.PortraitPath />
 	</div>
 	@if(BackdropActive)
 	{
@@ -34,3 +33,4 @@
 	public bool BackdropActive = false;
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }
+
