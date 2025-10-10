@@ -11,3 +11,5 @@
 //MAIN MENU -> TOWER MAP -> PARTY FORMATION -> BATTLE SYSTEM
 
 ![Marche Portrait](../Assets/materials/player/marche_portrait.png "Marche")
+
+$${\color{red}Red}$$
