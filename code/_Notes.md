@@ -4,7 +4,7 @@
 
 //FINISH **FLOATING CHAR SYSTEM**
 
-//DECOUPLE BATTLE/UI/TILE HIGHLIGHTING FROM PLAYERMASTER
+//<span style="color:blue">DECOUPLE BATTLE/UI/TILE HIGHLIGHTING FROM PLAYERMASTER</span>  
 //<u>AI SHOULD HAVE SAME SYSTEMS AS PLAYER</u>
 
 //START ENCAPSULATING BATTLE SYSTEM (INITIALIZATION/DEACTIVATE)  
@@ -13,4 +13,4 @@
 
 ![Marche Portrait](../Assets/materials/player/marche_portrait.png "Marche")
 
-$${\color{red}TACTICS RPG}$$
+$${\color{red}TACTICS \space \color{blue}RPG}$$
