@@ -11,6 +11,8 @@
 
 //MAIN MENU -> TOWER MAP -> PARTY FORMATION -> BATTLE SYSTEM
 
+//BEGIN INCORPORATING **SAVE SYSTEM**
+
 ![Marche Portrait](../Assets/materials/player/marche_portrait.png "Marche")
 
 $${\color{red}TACTICS \space \color{blue}RPG}$$
