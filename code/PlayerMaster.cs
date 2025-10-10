@@ -6,6 +6,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 	//URGENT REFACTOR --MISSION ACCOMPLISHED--
 
 	[Property] public Unit CurrentUnit {get; set;} = null;
+	[Property] public Unit SelectedUnit {get; set;} = null;
 
 	[Property] public FocusMode? LastMode {get; set;} = null;
 	[Property] public FocusMode? Mode {get; set;} = FocusMode.NA;
@@ -19,6 +20,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
 
 	[Property] public ActionMenu Menu {get; set;}
+	[Property] public FreeLookScreen FreeLookScreen {get; set;}
 	[Property] public ConfirmManager Confirm {get; set;}
 
 	[Property] public SoundEvent Error {get; set;}
@@ -32,7 +34,9 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 
 		Confirm.ConfirmStart -= OnConfirmStart;
 		Confirm.ConfirmEnd -= OnConfirmEnd;
-		Confirm.ConfirmCancel -= OnCancelConfirm;	
+		Confirm.ConfirmCancel -= OnCancelConfirm;
+
+		PlayerEvents.UnitSelected += OnUnitSelected;	
 	}
 	protected override void OnAwake()
 	{
@@ -44,6 +48,8 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		Confirm.ConfirmStart += OnConfirmStart;
 		Confirm.ConfirmEnd += OnConfirmEnd;
 		Confirm.ConfirmCancel += OnCancelConfirm;
+
+		PlayerEvents.UnitSelected += OnUnitSelected;
 	}
 
 	public void OnActionSelectStart(Unit u)
@@ -51,6 +57,16 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		InitiatePlayerMaster(u);
 	}
 	
+	public void OnUnitSelected(Unit u)
+	{
+		SelectedUnit = u;
+		if(Mode == FocusMode.FreeLook)
+		{
+			Mode = FocusMode.FreeUnitSelectMenu;
+			PlayerEvents.OnFocusModeChange(Mode, SelectedUnit);
+		}
+	}
+
 	public void InitiatePlayerMaster(Unit u)
 	{
 		CurrentUnit = u;
@@ -184,6 +200,21 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				}
 
 				break;
+			case CommandType.Status:
+
+				if(Mode == FocusMode.Menu)
+				{	
+					LastMode = Mode;
+					Mode = FocusMode.StatusMenu;
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				}
+				else if(Mode == FocusMode.FreeUnitSelectMenu)
+				{
+					LastMode = Mode;
+					Mode = FocusMode.StatusMenu;
+					PlayerEvents.OnFocusModeChange(Mode, SelectedUnit);
+				}
+				break;
 			case null:
 				Log.Info("Error With Command");
 				break;
@@ -215,20 +246,34 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		PlayerEvents.OnCommandModeChange(cMode);		
 	}
 	
+	public void LastFocusMode()
+	{
+		Mode = LastMode;
+		PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+	}
 	public void SwitchFocusMode()
 	{
 		switch(Mode)
 		{
 			case FocusMode.Menu:
+				LastMode = Mode;
 				Mode = FocusMode.FreeLook;
 				Log.Info(Mode);
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
 				//GameCursor.Instance.ActiveToggle();
 				return;
 			case FocusMode.FreeLook:
+				LastMode = Mode;
 				Mode = FocusMode.Menu;
 				Log.Info(Mode);
 				PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+				//GameCursor.Instance.ActiveToggle();
+				return;
+			case FocusMode.FreeUnitSelectMenu:
+				LastMode = Mode;
+				Mode = FocusMode.FreeLook;
+				Log.Info(Mode);
+				PlayerEvents.OnFocusModeChange(Mode, SelectedUnit);
 				//GameCursor.Instance.ActiveToggle();
 				return;
 		}
@@ -240,8 +285,10 @@ public enum FocusMode
 	NA,
 	Menu,
 	ConfirmMenu,
+	StatusMenu,
 	FreeLook,
 	CommandSelectLook,
+	FreeUnitSelectMenu,
 }
 
 public enum CommandMode

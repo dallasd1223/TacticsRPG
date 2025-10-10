@@ -89,6 +89,19 @@ public class UnitEquipment : Component
 		return false;
 	}
 
+	public Equipment GetEquipment(EquipmentSlotType slot)
+	{
+		foreach(var kvp in _activeEquipment)
+		{
+			if(kvp.Key == slot)
+			{
+				return kvp.Value;
+			}
+		}
+		Log.Info($"Error Finding {slot}");
+		return null;
+	}
+
 	protected override void OnStart()
 	{
 		Initialize();

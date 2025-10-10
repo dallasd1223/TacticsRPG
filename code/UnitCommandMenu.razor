@@ -1,0 +1,97 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+@attribute [StyleSheet]
+<root>
+	@if(!IsActive) return;
+	@if(!ActiveUnit.IsValid()) return;
+		<div class="@(IsGrey ? "unit-menu grey-out" : "unit-menu")" @ref="Menu">
+
+			@foreach(CommandItem com in ActiveUnit.Turn.UnitCommands)
+			{
+				if(IsGrey)
+				{
+					<div class="button" style ="@(ActiveUnit.Turn.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+						<h1 class="button-text">@com.Text</h1>
+					</div>	
+								
+				}
+				else if(!com.Active)
+				{
+					<div class="button" style ="background-color: rgb(39, 39, 39)">
+						<h1 class="button-text">@com.Text</h1>
+					</div>						
+				}
+				else if(com.Active)
+				{
+					<div class="button" style ="@(ActiveUnit.Turn.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+						<h1 class="button-text">@com.Text</h1>
+					</div>
+				}
+			}	
+		</div>
+</root>
+
+@code
+{
+	public Unit ActiveUnit = null;
+	public bool IsActive {get; set;} = true;
+	[Property] public bool IsGrey {get; set;} = false;
+	public int SelectedIndex {get; set;} = 0;
+	[Property] SoundEvent SelectSound {get; set;}
+	[Property] SoundEvent PressSound {get; set;}
+	public Panel Menu;
+
+	protected override void OnAfterTreeRender(bool firstTime)
+	{
+		if(!firstTime) return;
+	}
+
+	public void Activate(Unit u)
+	{
+		IsActive = true;
+		ActiveUnit = u;
+	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+	}
+
+	public void IncreaseIndex()
+	{
+		if(SelectedIndex == ActiveUnit.Turn.UnitCommands.Count() - 1)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}
+		SelectedIndex += 1;
+
+		StateHasChanged();
+		Log.Info($"UnitCommandMenu Index Set To {SelectedIndex}");
+	}
+
+	public void DecreaseIndex()
+	{
+		if(SelectedIndex == 0)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}		
+		SelectedIndex -= 1;
+		Sound.Play(SelectSound);
+		StateHasChanged();
+		Log.Info($"UnitCommandMenu Index Set To {SelectedIndex}");
+	}
+
+	public void SelectCommand()
+	{
+		Log.Info($"Selecting {ActiveUnit.Turn.UnitCommands[SelectedIndex].Text} Command");
+		PlayerMaster.Instance.SelectedCommand(CommandType.Status);
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -31,8 +31,7 @@
 						<h1 class="button-text">@com.Text</h1>
 					</div>
 				}
-
-			}
+			}	
 		</div>
 </root>
 
@@ -117,6 +116,8 @@
 				return "ABILITY";
 			case CommandType.Wait:
 				return "WAIT";
+			case CommandType.Status:
+				return "STATUS";
 		}
 		return "";
 	}
@@ -133,6 +134,8 @@
 				return CommandType.Ability;
 			case "WAIT":
 				return CommandType.Wait;
+			case "STATUS":
+				return CommandType.Status;
 		}
 		Log.Info($"Error: No Matching Command For {str}");
 		return null;

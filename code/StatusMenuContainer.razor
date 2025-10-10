@@ -1,0 +1,32 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	@if(_Unit is null) return;
+	<EquipmentPanel @ref="_EquipmentPanel" />
+</root>
+
+@code
+{
+	public Unit _Unit;
+
+	private EquipmentPanel _EquipmentPanel;
+
+	protected override void OnAfterTreeRender(bool firstTime)
+	{
+		if(!firstTime) return;
+		
+		if(_EquipmentPanel.IsValid())
+		{
+			_EquipmentPanel._Unit = _Unit;
+		}	
+
+		
+	}
+
+
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now);
+}

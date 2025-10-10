@@ -64,5 +64,37 @@ partial class PlayerMaster
 					break;
 			}
 		}
+		else if(Mode == FocusMode.FreeUnitSelectMenu)
+		{
+			switch(key)
+			{
+				case InputKey.ENTER:
+					FreeLookScreen.SelectCommand();
+					return;
+				case InputKey.BACKSPACE:
+						Log.Info("Focus");
+						SwitchFocusMode();
+						return;
+				default:
+					break;
+			}
+		}
+		else if(Mode == FocusMode.StatusMenu)
+		{
+			switch(key)
+			{
+				case InputKey.BACKSPACE:
+						Log.Info("Focus");
+						LastFocusMode();
+					return;
+				default:
+					break;
+			}
+		}
+		else
+		{
+			Log.Info("No Focus Mode Set");
+			return;
+		}
 	}
 }

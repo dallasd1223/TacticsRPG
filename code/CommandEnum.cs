@@ -11,5 +11,5 @@ public enum CommandType
 	Magic,
 	Skill,
 	Wait,
-
+	Status,
 }

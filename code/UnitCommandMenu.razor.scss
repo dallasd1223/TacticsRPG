@@ -1,0 +1,31 @@
+UnitCommandMenu
+{
+
+
+	.unit-menu
+	{
+		position: absolute;
+		top: 370px;
+		left: 1250px;
+		flex-direction: column;
+		gap: 5px;
+		justify-content: center;
+		align-items: center;
+		color: rgb(39, 39, 39)
+	}
+
+	.button
+	{
+		justify-content: center;
+		align-items: center;
+		background-color: blue;
+		width: 100px;
+		height: 25px;
+	}
+	
+	.button-text
+	{
+		font-size: 15px;
+		color: white;
+	}
+}

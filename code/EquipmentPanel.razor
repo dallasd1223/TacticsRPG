@@ -1,0 +1,41 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	@if(_Unit is null) return;
+	<div class="MainContainer">
+		<div class="EquipHeader"><p>EQUIPMENT</p></div>
+		<div class="EquipmentContainer">
+			<div class="EquipmentDiv">
+				<h1 class="Title">LEFT</h1>
+				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.LeftHand)?.Data.Name</p>
+			</div>
+			<div class="EquipmentDiv">
+				<h1 class="Title">RIGHT</h1>
+				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.RightHand)?.Data.Name</p>
+			</div>
+			<div class="EquipmentDiv">
+				<h1 class="Title">HEAD</h1>
+				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Helmet)?.Data.Name</p>
+			</div>
+			<div class="EquipmentDiv">
+				<h1 class="Title">BODY</h1>
+				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Armor)?.Data.Name</p>
+			</div>
+			<div class="EquipmentDiv">
+				<h1 class="Title">ACC</h1>
+				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Accessory)?.Data.Name</p>
+			</div>
+		</div>
+	</div>
+</root>
+
+@code
+{
+	public Unit _Unit;
+
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now);
+}

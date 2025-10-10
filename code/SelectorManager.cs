@@ -48,6 +48,8 @@ public partial class SelectorManager : StateMachine
 		TrySetObject(HoveredTile);
 		//Send Event To Current SelectorState
 		HoverChange?.Invoke();
+		//Send Event To Global EventBus
+		PlayerEvents.OnTileHovered(HoveredUnit, HoveredTile);
 	}
 
 	public void TrySetVector(Vector2 vec, bool fresh)
@@ -103,9 +105,11 @@ public partial class SelectorManager : StateMachine
 	}
 	public void OnValidSelect()
 	{
-		ValidSelect?.Invoke(State);
-		PlayerEvents.OnValidSelection(State);
 		IsConfirming = true;
+		ValidSelect?.Invoke(State);
+		//Send Event To Global EventBus
+		PlayerEvents.OnValidSelection(State);
+
 	}
 
 	public void CancelSelection()
@@ -217,12 +221,33 @@ public class SelectorState : State
 
 public class FreeLookSelectState : SelectorState
 {
-
+	
+	[Property] Unit SelectedUnit {get; set;} = null;
 	protected override bool CheckIfSelectable()
 	{
+		var t = Selector.HoveredTile;
+		var u = UnitManager.Instance.GetUnitFromTile(t);
 
+		if(u is not null)
+		{
+			IsSelectable = true;
+			Log.Info($"-Free Look- Unit {u.Data.Name} On Tile {t.TileIndex} Is Selectable");
+			return true;
+		}
 		IsSelectable = false;
 		return false;
+	}
+
+	public override void OnSelect()
+	{
+		//Might be redundant
+		if(IsSelectable)
+		{
+			SelectedUnit = UnitManager.Instance.GetUnitFromTile(Selector.HoveredTile);
+			Log.Info($"-Free Look- Selected Unit: {SelectedUnit.Data.Name}");
+			PlayerEvents.OnUnitSelected(SelectedUnit);
+			OnDeactivate();
+		}
 	}
 
 }

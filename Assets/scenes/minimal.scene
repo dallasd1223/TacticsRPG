@@ -12982,6 +12982,53 @@
       "Children": []
     },
     {
+      "__guid": "cdafc7f3-377f-4d9b-827c-3e6c2c0b3d1e",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "SelectLookMenu",
+      "Position": "12.12974,-104.1004,76.15854",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.FreeLookScreen",
+          "__guid": "ba9ec80f-2619-4c51-8536-565dff17a703",
+          "__enabled": true,
+          "IsActive": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "4a05ab8d-fe92-42f0-9995-a4abde9ab9d6",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "4290e48d-81ca-45c5-a62a-3421a3ee04ca",
       "__version": 1,
       "Flags": 0,
@@ -13119,12 +13166,14 @@
           "__type": "Sandbox.BattleHUD",
           "__guid": "17582296-ffe1-413e-820f-a5398654bdf7",
           "__enabled": true,
+          "CurrentTile": null,
           "CurrentUnit": {
             "_type": "component",
             "component_id": "39968a51-ae2c-4575-91e5-a2b547660143",
             "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
             "component_type": "Unit"
           },
+          "EnemyUnit": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -13183,6 +13232,12 @@
           "CurrentSelectedCommand": null,
           "CurrentUnit": null,
           "Error": "sounds/ui-sound-18.sound",
+          "FreeLookScreen": {
+            "_type": "component",
+            "component_id": "ba9ec80f-2619-4c51-8536-565dff17a703",
+            "go": "cdafc7f3-377f-4d9b-827c-3e6c2c0b3d1e",
+            "component_type": "FreeLookScreen"
+          },
           "Inventory": {
             "_type": "component",
             "component_id": "0b909bfe-992a-4587-bd40-44fe1a97e734",
@@ -13203,7 +13258,8 @@
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
-          "OnComponentUpdate": null
+          "OnComponentUpdate": null,
+          "SelectedUnit": null
         },
         {
           "__type": "InputManager",
@@ -14085,7 +14141,8 @@
             "MOVE",
             "ATTACK",
             "ABILITY",
-            "WAIT"
+            "WAIT",
+            "STATUS"
           ],
           "ItemCommands": [],
           "OnComponentDestroy": null,
@@ -14095,7 +14152,11 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "SkillCommands": [],
-          "SpellCommands": []
+          "SpellCommands": [],
+          "UnitCommands": [],
+          "UnitCommandsList": [
+            "STATUS"
+          ]
         },
         {
           "__type": "TacticsRPG.UnitStats",
@@ -14361,7 +14422,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "PortraitPath": null
+          "PortraitPath": "materials/player/marche_portrait.png"
         },
         {
           "__type": "TacticsRPG.UnitAnimator",
@@ -14470,7 +14531,11 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "SkillCommands": [],
-          "SpellCommands": []
+          "SpellCommands": [],
+          "UnitCommands": [],
+          "UnitCommandsList": [
+            "STATUS"
+          ]
         },
         {
           "__type": "TacticsRPG.UnitStats",
@@ -14619,7 +14684,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 2639.6208
+            "Relative": 2770.919
           }
         },
         {

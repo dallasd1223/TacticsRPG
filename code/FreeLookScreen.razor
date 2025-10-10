@@ -1,0 +1,75 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+
+</root>
+
+@code
+{
+	[Property] public bool IsActive {get; set;} = true;
+
+	private UnitCommandMenu _UnitCommandMenu;
+	TimeSince TimeSinceActive = 0;
+
+	protected override void OnAwake()
+	{
+		AddListeners();
+	}
+
+	protected override void OnDestroy()
+	{
+		RemoveListeners();
+	}
+
+
+	void AddListeners()
+	{
+		PlayerEvents.FocusModeChange += HandleFocusModeChange;
+	}
+
+	void RemoveListeners()
+	{
+		PlayerEvents.FocusModeChange -= HandleFocusModeChange;
+	}
+
+	void HandleFocusModeChange(FocusMode? mode, Unit u)
+	{
+		if(mode == FocusMode.FreeUnitSelectMenu)
+		{
+			if(_UnitCommandMenu.IsValid())
+			{
+				_UnitCommandMenu.Delete();
+				_UnitCommandMenu = null;
+			}
+			IsActive = true;
+			TimeSinceActive = 0;
+			_UnitCommandMenu = Panel.AddChild<UnitCommandMenu>();
+			_UnitCommandMenu.ActiveUnit = u;
+			StateHasChanged();
+		}
+		else
+		{
+			Log.Info("Removing Unit Command Menu");
+			IsActive = false;
+			if(_UnitCommandMenu.IsValid())
+			{
+				_UnitCommandMenu.Delete();
+				_UnitCommandMenu = null;
+			}
+			StateHasChanged();
+		}
+	}
+
+	public void SelectCommand()
+	{
+		if(TimeSinceActive < 0.1f) return;
+		if(!_UnitCommandMenu.IsValid()) return;
+		_UnitCommandMenu.SelectCommand();
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

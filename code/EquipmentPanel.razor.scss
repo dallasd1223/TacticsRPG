@@ -1,0 +1,83 @@
+EquipmentPanel
+{
+	position: absolute;
+
+	justify-content: center;
+	align-items: center;
+
+	transition:all 0.3s ease-in-out;
+	opacity: 1;
+
+	.MainContainer
+	{
+		width: auto;
+		height: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+		border: 2px solid white;
+		border-radius: 5px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.EquipmentContainer
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 10px;
+		border: 2px solid white;
+		border-radius: 5px;
+		padding: 10px;
+		margin: 10px;
+	}
+
+	.EquipHeader
+	{	
+		font-family: "Retro Pixel Thick";
+		font-size: 30px;
+		color: white;	
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+		justify-content: center;
+	}
+
+	.EquipmentDiv
+	{
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+
+
+		>.selected
+		{
+			background-color: blue;
+		}
+	}
+	.Title
+	{
+		font-size: 25px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+	}
+
+	.Name
+	{
+		font-size: 20px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 4px 4px 0px black;
+	}
+
+	&:intro
+	{
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	&:outro
+	{
+		opacity: 0;
+	}
+}

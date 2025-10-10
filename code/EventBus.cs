@@ -56,10 +56,23 @@ public static class PlayerEvents
 	public static event Action<CommandMode?> CommandModeChange;
 	public static event Action<IAbilityItem> AbilityItemSelected;
 	public static event Action<SelectorState> ValidSelection;
+	public static event Action<Unit, TileData> TileHovered;
+	public static event Action<Unit> UnitSelected;
 	public static event Action<Unit> CancelCommand;
 	public static event Action CancelSelection;
 	public static event Action<Command> ConfirmAction;
 	public static event Action ActionConfirmed;
+
+	public static void OnUnitSelected(Unit u)
+	{
+		UnitSelected?.Invoke(u);
+		Log.Info($"Unit Selected Event: {u?.Data.Name ?? "null"}" );
+	}
+	public static void OnTileHovered(Unit u, TileData t)
+	{
+		TileHovered?.Invoke(u, t);
+		Log.Info($"Tile Hovered Event: {u?.Data.Name ?? "null"} {t?.TileIndex.ToString() ?? "null"}" );
+	}
 
 	public static void OnCancelCommand(Unit u)
 	{
@@ -81,6 +94,7 @@ public static class PlayerEvents
 	public static void OnValidSelection(SelectorState state)
 	{
 		ValidSelection?.Invoke(state);
+		Log.Info("Valid Selection Event");
 	}
 
 	public static void OnAbilitItemSelected(IAbilityItem AItem)
@@ -91,6 +105,7 @@ public static class PlayerEvents
 	public static void OnFocusModeChange(FocusMode? mode, Unit u)
 	{
 		FocusModeChange?.Invoke(mode, u);
+		Log.Info("Focus Mode Change Event: " + mode.ToString());
 	}
 
 	public static void OnCommandModeChange(CommandMode? mode)

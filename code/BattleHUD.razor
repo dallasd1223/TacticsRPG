@@ -13,13 +13,20 @@
 	[Property] public Unit CurrentUnit {get; set;}
 	[Property] public Unit EnemyUnit {get; set;}
 	[Property] public TileData CurrentTile {get; set;}
+
+	[Property] public FocusMode? CurrentFocusMode = null;
 	private UnitStatPanel _UnitStatPanel;
+	private EUnitStatPanel _EUnitStatPanel;
 	private MapDataPanel _MapDataPanel;
+	private StatusMenuContainer _StatusMenuContainer;
+
 	private bool FirstGameTurn = false;
 
 	void AddListeners()
 	{
 		PlayerEvents.FocusModeChange += HandleFocusModeChange;
+		PlayerEvents.TileHovered += HandleTileHover;
+		PlayerEvents.ValidSelection += HandleValidSelection;
 		BattleEvents.StateChanged += HandleBattleStateChange;
 	}
 
@@ -27,6 +34,8 @@
 	{
 		PlayerEvents.FocusModeChange -= HandleFocusModeChange;
 		BattleEvents.StateChanged -= HandleBattleStateChange;
+		PlayerEvents.ValidSelection += HandleValidSelection;
+		PlayerEvents.TileHovered -= HandleTileHover;
 	}
 
 	void HandleBattleStateChange(Battlestate state)
@@ -38,29 +47,96 @@
 			_MapDataPanel.Start();
 			FirstGameTurn = true;
 		}
+		else if(state is ExecuteActionState)
+		{
+			if(_UnitStatPanel.IsActive)
+			{
+				_UnitStatPanel.IsActive = false;
+				_UnitStatPanel.BackdropActive = false;
+				_UnitStatPanel._Unit = null;
+			}
+			if(_EUnitStatPanel.IsActive)
+			{
+				_EUnitStatPanel.IsActive = false;
+				_EUnitStatPanel.BackdropActive = false;
+				_EUnitStatPanel._Unit = null;
+			}
+		}
+	}
+	void HandleValidSelection(SelectorState state)
+	{
+		if(state.Selector.IsConfirming)
+		{
+			_UnitStatPanel.IsActive = true;
+			_UnitStatPanel.BackdropActive = true;
+			_UnitStatPanel._Unit = CurrentUnit;			
+		}
 	}
 	void HandleFocusModeChange(FocusMode? mode, Unit u)
 	{
 		CurrentUnit = u;
+		CurrentFocusMode = mode;
+		Log.Info($"BattleHUD FocusMode Change: {mode.ToString() ?? "null"}" );
 		if(mode == FocusMode.Menu)
 		{
+			if(_StatusMenuContainer.IsValid())
+			{
+				_StatusMenuContainer.Delete();
+				_StatusMenuContainer = null;
+			}
+			if(_EUnitStatPanel.IsActive)
+			{
+				_EUnitStatPanel.IsActive = false;
+				_EUnitStatPanel.BackdropActive = false;
+				_EUnitStatPanel._Unit = null;
+			}
+
 			_UnitStatPanel.IsActive = true;
 			_UnitStatPanel.BackdropActive = true;
 			_UnitStatPanel._Unit = CurrentUnit;
 		}
-		else if(mode == FocusMode.CommandSelectLook)
+		else if(mode == FocusMode.ConfirmMenu)
 		{
-			_UnitStatPanel.IsActive = true;
-			_UnitStatPanel.BackdropActive = false;
-			_UnitStatPanel._Unit = CurrentUnit;
+			return;
+		}
+		else if(mode == FocusMode.StatusMenu)
+		{
+			_StatusMenuContainer = Panel.AddChild<StatusMenuContainer>();
+			_StatusMenuContainer._Unit = u;
 		}
 		else
 		{
+			if(_StatusMenuContainer.IsValid())
+			{
+				_StatusMenuContainer.Delete();
+				_StatusMenuContainer = null;
+			}
 			_UnitStatPanel.IsActive = false;
 			_UnitStatPanel.BackdropActive = false;
 			_UnitStatPanel._Unit = null;
 		}
 	}
+
+	void HandleTileHover(Unit u, TileData t)
+	{
+		if(CurrentFocusMode == FocusMode.Menu) return;
+		CurrentUnit = u;
+		CurrentTile = t;
+		Log.Info("BattleHUD Tile Hover Change");
+		if(u != null)
+		{
+			_EUnitStatPanel.IsActive = true;
+			_EUnitStatPanel.BackdropActive = true;
+			_EUnitStatPanel._Unit = u;
+		}
+		else
+		{
+			_EUnitStatPanel.IsActive = false;
+			_EUnitStatPanel.BackdropActive = false;
+			_EUnitStatPanel._Unit = null;
+		}
+	}
+
 	protected override void OnAwake()
 	{
 		AddListeners();
@@ -74,6 +150,8 @@
 
 		_UnitStatPanel = Panel.AddChild<UnitStatPanel>();
 		_UnitStatPanel._Unit = CurrentUnit;
+
+		_EUnitStatPanel = Panel.AddChild<EUnitStatPanel>();
 	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

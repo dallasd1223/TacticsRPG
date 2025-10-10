@@ -8,13 +8,14 @@ public class UnitTurn : Component
 {
 	[Property] public bool HasMoved {get; set;} = false;
 	[Property] public bool HasActed {get; set;}= false;
-	[Property] public List<string> InitialCommands = new List<string>{"MOVE", "ATTACK", "ABILITY", "WAIT"};
+	[Property] public List<string> InitialCommands = new List<string>{"MOVE", "ATTACK", "ABILITY", "WAIT", "STATUS"};
+	[Property] public List<string> UnitCommandsList = new List<string>{"STATUS"};
+	[Property] public List<CommandItem> UnitCommands {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> CommandItems {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> AbilityCommands {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> ItemCommands {get; set;} = new List<CommandItem>(); 
 	[Property] public List<CommandItem> SkillCommands {get; set;} = new List<CommandItem>();
 	[Property] public List<CommandItem> SpellCommands {get; set;} = new List<CommandItem>();
-
 	public event Action TurnStarted;
 	public event Action TurnEnded;
 
@@ -27,11 +28,16 @@ public class UnitTurn : Component
 
 	protected override void OnStart()
 	{
+		var unit = GetComponent<Unit>();
 		foreach(string s in InitialCommands)
 		{
 			CommandItems.Add(new CommandItem(s));
 		}
-		var unit = GetComponent<Unit>();
+
+		foreach(string s in UnitCommandsList)
+		{
+			UnitCommands.Add(new CommandItem(s));
+		}
 		if(unit.UAbility.Abilities.Any())
 		{
 			foreach(Ability a in unit.UAbility.Abilities)
@@ -68,7 +74,6 @@ public class UnitTurn : Component
 				Log.Info($"{d.Name} Item Command");
 			}
 		}
-
 	}
 	public void SetCommand(string s, bool b)
 	{

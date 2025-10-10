@@ -58,6 +58,12 @@ public partial class SelectorManager
 			NullState();
 			return;
 		}
+		else if(f == FocusMode.FreeUnitSelectMenu)
+		{
+			DeactivateSelector();
+			NullState();
+			return;
+		}
 	}
 
 	public void HandleCommandMode(CommandMode? c)
