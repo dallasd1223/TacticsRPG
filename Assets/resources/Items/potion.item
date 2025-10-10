@@ -6,7 +6,7 @@
   "EffectID": 0,
   "CanUseOnSelf": true,
   "Shape": "Line",
-  "BaseRange": 0,
+  "BaseRange": 1,
   "ActionRange": 0,
   "Value": 0,
   "ItemEffect": "Heal",
