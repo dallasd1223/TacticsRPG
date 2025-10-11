@@ -1,8 +1,88 @@
 StatPanel
 {
-	position: absolute;
 	
 	justify-content: center;
 	align-items: center;
 
+	transition:all 0.3s ease-in-out;
+	opacity: 1;
+
+	.MainContainer
+	{
+		height: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+		border: 1px solid white;
+		border-radius: 5px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.StatHeader
+	{	
+		font-family: "Retro Pixel Thick";
+		font-size: 30px;
+		color: white;	
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+		justify-content: center;
+	}
+
+	.StatContainer
+	{
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+		justify-content: center;
+	}
+
+	.StatColumn
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		border: 1px solid white;
+		border-radius: 5px;
+	}
+
+	.StatDiv
+	{
+		display: flex;
+		flex-direction: row;
+		padding: 5px;
+		margin-left: 5px;
+		margin-right: 5px;
+		gap: 10px;
+	}
+
+	.Title
+	{
+		font-size: 25px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+	}
+
+	.Value
+	{
+		font-size: 20px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+	}
+
+	&:intro
+	{
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	&:outro
+	{
+		opacity: 0;
+	}
 }

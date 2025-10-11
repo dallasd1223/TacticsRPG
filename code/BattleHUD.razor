@@ -69,7 +69,8 @@
 		{
 			_UnitStatPanel.IsActive = true;
 			_UnitStatPanel.BackdropActive = true;
-			_UnitStatPanel._Unit = CurrentUnit;			
+			_UnitStatPanel._Unit = CurrentUnit;	
+			SetPositionStyle();		
 		}
 	}
 	void HandleFocusModeChange(FocusMode? mode, Unit u)
@@ -94,6 +95,7 @@
 			_UnitStatPanel.IsActive = true;
 			_UnitStatPanel.BackdropActive = true;
 			_UnitStatPanel._Unit = CurrentUnit;
+			SetPositionStyle();
 		}
 		else if(mode == FocusMode.ConfirmMenu)
 		{
@@ -101,6 +103,18 @@
 		}
 		else if(mode == FocusMode.StatusMenu)
 		{
+			if(_UnitStatPanel.IsActive)
+			{
+				_UnitStatPanel.IsActive = false;
+				_UnitStatPanel.BackdropActive = false;
+				_UnitStatPanel._Unit = null;
+			}
+			if(_EUnitStatPanel.IsActive)
+			{
+				_EUnitStatPanel.IsActive = false;
+				_EUnitStatPanel.BackdropActive = false;
+				_EUnitStatPanel._Unit = null;
+			}
 			_StatusMenuContainer = Panel.AddChild<StatusMenuContainer>();
 			_StatusMenuContainer._Unit = u;
 		}
@@ -111,6 +125,7 @@
 				_StatusMenuContainer.Delete();
 				_StatusMenuContainer = null;
 			}
+
 			_UnitStatPanel.IsActive = false;
 			_UnitStatPanel.BackdropActive = false;
 			_UnitStatPanel._Unit = null;
@@ -136,7 +151,12 @@
 			_EUnitStatPanel._Unit = null;
 		}
 	}
-
+	void SetPositionStyle()
+	{
+		_UnitStatPanel.Style.Position = PositionMode.Absolute;
+		_UnitStatPanel.Style.Left = Length.Pixels(100);
+		_UnitStatPanel.Style.Bottom = Length.Pixels(100);
+	}
 	protected override void OnAwake()
 	{
 		AddListeners();
@@ -153,6 +173,13 @@
 
 		_EUnitStatPanel = Panel.AddChild<EUnitStatPanel>();
 	}
+/*
+	position: absolute;
 
+	left: 100px;
+	bottom: 100px;
+
+*/
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }
+

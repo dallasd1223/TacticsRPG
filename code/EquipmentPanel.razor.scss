@@ -1,6 +1,5 @@
 EquipmentPanel
 {
-	position: absolute;
 
 	justify-content: center;
 	align-items: center;
@@ -13,7 +12,7 @@ EquipmentPanel
 		width: auto;
 		height: auto;
 		background-color: rgba(0, 0, 0, 0.5);
-		border: 2px solid white;
+		border: 1px solid white;
 		border-radius: 5px;
 		display: flex;
 		flex-direction: column;
@@ -25,7 +24,7 @@ EquipmentPanel
 		flex-direction: column;
 		gap: 20px;
 		padding: 10px;
-		border: 2px solid white;
+		border: 1px solid white;
 		border-radius: 5px;
 		padding: 10px;
 		margin: 10px;

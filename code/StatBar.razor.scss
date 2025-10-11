@@ -8,16 +8,16 @@ StatBar
 		flex-direction: row;
 		align-items: center;
 		gap: 10px;
-		font-family: "Retro Pixel Thick";
-		color: white;
-		text-shadow: 2px 2px 0px black;
+
 	}
 	
 	.Text
 	{
 		font-size: 30px;
-		width: 50px;
 		text-align: right;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 2px 2px 0px black;
 	}
 
 	.Bar
@@ -37,5 +37,14 @@ StatBar
 		left: 0;
 		background-color: red;
 		height: 100%;
+	}
+
+	.Value
+	{
+		font-size: 30px;
+		text-align: right;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 2px 2px 0px black;
 	}
 }

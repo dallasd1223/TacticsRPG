@@ -96,7 +96,7 @@ public partial class SelectorManager
 		IsActive = true;
 		IsConfirming = false;
 		CurrentUnit = u;
-
+		
 		TileData StartTile = TileMapManager.Instance.GetTileFromUnit(u);
 		Vector2 StartVec = TileMapManager.Instance.GetVector2FromTile(StartTile);
 		

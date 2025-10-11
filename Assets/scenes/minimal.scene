@@ -13166,6 +13166,7 @@
           "__type": "Sandbox.BattleHUD",
           "__guid": "17582296-ffe1-413e-820f-a5398654bdf7",
           "__enabled": true,
+          "CurrentFocusMode": null,
           "CurrentTile": null,
           "CurrentUnit": {
             "_type": "component",
@@ -13474,7 +13475,8 @@
             "component_id": "a8b511a0-b162-4b93-a120-e87e566bccd0",
             "go": "a077885a-5a65-4c43-b808-8fbcccc39023",
             "component_type": "SaveManager"
-          }
+          },
+          "TimeScaleValue": 1
         }
       ],
       "Children": []
@@ -14684,7 +14686,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 2770.919
+            "Relative": 472.78464
           }
         },
         {
@@ -14893,7 +14895,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "Size": 100,
-          "Value": "MOMMY"
+          "Value": ""
         }
       ],
       "Children": []

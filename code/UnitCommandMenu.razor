@@ -41,8 +41,6 @@
 	public bool IsActive {get; set;} = true;
 	[Property] public bool IsGrey {get; set;} = false;
 	public int SelectedIndex {get; set;} = 0;
-	[Property] SoundEvent SelectSound {get; set;}
-	[Property] SoundEvent PressSound {get; set;}
 	public Panel Menu;
 
 	protected override void OnAfterTreeRender(bool firstTime)
@@ -82,7 +80,6 @@
 			return;
 		}		
 		SelectedIndex -= 1;
-		Sound.Play(SelectSound);
 		StateHasChanged();
 		Log.Info($"UnitCommandMenu Index Set To {SelectedIndex}");
 	}

@@ -17,6 +17,7 @@ public enum StatType
 	MAG, // MAGIC
 	DEF, // DEFENSE
 	SPD, // SPEED
+	JMP, // JUMP
 	ACC, // ACCURACY
 	EV, // EVASION
 }

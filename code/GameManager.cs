@@ -9,6 +9,7 @@ public sealed class GameManager : Component
 	[Property] public GameState CurrentState {get; set;} = GameState.NA;
 	[Property] public SaveManager Save {get; set;}
 	[Property] public DebugUI DebugVisual {get; set;}
+	[Property] [Range(0f, 1f)]public float TimeScaleValue {get; set;} = 1f;
 	 
 	private float RealStartTime {get; set;}
 	[Property] public float GameTime {get; set;} = 0;
@@ -35,6 +36,7 @@ public sealed class GameManager : Component
 
 	protected override void OnUpdate()
 	{
+		Scene.TimeScale = TimeScaleValue;
 		GameTime = RealTime.Now - RealStartTime;
 	}
 

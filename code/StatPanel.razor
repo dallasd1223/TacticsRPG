@@ -5,13 +5,50 @@
 @namespace Sandbox
 
 <root>
+	@if(_Unit is null) return;
+	<div class="MainContainer">
+		<div class="StatHeader"><p>STATS</p></div>
+		<div class="StatContainer">
+			<div class="StatColumn">
+				<div class="StatDiv">
+					<h1 class="Title">MOV:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.MOV)</h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">SPD:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.SPD)</h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">JMP:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.JMP)</h1>
+				</div>
+			</div>
+			<div class="StatColumn">
+				<div class="StatDiv">
+					<h1 class="Title">ATK:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.ATK)</h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">WEP:</h1><h1 class="Value"> </h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">MAG:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.MAG)</h1>
+				</div>
+			</div>
+			<div class="StatColumn">
+				<div class="StatDiv">
+					<h1 class="Title">DEF:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.DEF)</h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">ACC:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.ACC)</h1>
+				</div>
+				<div class="StatDiv">
+					<h1 class="Title">EV:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.EV)</h1>
+				</div>
 
+			</div>
+		</div>
 </root>
 
 @code
 {
-
-
+	public Unit _Unit;
 
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

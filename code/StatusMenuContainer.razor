@@ -6,23 +6,47 @@
 
 <root>
 	@if(_Unit is null) return;
-	<EquipmentPanel @ref="_EquipmentPanel" />
+	<div class="StatusContainer">
+		<UnitStatPanel @ref="_UnitStatPanel" />
+		<StatPanel @ref="_StatPanel" />
+		<div style="flex-direction:row; gap:10px;">
+			<EquipmentPanel @ref="_EquipmentPanel" />
+			<AbilityPanel @ref="_AbilityPanel" />
+		</div>
+	</div>
+
 </root>
 
 @code
 {
 	public Unit _Unit;
-
+	
+	private UnitStatPanel _UnitStatPanel;
+	private StatPanel _StatPanel;
 	private EquipmentPanel _EquipmentPanel;
+	private AbilityPanel _AbilityPanel;
 
 	protected override void OnAfterTreeRender(bool firstTime)
 	{
 		if(!firstTime) return;
-		
+		if(_UnitStatPanel.IsValid())
+		{
+			_UnitStatPanel._Unit = _Unit;
+			_UnitStatPanel.IsActive = true;
+			_UnitStatPanel.BackdropActive = true;
+		}
+		if(_StatPanel.IsValid())
+		{
+			_StatPanel._Unit = _Unit;
+		}
 		if(_EquipmentPanel.IsValid())
 		{
 			_EquipmentPanel._Unit = _Unit;
 		}	
+		if(_AbilityPanel.IsValid())
+		{
+			_AbilityPanel._Unit = _Unit;
+		}
 
 		
 	}
