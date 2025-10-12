@@ -89,6 +89,20 @@ public class UnitEquipment : Component
 		return false;
 	}
 
+	public T GetEquipmentData<T>(EquipmentSlotType slot) where T : EquipmentData
+	{
+		foreach(var kvp in _activeEquipment)
+		{
+			if(kvp.Key == slot)
+			{
+				if(kvp.Value is null) return null;
+				return kvp.Value.Data as T;
+			}
+		}
+		Log.Info($"Error Finding {slot}");
+		return null;
+	}
+
 	public Equipment GetEquipment(EquipmentSlotType slot)
 	{
 		foreach(var kvp in _activeEquipment)
@@ -99,7 +113,7 @@ public class UnitEquipment : Component
 			}
 		}
 		Log.Info($"Error Finding {slot}");
-		return null;
+		return null;		
 	}
 
 	protected override void OnStart()

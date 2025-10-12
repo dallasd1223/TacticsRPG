@@ -25,7 +25,7 @@
 					<h1 class="Title">ATK:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.ATK)</h1>
 				</div>
 				<div class="StatDiv">
-					<h1 class="Title">WEP:</h1><h1 class="Value"> </h1>
+					<h1 class="Title">WEP:</h1><h1 class="Value">@(_Unit.Equipment.GetEquipmentData<WeaponData>(EquipmentSlotType.LeftHand).WP)</h1>
 				</div>
 				<div class="StatDiv">
 					<h1 class="Title">MAG:</h1><h1 class="Value">@_Unit.Stats.GetStat(StatType.MAG)</h1>

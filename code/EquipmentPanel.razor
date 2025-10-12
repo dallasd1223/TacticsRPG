@@ -11,23 +11,23 @@
 		<div class="EquipmentContainer">
 			<div class="EquipmentDiv">
 				<h1 class="Title">LEFT</h1>
-				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.LeftHand)?.Data.Name</p>
+				<p class="Name">@(_Unit.Equipment.GetEquipmentData<WeaponData>(EquipmentSlotType.LeftHand)?.Name)</p>
 			</div>
 			<div class="EquipmentDiv">
 				<h1 class="Title">RIGHT</h1>
-				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.RightHand)?.Data.Name</p>
+				<p class="Name">@(_Unit.Equipment.GetEquipmentData<WeaponData>(EquipmentSlotType.RightHand)?.Name)</p>
 			</div>
 			<div class="EquipmentDiv">
 				<h1 class="Title">HEAD</h1>
-				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Helmet)?.Data.Name</p>
+				<p class="Name">@(_Unit.Equipment.GetEquipmentData<HelmetData>(EquipmentSlotType.Helmet)?.Name)</p>
 			</div>
 			<div class="EquipmentDiv">
 				<h1 class="Title">BODY</h1>
-				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Armor)?.Data.Name</p>
+				<p class="Name">@(_Unit.Equipment.GetEquipmentData<ArmorData>(EquipmentSlotType.Armor)?.Name)</p>
 			</div>
 			<div class="EquipmentDiv">
 				<h1 class="Title">ACC</h1>
-				<p class="Name">@_Unit.Equipment.GetEquipment(EquipmentSlotType.Accessory)?.Data.Name</p>
+				<p class="Name">@(_Unit.Equipment.GetEquipmentData<AccessoryData>(EquipmentSlotType.Accessory)?.Name)</p>
 			</div>
 		</div>
 	</div>
