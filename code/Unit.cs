@@ -31,6 +31,7 @@ public sealed class Unit : Component
 	[Property] public UnitAnimator Animator {get; set;}
 	[Property] public UnitBattle Battle {get; set;}
 	[Property] public UnitAI AI {get; set;}
+	[Property] public FloatingElementManager FEM {get; set;}
 	[Property] public TeamType Team {get; set;}
 	[Property] public bool IsTurn {get; set;} = false;
 	[Property] Vector3 UnitPosition {get; set;}
@@ -50,6 +51,7 @@ public sealed class Unit : Component
 		UAbility = GetComponent<UnitAbilities>();
 		USpell = GetComponent<UnitSpells>();
 		USkill = GetComponent<UnitSkills>();
+		FEM = GetComponentInChildren<FloatingElementManager>();
 		Experience.OnLevelUp += LeveledUp;
 		UAbility.OnAbilityAdded += AbilityAdded;
 		USkill.OnSkillAdded += SkillAdded;

@@ -1,0 +1,51 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+</root>
+
+@code
+{
+	private Queue<IFloatingElement> Elements = new Queue<IFloatingElement>();
+	private List<Panel> ActiveElements = new List<Panel>();
+
+	protected override void OnStart()
+	{
+
+	}
+
+	[Button("DamageTest")]
+	public void ElemTest()
+	{
+		CreateDamageText(999);
+	}
+
+	public void CreateDamageText(int Amount)
+	{
+		var ft = new FloatingText(Amount.ToString(), "ThaleahFat", 60, new Color(1.00f, 0.00f, 0.00f, 1.00f), () => new BounceInAnimation());
+		ft.Obj = this.GameObject.Parent;
+		Panel.AddChild(ft);
+		ft.Start();
+	}
+
+	private void AddElem()
+	{
+		var elem = Elements.Dequeue() ;
+		Panel.AddChild((Panel)elem);
+		ActiveElements.Add((Panel)elem);
+		elem.Start();
+	}
+
+	protected override void OnUpdate()
+	{
+		if(Elements.Any())
+		{
+			AddElem();
+		}
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

@@ -1,5 +1,7 @@
 FloatingChar
 {
+	position: absolute;
+	z-index: 1;
 	.value
 	{
 		position: absolute;
@@ -15,6 +17,5 @@ FloatingChar
 		font-size: 40px;
 		font-smooth: never;
 		color: black;
-		z-index: 1;
 	}
 }

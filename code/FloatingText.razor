@@ -1,0 +1,80 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@implements IFloatingElement
+@namespace Sandbox
+@attribute [StyleSheet]
+
+<root>
+
+</root>
+
+@code
+{
+
+	public string Value {get; set;}
+	public string Font {get; set;}
+	public int Size {get; set;}
+	public GameObject Obj {get; set;}
+	public Color color {get; set;}
+	public Func<ICharAnimation> animFactory;
+
+	private List<FloatingChar> chars {get; set;} = new();
+
+	public FloatingText(string val, string font, int fsize, Color col, Func<ICharAnimation> anim)
+	{
+		Value = val;
+		Font = font;
+		Size = fsize;
+		color = col;
+		animFactory = anim;
+	}
+
+	public void Start()
+	{
+		int i = 0;
+		FloatingChar prev = null;
+		foreach(Char c in Value)
+		{
+			var p = new FloatingChar(c, i, i, color, animFactory(), Size, Font);
+			chars.Add(p);
+			this.AddChild(p);
+
+			if(prev is not null)
+			{
+				p.prevChar = prev;
+			}
+			
+			prev = p;
+
+			Log.Info($"i: {i} w/ Font: {Font}");
+			i++;
+		}
+
+	}
+
+	public override void Tick()
+	{
+		if(!chars.Any()) return;
+		foreach(FloatingChar c in chars)
+		{
+			var point = Scene.Camera.PointToScreenPixels(Obj.WorldPosition + new Vector3(0,0,100));
+			point = point + new Vector2(-((GetTotalWidth()) / 2),0);
+			point = point / ScaleToScreen;
+			c.Position = point;
+			c.Update(Time.Delta);
+		}
+	}
+
+	float GetTotalWidth()
+	{
+		float total = 0;
+		foreach(FloatingChar c in chars)
+		{
+			total += c.Width;
+		}
+		return total;
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
+}

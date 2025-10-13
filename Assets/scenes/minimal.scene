@@ -13967,6 +13967,7 @@
           "Equipment": null,
           "Experience": null,
           "FaceDirection": "North",
+          "FEM": null,
           "ID": 0,
           "Interact": null,
           "isAIControlled": false,
@@ -14220,6 +14221,52 @@
       ],
       "Children": [
         {
+          "__guid": "c4b1549b-8aa7-468f-9ca4-ef2e23d38303",
+          "__version": 1,
+          "Flags": 0,
+          "Name": "FEM",
+          "Position": "0,0,0",
+          "Rotation": "0,0,0,1",
+          "Scale": "1,1,1",
+          "Tags": "",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "NetworkOrphaned": 0,
+          "OwnerTransfer": 1,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "7923fc01-ec26-45ae-8af9-c810c809bfc0",
+              "__enabled": true,
+              "AutoScreenScale": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "Opacity": 1,
+              "Scale": 1,
+              "ScaleStrategy": "ConsistentHeight",
+              "TargetCamera": null,
+              "ZIndex": 100
+            },
+            {
+              "__type": "Sandbox.FloatingElementManager",
+              "__guid": "c09d11ad-5547-44ca-bd3e-54bea5363f2e",
+              "__enabled": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null
+            }
+          ],
+          "Children": []
+        },
+        {
           "__guid": "43028284-59f3-4778-88ab-5b7ffe619818",
           "__version": 1,
           "Flags": 0,
@@ -14348,6 +14395,7 @@
           "Equipment": null,
           "Experience": null,
           "FaceDirection": "North",
+          "FEM": null,
           "ID": 0,
           "Interact": null,
           "isAIControlled": true,
@@ -14686,7 +14734,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 472.78464
+            "Relative": 3461.284
           }
         },
         {
@@ -14877,25 +14925,6 @@
           "ScaleStrategy": "ConsistentHeight",
           "TargetCamera": null,
           "ZIndex": 100
-        },
-        {
-          "__type": "Sandbox.FloatingValue",
-          "__guid": "3afdcda3-56d9-4e3b-815c-37f30d784f11",
-          "__enabled": true,
-          "color": "0.3,0,1,1",
-          "Font": "ThaleahFat",
-          "Obj": {
-            "_type": "gameobject",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac"
-          },
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Size": 100,
-          "Value": ""
         }
       ],
       "Children": []
