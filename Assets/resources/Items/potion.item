@@ -8,7 +8,7 @@
   "Shape": "Line",
   "BaseRange": 1,
   "ActionRange": 0,
-  "Value": 0,
+  "Value": 15,
   "ItemEffect": "Heal",
   "MaxStack": 0,
   "IconPath": null,

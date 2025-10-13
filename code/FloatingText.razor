@@ -12,12 +12,13 @@
 @code
 {
 
-	public string Value {get; set;}
-	public string Font {get; set;}
-	public int Size {get; set;}
-	public GameObject Obj {get; set;}
-	public Color color {get; set;}
+	public string Value;
+	public string Font;
+	public int Size;
+	public GameObject Obj;
+	public Color color; 
 	public Func<ICharAnimation> animFactory;
+	public FloatingTextMode Mode = FloatingTextMode.Normal;
 
 	private List<FloatingChar> chars {get; set;} = new();
 
@@ -64,9 +65,14 @@
 			c.Position = point;
 			c.Update(Time.Delta);
 		}
+		if(AllCharsDeleted())
+		{
+			Log.Info("All Chars Deleted, Removing Self");
+			this.Delete();
+		}
 	}
 
-	float GetTotalWidth()
+	private float GetTotalWidth()
 	{
 		float total = 0;
 		foreach(FloatingChar c in chars)
@@ -76,5 +82,14 @@
 		return total;
 	}
 
+	private bool AllCharsDeleted()
+	{
+		if(!chars.Any()) return true;
+		foreach(FloatingChar c in chars)
+		{
+			if(c.IsValid()) return false;
+		}
+		return true;
+	}
 	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
 }

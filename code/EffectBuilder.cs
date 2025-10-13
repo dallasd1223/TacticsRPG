@@ -161,11 +161,12 @@ public class PotionEffect: EffectEvent
 					}
 				)
 				.AddStep(
-					new SpawnValueNumberStep{
+					new CreateFloatingTextStep{
 						StartTime = Data.stepData[8].StartTime,
 						Duration = Data.stepData[8].Duration,
-						SpawnPosition = CObject.ActingUnit.GameObject.WorldPosition + Data.stepData[8].StartPosition,
-						NumberPrefab = Data.stepData[8].Resource,						
+						unit = CObject.AffectedUnit,
+						Text = CObject.AbilityItem.Data.Value.ToString(),
+						color = Data.stepData[8].Color,	
 					}
 				)
 				.Finish(),

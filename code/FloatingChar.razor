@@ -29,7 +29,7 @@
 	private bool HasStarted = false;
 	private bool HasStyled = false;
 
-	public FloatingChar(char c, float delay, float gap, Color col, ICharAnimation anim, int size = 60, string font = "Retro Pixel Thick")
+	public FloatingChar(char c, float delay, float gap, Color col, ICharAnimation anim, int size = 60, string font = "ThaleahFat")
 	{
 		value = c;
 		Delay = delay;
@@ -68,7 +68,12 @@
 		if(animation is not null)
 		{
 			animation.Update(main, delta, shadow);
+			if(animation.IsFinished)
+			{
+				this.Delete();	
+			}
 		}
+
 
 	}
 
@@ -99,33 +104,9 @@
 		main.Style.FontColor = color;
 	}
 
-	public Color GetRainbow()
-	{
-		float hue = (((float)RealTime.Now - Delay * 0.4f)* 0.2f) % 1f;
-		return HSVToRGB(hue, 1f, 1f);
-	}
 
-	public Color HSVToRGB(float h, float s, float v)
-    {
-        int i = (int)Math.Floor(h * 6f);
-        float f = h * 6f - i;
-        float p = v * (1f - s);
-        float q = v * (1f - f * s);
-        float t = v * (1f - (1f - f) * s);
 
-        float r = 0, g = 0, b = 0;
-        switch (i % 6)
-        {
-            case 0: r = v; g = t; b = p; break;
-            case 1: r = q; g = v; b = p; break;
-            case 2: r = p; g = v; b = t; break;
-            case 3: r = p; g = q; b = v; break;
-            case 4: r = t; g = p; b = v; break;
-            case 5: r = v; g = p; b = q; break;
-        }
 
-        return new Color(r, g, b, 1f); // full alpha
-	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

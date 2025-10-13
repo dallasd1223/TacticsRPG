@@ -20,12 +20,12 @@
 	[Button("DamageTest")]
 	public void ElemTest()
 	{
-		CreateDamageText(999);
+		CreateFloatingText(999.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f));
 	}
 
-	public void CreateDamageText(int Amount)
+	public void CreateFloatingText(string text, Color color)
 	{
-		var ft = new FloatingText(Amount.ToString(), "ThaleahFat", 60, new Color(1.00f, 0.00f, 0.00f, 1.00f), () => new BounceInAnimation());
+		var ft = new FloatingText(text, "ThaleahFat", 60, color, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
 		ft.Obj = this.GameObject.Parent;
 		Panel.AddChild(ft);
 		ft.Start();

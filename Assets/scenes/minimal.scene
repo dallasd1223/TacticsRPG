@@ -14647,6 +14647,52 @@
       ],
       "Children": [
         {
+          "__guid": "eac388ef-b416-4c0d-b66e-451c33c2dd05",
+          "__version": 1,
+          "Flags": 0,
+          "Name": "FEM",
+          "Position": "0,0,0",
+          "Rotation": "0,0,0,0.9999999",
+          "Scale": "1,1,1",
+          "Tags": "",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "NetworkOrphaned": 0,
+          "OwnerTransfer": 1,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "f38f8663-c206-4f1c-864b-fd82c4e3c489",
+              "__enabled": true,
+              "AutoScreenScale": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "Opacity": 1,
+              "Scale": 1,
+              "ScaleStrategy": "ConsistentHeight",
+              "TargetCamera": null,
+              "ZIndex": 100
+            },
+            {
+              "__type": "Sandbox.FloatingElementManager",
+              "__guid": "69c34a5e-12c5-41c0-a975-8eadf801040d",
+              "__enabled": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null
+            }
+          ],
+          "Children": []
+        },
+        {
           "__guid": "92bbef0b-8c12-4b8c-b9f1-15d07e0a13df",
           "__version": 1,
           "Flags": 0,
@@ -14734,7 +14780,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 3461.284
+            "Relative": 745.33606
           }
         },
         {

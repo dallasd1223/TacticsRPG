@@ -1,0 +1,19 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@implements IFloatingElement
+@namespace Sandbox
+
+<root>
+
+</root>
+
+@code
+{
+	public void Start()
+	{
+		
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

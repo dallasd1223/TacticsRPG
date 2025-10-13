@@ -87,6 +87,40 @@ public interface IEffectStep
 	bool IsComplete(float globalTime);
 }
 
+public class CreateFloatingTextStep : IEffectStep
+{
+	public float StartTime {get; set;}
+	public float Duration {get; set;}
+
+	public bool Started {get; set;} = false;
+	public bool Finished {get; set;} = false;
+
+	public Unit unit;
+
+	public string Text;
+	public Color color;
+
+	public void Start()
+	{
+		Started = true;
+		if(!unit.IsValid()) return;
+
+		unit.FEM.CreateFloatingText(Text, color);
+	}
+
+	public void Update(float localTime)
+	{
+
+	}
+
+	public void End()
+	{
+		Finished = true;
+	}
+
+	public bool IsComplete(float globalTime) => globalTime >= StartTime + Duration;
+}
+
 public class ColorSpriteStep : IEffectStep
 {
 	public float StartTime {get; set;}

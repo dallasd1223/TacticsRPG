@@ -203,7 +203,7 @@
       "AnimationName": null
     },
     {
-      "StepName": "SpawnValueNumber",
+      "StepName": "CreateFloatingText",
       "SequenceNum": 0,
       "StartTime": 3,
       "Duration": 0,
@@ -221,11 +221,8 @@
       "StartPosition": "0,0,10",
       "EndPosition": "0,0,0",
       "FocusPosition": "0,0,0",
-      "Color": "0,0,0,0",
-      "Resource": {
-        "_type": "gameobject",
-        "prefab": "prefabs/num.prefab"
-      },
+      "Color": "0.37674,1,0.47023,1",
+      "Resource": null,
       "Sound": null,
       "AnimationName": null
     },
