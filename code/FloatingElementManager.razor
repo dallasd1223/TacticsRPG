@@ -23,6 +23,12 @@
 		CreateFloatingText(999.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f));
 	}
 
+	[Button("ExpTest")]
+	public void GiveExp()
+	{
+		CreateFloatingText("EXP 17", new Color(1.00f, 0.78f, 0.00f, 1.00f));
+	}
+
 	public void CreateFloatingText(string text, Color color)
 	{
 		var ft = new FloatingText(text, "ThaleahFat", 60, color, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
@@ -45,7 +51,22 @@
 		{
 			AddElem();
 		}
+
+		DeleteReadyElements();
 	}
 
+	void DeleteReadyElements()
+	{
+		if(!ActiveElements.Any()) return;
+		foreach(Panel p in ActiveElements)
+		{
+			var elem = p as IFloatingElement;
+			if(elem.ReadyToDelete)
+			{
+				var x = elem as Panel;
+				x.Delete();
+			}
+		}
+	}
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

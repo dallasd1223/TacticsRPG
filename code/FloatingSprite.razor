@@ -10,9 +10,16 @@
 
 @code
 {
+	public bool ReadyToDelete {get; set;}
+
 	public void Start()
 	{
 		
+	}
+
+	public void Hide()
+	{
+
 	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

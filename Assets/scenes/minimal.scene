@@ -14652,7 +14652,7 @@
           "Flags": 0,
           "Name": "FEM",
           "Position": "0,0,0",
-          "Rotation": "0,0,0,0.9999999",
+          "Rotation": "0,0,0,1",
           "Scale": "1,1,1",
           "Tags": "",
           "Enabled": true,
@@ -14780,7 +14780,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 745.33606
+            "Relative": 1809.5441
           }
         },
         {

@@ -22,6 +22,8 @@
 
 	private List<FloatingChar> chars {get; set;} = new();
 
+	public bool ReadyToDelete {get; set;} = false;
+
 	public FloatingText(string val, string font, int fsize, Color col, Func<ICharAnimation> anim)
 	{
 		Value = val;
@@ -37,9 +39,10 @@
 		FloatingChar prev = null;
 		foreach(Char c in Value)
 		{
-			var p = new FloatingChar(c, i, i, color, animFactory(), Size, Font);
+			var p = new FloatingChar(c, i, i, color, animFactory(), i, Size, Font);
 			chars.Add(p);
 			this.AddChild(p);
+			p.Index = i;
 
 			if(prev is not null)
 			{
@@ -65,6 +68,7 @@
 			c.Position = point;
 			c.Update(Time.Delta);
 		}
+		DeleteReadyChars();
 		if(AllCharsDeleted())
 		{
 			Log.Info("All Chars Deleted, Removing Self");
@@ -81,7 +85,15 @@
 		}
 		return total;
 	}
-
+	
+	private void DeleteReadyChars()
+	{
+		if(!chars.Any()) return;
+		foreach(FloatingChar c in chars)
+		{
+			if(c.ReadyToDelete) c.Delete();
+		}		
+	}
 	private bool AllCharsDeleted()
 	{
 		if(!chars.Any()) return true;
@@ -91,5 +103,8 @@
 		}
 		return true;
 	}
+
+	public void Hide() {}
+	
 	protected override int BuildHash() => System.HashCode.Combine( RealTime.Now );
 }
