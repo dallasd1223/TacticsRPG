@@ -29,6 +29,7 @@
 	private bool HasStarted = false;
 	private bool HasStyled = false;
 
+	ElementPlayType Type = ElementPlayType.Once;
 	public bool ReadyToDelete = false;
 
 	public FloatingChar(char c, float delay, float gap, Color col, ICharAnimation anim, int index, int size = 60, string font = "ThaleahFat")
@@ -42,7 +43,7 @@
 		animation = anim;
 		Index = index;
 
-		if(c == ' ') Width = 15f;
+		if(c == ' ') Width = 11f;
 		Log.Info($"char: {c}, gap: {gap}, index: {index}");
 	}
 	

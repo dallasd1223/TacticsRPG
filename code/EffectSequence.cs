@@ -99,13 +99,14 @@ public class CreateFloatingTextStep : IEffectStep
 
 	public string Text;
 	public Color color;
+	public int size;
 
 	public void Start()
 	{
 		Started = true;
 		if(!unit.IsValid()) return;
 
-		unit.FEM.CreateFloatingText(Text, color);
+		unit.FEM.CreateFloatingText(Text, color, size);
 	}
 
 	public void Update(float localTime)

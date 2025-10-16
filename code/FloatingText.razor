@@ -19,7 +19,7 @@
 	public Color color; 
 	public Func<ICharAnimation> animFactory;
 	public FloatingTextMode Mode = FloatingTextMode.Normal;
-
+	public ElementPlayType Type {get; set;} = ElementPlayType.Once;
 	private List<FloatingChar> chars {get; set;} = new();
 
 	public bool ReadyToDelete {get; set;} = false;
@@ -71,8 +71,8 @@
 		DeleteReadyChars();
 		if(AllCharsDeleted())
 		{
-			Log.Info("All Chars Deleted, Removing Self");
-			this.Delete();
+			Log.Info("All Chars Deleted, Marking Deletion");
+			ReadyToDelete = true;
 		}
 	}
 

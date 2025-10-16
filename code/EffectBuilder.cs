@@ -167,6 +167,7 @@ public class PotionEffect: EffectEvent
 						unit = CObject.AffectedUnit,
 						Text = CObject.AbilityItem.Data.Value.ToString(),
 						color = Data.stepData[8].Color,	
+						size = 60,
 					}
 				)
 				.Finish(),

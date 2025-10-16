@@ -97,7 +97,7 @@ public class CombatMachine : StateMachine
 					Log.Info($"{result.DamageAmount} Damage Of Type {result.Type}");
 					UnitEvents.UnitAttacked(CurrentObject.ActingUnit, CurrentObject.AffectedUnit);
 					CurrentObject.AffectedUnit.Battle.TakeDamage(result.DamageAmount);
-					CurrentObject.AffectedUnit.FEM.CreateFloatingText(result.DamageAmount.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f));
+					CurrentObject.AffectedUnit.FEM.CreateFloatingText(result.DamageAmount.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f), 60);
 					SpriteEffect.Instance.DamageNum.Clone(CurrentObject.AffectedUnit.GameObject.WorldPosition + new Vector3(0,0,10));
 					await Task.DelayRealtimeSeconds(1.5f);
 					bool dead = CurrentObject.AffectedUnit.Battle.CheckIfDead();

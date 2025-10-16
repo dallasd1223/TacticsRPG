@@ -251,6 +251,7 @@
           "Priority": 1,
           "RenderExcludeTags": "",
           "RenderTags": "",
+          "RenderTexture": null,
           "TargetEye": "None",
           "Viewport": "0,0,1,1",
           "ZFar": 10000,
@@ -13433,6 +13434,18 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "WinningTeam": "Alpha"
+        },
+        {
+          "__type": "TacticsRPG.ActiveTurnData",
+          "__guid": "d65442bf-5f1b-4054-997b-18ce8cb55a91",
+          "__enabled": true,
+          "CurrentTileHeight": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -14780,7 +14793,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 1809.5441
+            "Relative": 2325.5232
           }
         },
         {

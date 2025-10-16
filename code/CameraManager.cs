@@ -74,7 +74,7 @@ public class CameraManager: SingletonComponent<CameraManager>
 		if(!EffectOverride)
 		{
 			this.GameObject.LocalPosition = LocalPosition.LerpTo(NodeList[SelectedNode].WorldPosition + NodeList[SelectedNode].WorldRotation.Backward * ZoomValue, 0.05f);
-			this.GameObject.LocalRotation = Rotation.Lerp(this.GameObject.LocalRotation, Rotation.LookAt(FocusPoint.WorldPosition-WorldPosition), Time.Delta* 10f);
+			this.GameObject.LocalRotation = Rotation.Lerp(this.GameObject.LocalRotation, Rotation.LookAt((FocusPoint.WorldPosition + new Vector3(0,0,70f))-WorldPosition), Time.Delta* 10f);
 		}
 
 

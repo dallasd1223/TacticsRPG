@@ -9,64 +9,135 @@
 
 @code
 {
-	private Queue<IFloatingElement> Elements = new Queue<IFloatingElement>();
-	private List<Panel> ActiveElements = new List<Panel>();
+	private Queue<IFloatingElement> ElementsQueue = new Queue<IFloatingElement>();
+	private List<IFloatingElement> ActiveElements = new List<IFloatingElement>();
 
-	protected override void OnStart()
-	{
+	[Property] private int AmountInQueue = 0;
+	[Property] private int AmountLoopActive = 0;
+	[Property] private int AmountOnceActive = 0;
 
-	}
+	private TimeSince TimeSinceOnceQueued = 0f;
+	private TimeSince TimeSinceOnceActiveClear = 0f;
+
+	[Property] private bool IsPlaying = false;
+	[Property] private bool IsCluster = false;
+	[Property] private bool HasCleared = true;
+
+	public event Action ClearedActiveOnceElements;
 
 	[Button("DamageTest")]
 	public void ElemTest()
 	{
-		CreateFloatingText(999.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f));
+		CreateFloatingText(999.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f), 60);
 	}
 
 	[Button("ExpTest")]
 	public void GiveExp()
 	{
-		CreateFloatingText("EXP 17", new Color(1.00f, 0.78f, 0.00f, 1.00f));
+		CreateFloatingText("EXP 78", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40);
 	}
 
-	public void CreateFloatingText(string text, Color color)
+	public void CreateFloatingText(string text, Color color, int size)
 	{
-		var ft = new FloatingText(text, "ThaleahFat", 60, color, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+		var ft = new FloatingText(text, "Retro Pixel Cute Mono", size, color, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
 		ft.Obj = this.GameObject.Parent;
-		Panel.AddChild(ft);
-		ft.Start();
+		ElementsQueue.Enqueue(ft);
+		AmountInQueue++;
+		TimeSinceOnceQueued = 0f;
+		Log.Info($"Total Elems: {AmountOnceActive + AmountInQueue}");
+		if(AmountOnceActive + AmountInQueue > 1)
+		{
+			IsCluster = true;
+		}
+		HasCleared = false;
 	}
 
 	private void AddElem()
 	{
-		var elem = Elements.Dequeue() ;
+		if(IsPlaying) return;
+		var elem = ElementsQueue.Dequeue();
+		AmountInQueue--;
+
 		Panel.AddChild((Panel)elem);
-		ActiveElements.Add((Panel)elem);
+		ActiveElements.Add(elem);
+
+		if(elem.Type == ElementPlayType.Once)
+		{
+			AmountOnceActive++;
+		}
+		else if(elem.Type == ElementPlayType.Loop)
+		{
+			AmountLoopActive++;
+		}
+
 		elem.Start();
+
+		IsPlaying = true;
+	}
+
+	private void RemoveElem(IFloatingElement elem)
+	{
+		ActiveElements.Remove(elem);
+		if(elem.Type == ElementPlayType.Once)
+		{
+			AmountOnceActive--;
+			if(AmountOnceActive == 0 && !ElementsQueue.Any())
+			{
+				TimeSinceOnceActiveClear = 0f;
+			}
+			
+		}
+		else if(elem.Type == ElementPlayType.Loop)
+		{
+			AmountLoopActive--;
+		}
+
+		var p = elem as Panel;
+		p.Delete();
+
+		IsPlaying = false;
+		Log.Info("IsPlaying Set To False");
 	}
 
 	protected override void OnUpdate()
 	{
-		if(Elements.Any())
+		if(ElementsQueue.Any())
 		{
 			AddElem();
 		}
-
+		else
+		{
+			if(!HasCleared && AmountOnceActive == 0 && IsCluster && TimeSinceOnceActiveClear >= 1f)
+			{
+				IsCluster = false;
+				HasCleared = true;
+				ClearedActiveOnceElements?.Invoke();
+				Log.Info("Active Elements Cluster Finished/Cleared");
+			}
+			else if(!HasCleared && AmountOnceActive == 0 && TimeSinceOnceActiveClear >= 1f)
+			{
+				HasCleared = true;
+				ClearedActiveOnceElements?.Invoke();
+				Log.Info("Active Elements Finished/Cleared");				
+			}
+		}
 		DeleteReadyElements();
 	}
 
 	void DeleteReadyElements()
 	{
+
 		if(!ActiveElements.Any()) return;
-		foreach(Panel p in ActiveElements)
+		foreach(IFloatingElement e in ActiveElements)
 		{
-			var elem = p as IFloatingElement;
-			if(elem.ReadyToDelete)
+			if(e.ReadyToDelete)
 			{
-				var x = elem as Panel;
-				x.Delete();
+				RemoveElem(e);
+				Log.Info("Removing Elem");
+				if(!ActiveElements.Any()) return;
 			}
 		}
 	}
+
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

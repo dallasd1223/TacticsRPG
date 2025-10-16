@@ -193,7 +193,6 @@ public class CharAnimationSequence : ICharAnimation
 		if (current == null) return;
 		
 		current.Update(panel1, dt, panel2);
-		Log.Info("Updating Anim Sequence");
 		if(current.IsFinished && animations.Count > 0)
 		{
 			current = animations.Dequeue();
