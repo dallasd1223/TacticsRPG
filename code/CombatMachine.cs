@@ -45,7 +45,6 @@ public class CombatMachine : StateMachine
 		Log.Info($"Queue Count: {CombatObjectList.Count}");
 		if(b)
 		{
-			StartQueuedObject();
 			StartMachine();
 		}
 	}
@@ -97,7 +96,7 @@ public class CombatMachine : StateMachine
 					Log.Info($"{result.DamageAmount} Damage Of Type {result.Type}");
 					UnitEvents.UnitAttacked(CurrentObject.ActingUnit, CurrentObject.AffectedUnit);
 					CurrentObject.AffectedUnit.Battle.TakeDamage(result.DamageAmount);
-					CurrentObject.AffectedUnit.FEM.CreateFloatingText(result.DamageAmount.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f), 60);
+					CurrentObject.AffectedUnit.FEM.CreateIntValueText(result.DamageAmount, new Color(1.00f, 1.00f, 1.00f, 1.00f));
 					SpriteEffect.Instance.DamageNum.Clone(CurrentObject.AffectedUnit.GameObject.WorldPosition + new Vector3(0,0,10));
 					await Task.DelayRealtimeSeconds(1.5f);
 					bool dead = CurrentObject.AffectedUnit.Battle.CheckIfDead();
@@ -109,8 +108,8 @@ public class CombatMachine : StateMachine
 					CurrentObject.AffectedUnit.Animator.EndJitter();
 					CurrentObject.ActingUnit.Battle.InCombat = false;
 					CurrentObject.AffectedUnit.Battle.InCombat = false;
-					ProcessFinished?.Invoke();
-					CurrentObjectFinished();
+	
+					ChangeState<ReactionCombatState>();
 					break;
 				case AffectType.Multi:
 					break;
@@ -128,8 +127,9 @@ public class CombatMachine : StateMachine
 
 	public void CurrentObjectFinished()
 	{
-		CurrentObject = null;
 		IsProcessing = false;
+		CurrentObject = null;
+		ProcessFinished?.Invoke();
 	}
 	public void ClearObjectList()
 	{
@@ -193,11 +193,12 @@ public class InitialCombatState : CombatState
 	{
 		base.Enter();
 		Log.Info("InitialCombatState Entered");
+		Machine.StartQueuedObject();
 	}
 
 	public override void Update()
 	{
-		Machine.ChangeState<ReactionCombatState>();
+
 	}
 
 	public override void Exit()
@@ -228,7 +229,22 @@ public class ExperienceCombatState : CombatState
 {
 	public override void Enter()
 	{
+		Machine.CurrentObject.ActingUnit.FEM.ClearedActiveOnceElements += FEMCallback;
+		int xpgain = 60;
+		int jpgain = 21;
+		var b = Machine.CurrentObject.ActingUnit.Experience.AddXP(xpgain);
+		Machine.CurrentObject.ActingUnit.Job.AddJP(jpgain);
+		if(b)
+		{
+			Machine.CurrentObject.ActingUnit.FEM.CreateLVLUPText();
+		}
+		Machine.CurrentObject.ActingUnit.FEM.CreateEXPText(xpgain);
+		Machine.CurrentObject.ActingUnit.FEM.CreateJPText(jpgain);
+	}
 
+	void FEMCallback()
+	{
+		Machine.NullState();
 	}
 
 	public override void Update()
@@ -238,6 +254,8 @@ public class ExperienceCombatState : CombatState
 
 	public override void Exit()
 	{
+		Machine.CurrentObject.ActingUnit.FEM.ClearedActiveOnceElements -= FEMCallback;
+		Machine.CurrentObjectFinished();
 		base.Exit();
 	}
 }

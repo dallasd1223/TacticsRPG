@@ -34,8 +34,13 @@ public class UnitStats : Component
 		return final;
 	}
 
-	public bool SetStat(StatType type, int amount)
+	public bool SetStat(StatType type, int amount, bool force = false)
 	{
+		if(force)
+		{
+			Stats[type] = amount;
+			return true;
+		}
 		Stats[type] += amount;
 		return true;
 	}

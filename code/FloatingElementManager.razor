@@ -25,21 +25,65 @@
 
 	public event Action ClearedActiveOnceElements;
 
+	[Property] public SoundEvent LVLUPSound {get; set;}
+	[Property] public SoundEvent JobUPSound {get; set;}
+
 	[Button("DamageTest")]
 	public void ElemTest()
 	{
-		CreateFloatingText(999.ToString(), new Color(1.00f, 1.00f, 1.00f, 1.00f), 60);
+		CreateIntValueText(999, new Color(1.00f, 1.00f, 1.00f, 1.00f));
 	}
 
 	[Button("ExpTest")]
 	public void GiveExp()
 	{
-		CreateFloatingText("EXP 78", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40);
+		CreateEXPText(150);
 	}
 
-	public void CreateFloatingText(string text, Color color, int size)
+	[Button("JobEXP")]
+	public void JobTest()
 	{
-		var ft = new FloatingText(text, "Retro Pixel Cute Mono", size, color, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+		CreateJPText(17);
+	}
+
+	[Button("JobUP")]
+	public void JobUpTest()
+	{
+		CreateJobUpText();
+	}
+
+	[Button("LVLUP")]
+	public void LVLUPTest()
+	{
+		CreateLVLUPText();
+	}
+	public void CreateIntValueText(int amount, Color col)
+	{
+		CreateFloatingText(amount.ToString(), col, 60, "ThaleahFat", FloatingTextMode.Normal, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+	}
+	public void CreateEXPText(int amount)
+	{
+		CreateFloatingText($"EXP {amount}", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40, "ThaleahFat", FloatingTextMode.Normal, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+	}
+	public void CreateJPText(int amount)
+	{
+		CreateFloatingText($"JP {amount}", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40, "ThaleahFat", FloatingTextMode.Normal, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+	}
+	public void CreateLVLUPText()
+	{
+		CreateFloatingText($"LVL UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1.5f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
+		Sound.Play(LVLUPSound);	
+	}
+
+	public void CreateJobUpText()
+	{
+		CreateFloatingText($"Job UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1.5f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
+		Sound.Play(JobUPSound);	
+	}
+
+	public void CreateFloatingText(string text, Color color, int size, string font, FloatingTextMode mode, Func<ICharAnimation> anim)
+	{
+		var ft = new FloatingText(text, font, size, color, mode, TextColorMode.Rainbow, anim);
 		ft.Obj = this.GameObject.Parent;
 		ElementsQueue.Enqueue(ft);
 		AmountInQueue++;
@@ -107,14 +151,14 @@
 		}
 		else
 		{
-			if(!HasCleared && AmountOnceActive == 0 && IsCluster && TimeSinceOnceActiveClear >= 1f)
+			if(!HasCleared && AmountOnceActive == 0 && IsCluster && TimeSinceOnceActiveClear >= 0.5f)
 			{
 				IsCluster = false;
 				HasCleared = true;
 				ClearedActiveOnceElements?.Invoke();
 				Log.Info("Active Elements Cluster Finished/Cleared");
 			}
-			else if(!HasCleared && AmountOnceActive == 0 && TimeSinceOnceActiveClear >= 1f)
+			else if(!HasCleared && AmountOnceActive == 0 && TimeSinceOnceActiveClear >= 0.5f)
 			{
 				HasCleared = true;
 				ClearedActiveOnceElements?.Invoke();

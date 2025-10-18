@@ -52,11 +52,13 @@
 	{
 		IsActive = true;
 		ActiveUnit = u;
+
 	}
 
 	public void Deactivate()
 	{
 		IsActive = false;
+		SoundManager.Instance.PlaySound("UIBACK1");
 	}
 
 	public void IncreaseIndex()
@@ -88,6 +90,7 @@
 	{
 		Log.Info($"Selecting {ActiveUnit.Turn.UnitCommands[SelectedIndex].Text} Command");
 		PlayerMaster.Instance.SelectedCommand(CommandType.Status);
+		SoundManager.Instance.PlaySound("UIPRESS1");
 	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

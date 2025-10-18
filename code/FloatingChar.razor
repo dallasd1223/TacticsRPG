@@ -14,11 +14,12 @@
 {
 	Panel main;
 	Panel shadow;
-	public int Index;
+	public int Index = 0;
 	public float Width;
 	public float Gap;
 	public float Delay;
 	public float Age = 0;
+	public float Pos;
 	public string Font;
 	public int Size;
 	public Color color;
@@ -29,7 +30,6 @@
 	private bool HasStarted = false;
 	private bool HasStyled = false;
 
-	ElementPlayType Type = ElementPlayType.Once;
 	public bool ReadyToDelete = false;
 
 	public FloatingChar(char c, float delay, float gap, Color col, ICharAnimation anim, int index, int size = 60, string font = "ThaleahFat")
@@ -62,7 +62,8 @@
 		}
 		Age += delta;
 		Width = SetWidth();
-		Position = Position + new Vector2(GapAlignment() / ScaleToScreen, 0);
+		Pos = SetPrevPos();
+		Position = Position + new Vector2(Pos / ScaleToScreen, 0);
 		//Position = Position + new Vector2(0, (float)Math.Sin((Time.Now - (Delay * 0.1f ))* 3f) * 10f);
 		var Position1 = Position + new Vector2(8, 8);
 		main.Style.Left = Position.x;
@@ -92,12 +93,33 @@
 			return main.Box.Rect.Width;
 		}
 	}
-
+	float SetPrevPos()
+	{
+		if(value == ' ')
+		{
+			return prevChar.Pos + 9f;
+		}
+		if(prevChar is not null)
+		{
+			return prevChar.Pos + prevChar.Width;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 	float GapAlignment()
 	{
 		if(prevChar is not null)
 		{
-			return prevChar.Width * Gap;
+			//if(prevChar.Width < Width)
+			//{
+		//		return (Width * Gap) ;
+			//}
+			//else
+			//{
+			return (prevChar.Width * Gap);
+			//}
 		}
 		else
 		{

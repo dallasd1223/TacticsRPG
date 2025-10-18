@@ -52,6 +52,7 @@ public sealed class Unit : Component
 		USpell = GetComponent<UnitSpells>();
 		USkill = GetComponent<UnitSkills>();
 		FEM = GetComponentInChildren<FloatingElementManager>();
+		Experience.OnExpEarned += ExpEarned;
 		Experience.OnLevelUp += LeveledUp;
 		UAbility.OnAbilityAdded += AbilityAdded;
 		USkill.OnSkillAdded += SkillAdded;
@@ -68,6 +69,10 @@ public sealed class Unit : Component
 		UnitPosition = WorldPosition;
 	}
 
+	public void ExpEarned(int amt)
+	{
+		Log.Info($"{Data.Name} Has Earned {amt} EXP. {Experience.UntilLevelUp()} EXP Until Level Up");
+	}
 	public void LeveledUp(int i)
 	{
 		Log.Info($"{Data.Name} Has Leveled Up To LVL {i}");

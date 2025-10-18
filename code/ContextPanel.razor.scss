@@ -1,0 +1,42 @@
+ContextPanel
+{
+	position: absolute;
+
+	justify-content: center;
+	align-items: center;
+
+	top: 200;
+	left: 0;
+	right: 0;
+
+	.ContextContainer
+	{
+		height: 80px;
+		width: auto;
+		background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5) 20%, rgba(0, 0, 0, 0.5) 80%, transparent);
+		justify-content: center;
+		align-items: center;
+		opacity: 1;
+		transition: all 0.3s ease-in-out;
+		padding-left: 40px;
+		padding-right: 40px;
+		&:intro
+		{
+			opacity: 0;
+			transform: translateX(-30px);
+		}
+
+		&:outro
+		{
+			opacity: 0;
+			transform: translateX(30px);
+		}	
+	}
+
+	.Message
+	{
+		font-family: "Retro Pixel Cute Mono";
+		font-size: 60px;
+		color: white;
+	}
+}

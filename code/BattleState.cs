@@ -51,6 +51,7 @@ public partial class BattleMachine : StateMachine
 	[Property] public SelectorManager Selector {get; set;}
 	
 	//Battle Drivers
+	[Property] public ActiveTurnData AT;
 	[Property] public TurnManager Turn;
 	[Property] public TurnQueueController TurnQueue;
 	[Property] public WinController WinCondition;

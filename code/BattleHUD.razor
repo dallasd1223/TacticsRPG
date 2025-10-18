@@ -16,9 +16,12 @@
 
 	[Property] public FocusMode? CurrentFocusMode = null;
 	private UnitStatPanel _UnitStatPanel;
+	private JobPanel _UJobPanel;
+	private JobPanel _EJobPanel;
 	private EUnitStatPanel _EUnitStatPanel;
 	private MapDataPanel _MapDataPanel;
 	private StatusMenuContainer _StatusMenuContainer;
+	private HeightPanel _HeightPanel;
 
 	private bool FirstGameTurn = false;
 
@@ -47,6 +50,10 @@
 			_MapDataPanel.Start();
 			FirstGameTurn = true;
 		}
+		else if(state is ActionCommandSelectState)
+		{
+
+		}
 		else if(state is ExecuteActionState)
 		{
 			if(_UnitStatPanel.IsActive)
@@ -60,6 +67,11 @@
 				_EUnitStatPanel.IsActive = false;
 				_EUnitStatPanel.BackdropActive = false;
 				_EUnitStatPanel._Unit = null;
+				_EJobPanel._Unit = null;
+			}
+			if(_HeightPanel.IsActive)
+			{
+				_HeightPanel.IsActive = false;
 			}
 		}
 	}
@@ -69,8 +81,9 @@
 		{
 			_UnitStatPanel.IsActive = true;
 			_UnitStatPanel.BackdropActive = true;
-			_UnitStatPanel._Unit = CurrentUnit;	
-			SetPositionStyle();		
+			_UnitStatPanel._Unit = CurrentUnit;
+			_UJobPanel._Unit = CurrentUnit;	
+			//SetPositionStyle();		
 		}
 	}
 	void HandleFocusModeChange(FocusMode? mode, Unit u)
@@ -90,15 +103,25 @@
 				_EUnitStatPanel.IsActive = false;
 				_EUnitStatPanel.BackdropActive = false;
 				_EUnitStatPanel._Unit = null;
+				_EJobPanel._Unit = null;
 			}
-
+			if(_HeightPanel.IsActive)
+			{
+				_HeightPanel.IsActive = false;
+			}
 			_UnitStatPanel.IsActive = true;
 			_UnitStatPanel.BackdropActive = true;
 			_UnitStatPanel._Unit = CurrentUnit;
+			_UJobPanel._Unit = u;
 			SetPositionStyle();
+			if(_HeightPanel.IsValid())
+			{
+				_HeightPanel.CurrentHeightIndex = TileMapManager.Instance.GetTileFromUnit(u).HeightIndex;
+			}
 		}
 		else if(mode == FocusMode.ConfirmMenu)
 		{
+
 			return;
 		}
 		else if(mode == FocusMode.StatusMenu)
@@ -108,15 +131,39 @@
 				_UnitStatPanel.IsActive = false;
 				_UnitStatPanel.BackdropActive = false;
 				_UnitStatPanel._Unit = null;
+				_UJobPanel._Unit = null;
 			}
 			if(_EUnitStatPanel.IsActive)
 			{
 				_EUnitStatPanel.IsActive = false;
 				_EUnitStatPanel.BackdropActive = false;
 				_EUnitStatPanel._Unit = null;
+				_EJobPanel._Unit = null;
+			}
+			if(_HeightPanel.IsActive)
+			{
+				_HeightPanel.IsActive = false;
 			}
 			_StatusMenuContainer = Panel.AddChild<StatusMenuContainer>();
 			_StatusMenuContainer._Unit = u;
+		}
+		else if(mode == FocusMode.FreeLook || mode == FocusMode.CommandSelectLook)
+		{
+			if(!_HeightPanel.IsActive)
+			{
+				_HeightPanel.IsActive = true;
+			}
+			if(_StatusMenuContainer.IsValid())
+			{
+				_StatusMenuContainer.Delete();
+				_StatusMenuContainer = null;
+			}
+
+			_UnitStatPanel.IsActive = false;
+			_UnitStatPanel.BackdropActive = false;
+			_UnitStatPanel._Unit = null;
+			_UJobPanel._Unit = null;
+		
 		}
 		else
 		{
@@ -129,6 +176,7 @@
 			_UnitStatPanel.IsActive = false;
 			_UnitStatPanel.BackdropActive = false;
 			_UnitStatPanel._Unit = null;
+			_UJobPanel._Unit = null;
 		}
 	}
 
@@ -143,12 +191,19 @@
 			_EUnitStatPanel.IsActive = true;
 			_EUnitStatPanel.BackdropActive = true;
 			_EUnitStatPanel._Unit = u;
+			_EJobPanel._Unit = u;
+			SetPositionStyle();
 		}
 		else
 		{
 			_EUnitStatPanel.IsActive = false;
 			_EUnitStatPanel.BackdropActive = false;
 			_EUnitStatPanel._Unit = null;
+			_EJobPanel._Unit = null;
+		}
+		if(t != null && _HeightPanel.IsValid())
+		{
+			_HeightPanel.CurrentHeightIndex = t.HeightIndex;
 		}
 	}
 	void SetPositionStyle()
@@ -156,6 +211,21 @@
 		_UnitStatPanel.Style.Position = PositionMode.Absolute;
 		_UnitStatPanel.Style.Left = Length.Pixels(100);
 		_UnitStatPanel.Style.Bottom = Length.Pixels(100);
+
+		if(_UJobPanel._Unit is not null)
+		{
+			_UJobPanel.Style.Position = PositionMode.Absolute;
+			_UJobPanel.Style.Left = Length.Pixels(130);
+			_UJobPanel.Style.Bottom = Length.Pixels(25);
+		}
+
+		if(_EJobPanel._Unit is not null)
+		{
+			_EJobPanel.Style.Position = PositionMode.Absolute;
+			_EJobPanel.Style.Right = Length.Pixels(130);
+			_EJobPanel.Style.Bottom = Length.Pixels(25);
+		}
+
 	}
 	protected override void OnAwake()
 	{
@@ -172,6 +242,11 @@
 		_UnitStatPanel._Unit = CurrentUnit;
 
 		_EUnitStatPanel = Panel.AddChild<EUnitStatPanel>();
+
+		_HeightPanel = Panel.AddChild<HeightPanel>();
+
+		_UJobPanel = Panel.AddChild<JobPanel>();
+		_EJobPanel = Panel.AddChild<JobPanel>();
 	}
 /*
 	position: absolute;

@@ -15,7 +15,7 @@
 
 //**SOUND SYSTEM INSTANCE** TO MANAGE ALL **SOUNDEVENTS** (W/ CLEAN API)
 
-//Make Floating Elements Send Event Or Flag To Parent For Clean Up/Deletion (Instead of Panels deleting themselves)
+//ADD Floating Element Abstractions "CreateNumberElement", "CreateEXPElement", "CreateJPElement" "CreateStatusElement"
 
 //Fix Map Material Shader Group Tinting, For Effects
 //Fix Skybox Shader Tinting For Effects

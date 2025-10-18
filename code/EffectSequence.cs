@@ -87,7 +87,7 @@ public interface IEffectStep
 	bool IsComplete(float globalTime);
 }
 
-public class CreateFloatingTextStep : IEffectStep
+public class CreateIntValueTextStep : IEffectStep
 {
 	public float StartTime {get; set;}
 	public float Duration {get; set;}
@@ -97,7 +97,7 @@ public class CreateFloatingTextStep : IEffectStep
 
 	public Unit unit;
 
-	public string Text;
+	public int Amount;
 	public Color color;
 	public int size;
 
@@ -106,7 +106,7 @@ public class CreateFloatingTextStep : IEffectStep
 		Started = true;
 		if(!unit.IsValid()) return;
 
-		unit.FEM.CreateFloatingText(Text, color, size);
+		unit.FEM.CreateIntValueText(Amount, color);
 	}
 
 	public void Update(float localTime)

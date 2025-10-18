@@ -90,12 +90,15 @@ public class RainbowColorAnimation : ICharAnimation
 	private float time;
 	private float delay;
 
-	public bool IsFinished {get;} = false;
+	private float duration;
+	
+	public bool IsFinished => time >= duration;
 	public bool IsStarted {get; set;} = false;
 
-	public RainbowColorAnimation(float delay)
+	public RainbowColorAnimation(float delay, float duration=0.6f)
 	{
 		this.delay = delay;
+		this.duration = duration;
 	}
 
 	public void Reset(Panel panel1, Panel panel2 = null)
@@ -106,12 +109,16 @@ public class RainbowColorAnimation : ICharAnimation
 	public void Update(Panel panel1, float dt, Panel panel2 = null)
 	{
 		if(!IsStarted) return;
-		panel1.Style.FontColor = GetRainbow();
+		time += dt;
+		if(panel1 is null) return;
+		panel1.Style.FontColor = GetRainbow(panel1);
 	}
 
-	public Color GetRainbow()
+	public Color GetRainbow(Panel panel1)
 	{
-		float hue = (((float)RealTime.Now - delay * 0.4f)* 0.2f) % 1f;
+		var p = panel1.Parent as FloatingChar;
+		if(p is null) return new Color (1.0f, 1.0f, 1.0f, 1.0f);
+		float hue = (((float)RealTime.Now - p.Index * 0.4f)* 0.2f) % 1f;
 		return HSVToRGB(hue, 1f, 1f);
 	}
 
@@ -202,6 +209,35 @@ public class CharAnimationSequence : ICharAnimation
 		else if(current.IsFinished)
 		{
 			current = null;
+		}
+	}
+}
+
+public class ParallelAnimation : ICharAnimation
+{
+	private List<ICharAnimation> animations = new();
+	public bool IsFinished => animations.TrueForAll(a => a.IsFinished);
+	public bool IsStarted {get; set;} = false;
+
+	public ParallelAnimation(params ICharAnimation[] anims)
+	{
+		animations.AddRange(anims);
+	}
+
+	public void Reset(Panel panel1, Panel panel2)
+	{
+		foreach(var anim in animations)
+		{
+			anim.Reset(panel1, panel2);
+			anim.IsStarted = true;
+		}
+	}
+
+	public void Update(Panel panel1, float dt, Panel panel2)
+	{
+		foreach(var anim in animations)
+		{
+			anim.Update(panel1, dt, panel2);
 		}
 	}
 }

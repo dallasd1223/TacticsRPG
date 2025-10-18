@@ -1,8 +1,69 @@
 JobPanel
 {
-	position: absolute;
 
-	justify-content: center;
-	align-items: center;
+
+
+	.MainContainer
+	{
+		height: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+
+		border-radius: 5px;
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		transition:all 0.3s ease-in-out;
+		opacity: 1;
+		&:intro
+		{
+			opacity: 0;
+			transform: translateY(30px);
+		}
+
+		&:outro
+		{
+			opacity: 0;
+		}
+	}
+
+	.JobHeader
+	{
+		font-family: "Retro Pixel Thick";
+		font-size: 30px;
+		color: white;	
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+		justify-content: center;
+		padding: 3px;
+	}
+
+	.VContainer
+	{
+		flex-direction: row;
+		gap:10px;
+		padding: 3px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.VHeader
+	{
+		font-family: "Retro Pixel Thick";
+		font-size: 30px;
+		color: white;	
+		text-shadow: 4px 4px 0px black;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.JobValue
+	{
+		font-size: 30px;
+		font-family: "Retro Pixel Thick";
+		color: white;
+		text-shadow: 4px 4px 0px black;
+	}
+
 
 }

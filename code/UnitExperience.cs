@@ -13,22 +13,28 @@ public class UnitExperience : Component
 	public event Action<int> OnExpEarned;
 	public event Action<int> OnLevelUp;
 
-	public void AddXP(int amount)
+	//Returns True If Unit LVLed Up
+	public bool AddXP(int amount)
 	{
 		int CurXP = Stats.GetStat(StatType.EXP);
 		int temp = CurXP + amount;
+		Log.Info($"temp exp: {temp}");
 		if(temp >= 100)
 		{
+			Stats.SetStat(StatType.EXP, temp - 100, true);
+			Log.Info($"temp - 100: {temp - 100}");
 			LevelUp();
-			Stats.SetStat(StatType.EXP, temp - 100);
-
+			OnExpEarned?.Invoke(amount);
+			return true;
 		}
 		else
 		{
-			Stats.SetStat(StatType.EXP, amount);		
+			Stats.SetStat(StatType.EXP, amount);
+			OnExpEarned?.Invoke(amount);
+			return false;	
 		}
 
-		OnExpEarned?.Invoke(Stats.GetStat(StatType.EXP));	
+	
 	}
 
 	public void LevelUp()
@@ -38,6 +44,11 @@ public class UnitExperience : Component
 		OnLevelUp?.Invoke(Stats.GetStat(StatType.LVL));
 	}
 
+	public void ConfirmLevelUp()
+	{
+		HasLeveledUp = false;
+	}
+	
 	public int UntilLevelUp()
 	{
 		int CurXP = Stats.GetStat(StatType.EXP);
@@ -54,8 +65,8 @@ public class UnitExperience : Component
 
 	protected override void OnStart()
 	{
-		AddXP(150);
-		UntilLevelUp();
+		AddXP(50);
+		Log.Info("EXP ADDED");
 	}
 
 }

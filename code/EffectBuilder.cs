@@ -161,11 +161,11 @@ public class PotionEffect: EffectEvent
 					}
 				)
 				.AddStep(
-					new CreateFloatingTextStep{
+					new CreateIntValueTextStep{
 						StartTime = Data.stepData[8].StartTime,
 						Duration = Data.stepData[8].Duration,
 						unit = CObject.AffectedUnit,
-						Text = CObject.AbilityItem.Data.Value.ToString(),
+						Amount = CObject.AbilityItem.Data.Value,
 						color = Data.stepData[8].Color,	
 						size = 60,
 					}

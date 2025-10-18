@@ -57,6 +57,7 @@
 			IsActive = false;
 			if(_UnitCommandMenu.IsValid())
 			{
+				_UnitCommandMenu.Deactivate();
 				_UnitCommandMenu.Delete();
 				_UnitCommandMenu = null;
 			}

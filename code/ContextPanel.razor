@@ -1,0 +1,25 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<div class="ContextContainer">
+		<h1 class ="Message">@ContextMessage</h1>
+	</div>
+</root>
+
+@code
+{
+	public bool IsActive {get; set;} = false;
+	[Property] public string ContextMessage {get; set;} = "This is the Context Panel";
+
+	[Button("Switch")]
+	public void SwitchActive()
+	{
+		IsActive = !IsActive;
+		Log.Info($"ContextPanel Active: {IsActive}");
+	}
+	protected override int BuildHash() => System.HashCode.Combine(IsActive);
+}

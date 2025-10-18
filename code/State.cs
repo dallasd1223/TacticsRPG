@@ -30,7 +30,7 @@ public abstract class State : Component
 
 public class StateMachine : Component
 {
-	public State ActiveState {
+	[Property] public State ActiveState {
 		get {return _activeState;}
 		set {TransitionState(value);}
 	}

@@ -19,22 +19,34 @@
 	public Color color; 
 	public Func<ICharAnimation> animFactory;
 	public FloatingTextMode Mode = FloatingTextMode.Normal;
+	public TextColorMode ColorMode = TextColorMode.Normal;
 	public ElementPlayType Type {get; set;} = ElementPlayType.Once;
 	private List<FloatingChar> chars {get; set;} = new();
 
 	public bool ReadyToDelete {get; set;} = false;
 
-	public FloatingText(string val, string font, int fsize, Color col, Func<ICharAnimation> anim)
+	private bool IsStarting = false;
+	private bool DoneInitializingChars = false;
+	private int TypewriterIndex;
+	private TimeSince TimeSinceLetter;
+	private FloatingChar pr = null;
+
+	public FloatingText(string val, string font, int fsize, Color col, FloatingTextMode mode, TextColorMode cmode, Func<ICharAnimation> anim)
 	{
 		Value = val;
 		Font = font;
 		Size = fsize;
 		color = col;
 		animFactory = anim;
+		Mode = mode;
+		ColorMode = cmode;
 	}
 
 	public void Start()
 	{
+		IsStarting = true;
+		TimeSinceLetter = 0f;
+		if(Mode != FloatingTextMode.Normal) return;
 		int i = 0;
 		FloatingChar prev = null;
 		foreach(Char c in Value)
@@ -54,11 +66,36 @@
 			Log.Info($"i: {i} w/ Font: {Font}");
 			i++;
 		}
-
+		DoneInitializingChars = true;
 	}
 
 	public override void Tick()
 	{
+		if(IsStarting && Mode == FloatingTextMode.Typewriter && !DoneInitializingChars )
+		{
+			if(TimeSinceLetter >= 0.3f && TypewriterIndex < Value.Length)
+			{
+				Char c = Value[TypewriterIndex];
+				var p = new FloatingChar(c, TypewriterIndex, TypewriterIndex, color, animFactory(), TypewriterIndex, Size, Font);
+				chars.Add(p);
+				this.AddChild(p);
+				p.Index = TypewriterIndex;
+
+				if(pr is not null)
+				{
+					p.prevChar = pr;
+				}
+				
+				pr= p;
+
+				Log.Info($"i: {TypewriterIndex} w/ Font: {Font}");
+				TypewriterIndex++;
+			}
+			else if(TypewriterIndex >= Value.Length)
+			{
+				DoneInitializingChars = true;
+			}
+		}
 		if(!chars.Any()) return;
 		foreach(FloatingChar c in chars)
 		{
@@ -68,6 +105,7 @@
 			c.Position = point;
 			c.Update(Time.Delta);
 		}
+		if(!DoneInitializingChars) return;
 		DeleteReadyChars();
 		if(AllCharsDeleted())
 		{

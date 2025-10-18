@@ -27,6 +27,8 @@ StatBar
 		height: 20px;
 		border: 2px solid black;
 		box-shadow: 2px 2px 0px black;
+		transform: skew(35deg, 0);
+		z-index: 100;
 	}
 
 	.Fill
@@ -37,6 +39,7 @@ StatBar
 		left: 0;
 		background-color: red;
 		height: 100%;
+		z-index: 1;
 	}
 
 	.Value

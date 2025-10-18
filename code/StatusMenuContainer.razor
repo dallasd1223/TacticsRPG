@@ -8,6 +8,7 @@
 	@if(_Unit is null) return;
 	<div class="StatusContainer">
 		<UnitStatPanel @ref="_UnitStatPanel" />
+		<JobPanel @ref="_JobPanel" />
 		<StatPanel @ref="_StatPanel" />
 		<div style="flex-direction:row; gap:10px;">
 			<EquipmentPanel @ref="_EquipmentPanel" />
@@ -22,6 +23,7 @@
 	public Unit _Unit;
 	
 	private UnitStatPanel _UnitStatPanel;
+	private JobPanel _JobPanel;
 	private StatPanel _StatPanel;
 	private EquipmentPanel _EquipmentPanel;
 	private AbilityPanel _AbilityPanel;
@@ -46,8 +48,13 @@
 		if(_AbilityPanel.IsValid())
 		{
 			_AbilityPanel._Unit = _Unit;
-		}
 
+		}
+		if(_JobPanel.IsValid())
+		{
+			_JobPanel._Unit = _Unit;
+			Log.Info("Job Panel Unit Injected");
+		}
 		
 	}
 

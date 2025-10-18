@@ -2,13 +2,22 @@
 @using Sandbox.UI;
 @inherits Panel
 @namespace Sandbox
+@attribute [StyleSheet]
 
 <root>
-
+	@if(!IsActive) return;
+	<h1 class= "Height">@GetHeightText()</h1>
 </root>
 
 @code
 {
+	public bool IsActive = false;
+	public int CurrentHeightIndex = 1;
+
+	string GetHeightText()
+	{
+		return $"{CurrentHeightIndex}H";
+	}
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

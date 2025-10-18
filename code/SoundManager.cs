@@ -1,24 +1,10 @@
 using Sandbox;
 
-public class SoundManager : Component
+public class SoundManager : SingletonComponent<SoundManager>
 {
-	public static SoundManager Instance;
 
-	[Property] public int wow {get; set;} = 52;
-	[Property] public SoundEvent HealSound {get; set;}
-
-	protected override void OnAwake()
-	{
-		if(Instance is null)
-		{
-			Instance = this;
-		}
-	}
-
-	protected override void OnStart()
-	{
-		Log.Info($"HealSound is {HealSound}");
-	}
+	[Property] public SoundEvent UIPress1 {get; set;}
+	[Property] public SoundEvent UIBack1 {get; set;}
 
 	public void PlaySound(string s)
 	{
@@ -32,19 +18,14 @@ public class SoundManager : Component
 	{
 		switch(s)
 		{
-			case "HEAL":
-				Log.Info($"Returning Heal Sound");
-				return HealSound;
+			case "UIPRESS1":
+				return UIPress1;
+			case "UIBACK1":
+				return UIBack1;
 			default:
 				Log.Info("Returning Null");
 				return null;
 		}
-	}
-
-	public void Play()
-	{
-		Log.Info("Playing Sound");
-		Sound.Play(HealSound);
 	}
 }
 

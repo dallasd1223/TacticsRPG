@@ -3,14 +3,28 @@
 @using TacticsRPG;
 @inherits Panel
 @namespace Sandbox
+@attribute [StyleSheet]
 
 <root>
-
+	@if(_Unit is null) return;
+	<div class="MainContainer">
+		<div style="flex-direction: row; gap:20px; padding-left:20px; padding-right:20px;">
+			<div class="JobHeader">@_Unit.Job.CurrentJob.Name</div>
+			<div class="VContainer">
+				<h1 class="VHeader">LVL</h1>
+				<div class="JobValue">@_Unit.Job.GetCurrentJobEXP().JobLevel</div>
+			</div>
+			<div class="VContainer">
+				<h1 class="VHeader">NEXT</h1>
+				<div class="JobValue">@_Unit.Job.GetCurrentJobEXP().UntilLevel() EXP</div>
+			</div>
+		</div>
+	</div>
 </root>
 
 @code
 {
-
+	public Unit _Unit;
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

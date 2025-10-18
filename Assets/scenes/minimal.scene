@@ -12929,6 +12929,53 @@
       "Children": []
     },
     {
+      "__guid": "b09affeb-6068-4a97-9313-aeaf5c3284f6",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "ContextPanel",
+      "Position": "166.5737,-336.0347,269.1355",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "3594f0c2-a749-49bd-bd58-12e35f361da0",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.ContextPanel",
+          "__guid": "c96d6b50-fe37-494f-a3a7-56ec29e011f1",
+          "__enabled": true,
+          "ContextMessage": "This is the Context Panel",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
       "__version": 1,
       "Flags": 0,
@@ -12960,7 +13007,8 @@
           "OnComponentUpdate": null,
           "PressSound": "sounds/ui-sound4.sound",
           "SelectSound": "sounds/ui-sound2.sound",
-          "State": "Action"
+          "State": "Action",
+          "YValue": 475
         },
         {
           "__type": "Sandbox.ScreenPanel",
@@ -13127,6 +13175,7 @@
           "__enabled": true,
           "ActiveCursor": null,
           "ActiveCursorObject": null,
+          "ActiveState": null,
           "CurrentUnit": null,
           "CursorPrefab": {
             "_type": "gameobject",
@@ -13310,6 +13359,8 @@
           "__type": "TacticsRPG.BattleMachine",
           "__guid": "887a11e9-50ff-4be5-bdd4-e96a5378f361",
           "__enabled": true,
+          "ActiveState": null,
+          "AT": null,
           "Camera": {
             "_type": "component",
             "component_id": "c508db43-bebd-4c6e-bec7-d6daf7724d81",
@@ -13559,14 +13610,14 @@
           "__type": "SoundManager",
           "__guid": "27230492-ded6-4510-9741-6ba65f7d59dc",
           "__enabled": true,
-          "HealSound": "sounds/death.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "wow": 52
+          "UIBack1": "sounds/ui-sound-2.sound",
+          "UIPress1": "sounds/ui-sound4.sound"
         }
       ],
       "Children": []
@@ -13590,6 +13641,7 @@
           "__type": "TacticsRPG.CombatMachine",
           "__guid": "31b305d0-0f8e-4c1b-bf17-c3bdd591c360",
           "__enabled": true,
+          "ActiveState": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -14269,6 +14321,14 @@
               "__type": "Sandbox.FloatingElementManager",
               "__guid": "c09d11ad-5547-44ca-bd3e-54bea5363f2e",
               "__enabled": true,
+              "AmountInQueue": 0,
+              "AmountLoopActive": 0,
+              "AmountOnceActive": 0,
+              "HasCleared": true,
+              "IsCluster": false,
+              "IsPlaying": false,
+              "JobUPSound": "sounds/lvlup2.sound",
+              "LVLUPSound": "sounds/lvlup1.sound",
               "OnComponentDestroy": null,
               "OnComponentDisabled": null,
               "OnComponentEnabled": null,
@@ -14695,6 +14755,14 @@
               "__type": "Sandbox.FloatingElementManager",
               "__guid": "69c34a5e-12c5-41c0-a975-8eadf801040d",
               "__enabled": true,
+              "AmountInQueue": 0,
+              "AmountLoopActive": 0,
+              "AmountOnceActive": 0,
+              "HasCleared": true,
+              "IsCluster": false,
+              "IsPlaying": false,
+              "JobUPSound": "sounds/lvlup2.sound",
+              "LVLUPSound": "sounds/lvlup1.sound",
               "OnComponentDestroy": null,
               "OnComponentDisabled": null,
               "OnComponentEnabled": null,
@@ -14793,7 +14861,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 2325.5232
+            "Relative": 3058.2
           }
         },
         {

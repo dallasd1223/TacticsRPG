@@ -1,8 +1,31 @@
 HeightPanel
 {
 	position: absolute;
-
+	right: 60;
+	top: 10;
 	justify-content: center;
 	align-items: center;
 
+
+	
+
+
+	.Height
+	{
+		color: linear-gradient(to bottom right, #99ffb2, #008b00);
+		font-size: 150;
+		font-family: "BassetRR";
+		text-shadow: 8px 8px 0px black;
+		transition: opacity 0.4s ease-in-out;
+
+		&:intro
+		{
+			opacity: 0;
+		}
+
+		&:outro
+		{
+			opacity: 0;
+		}
+	}
 }

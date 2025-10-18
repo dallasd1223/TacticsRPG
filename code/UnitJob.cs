@@ -27,6 +27,19 @@ public class UnitJob : Component
 		Log.Info($"Job: {job.Name} Job Level: {exp.JobLevel} CurrentJP : {exp.CurrentJP} TotalJP: {exp.TotalJP}");
 	}
 
+	public JobExp GetCurrentJobEXP()
+	{
+		foreach(var kvp in JobExpDictionary)
+		{
+			if(kvp.Key == CurrentJob.Name)
+			{
+				return kvp.Value;
+			}
+		}
+		Log.Info($"Job {CurrentJob.Name} Not Found");
+		return null;
+	}
+
 	protected override void OnStart()
 	{
 		AddJP(105);

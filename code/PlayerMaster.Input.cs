@@ -85,6 +85,7 @@ partial class PlayerMaster
 			{
 				case InputKey.BACKSPACE:
 						Log.Info("Focus");
+						SoundManager.Instance.PlaySound("UIBACK1");
 						LastFocusMode();
 					return;
 				default:

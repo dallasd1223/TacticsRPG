@@ -246,6 +246,7 @@ public class FreeLookSelectState : SelectorState
 			SelectedUnit = UnitManager.Instance.GetUnitFromTile(Selector.HoveredTile);
 			Log.Info($"-Free Look- Selected Unit: {SelectedUnit.Data.Name}");
 			PlayerEvents.OnUnitSelected(SelectedUnit);
+			SoundManager.Instance.PlaySound("UIPRESS1");
 			OnDeactivate();
 		}
 	}
@@ -563,6 +564,7 @@ public class SelectCursor : Component
 
 	private void SetCursorPosition(Vector2 vec)
 	{
+
 		LastPosition = TargetPosition;
 		TargetPosition = GetCursorPositionFromVector(vec);
 	}

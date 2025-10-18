@@ -27,6 +27,7 @@
 	[Property] public MenuState? State {get; set;} = MenuState.Action;
 	[Property] public MenuState? LastState {get; set;} = null;
 	[Property] public int MenuLevel {get; set;} = 0;
+	[Property] public int YValue {get; set;} = 470;
 	public CommandMenu CMenu {get; set;}
 	public AbilityMenu AMenu {get; set;}
 	public ItemMenu IMenu {get; set;}
@@ -126,6 +127,7 @@
 				if(!CMenu.ActiveUnit.IsValid()) return;
 				if(CMenu.Menu is null) return;
 				if(!CMenu.Menu.IsVisible) return;
+				CMenu.Menu.Style.Top = Length.Pixels(YValue);
 				var CMenuPos = CMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = CMenuPos.y + (34 * CMenu.SelectedIndex);
 				ImgPanel.Style.Left = CMenuPos.x -20 ;
@@ -133,6 +135,7 @@
 			case MenuState.Ability:
 				if(!AMenu.IsValid()) return;
 				if(!AMenu.IsActive) return;
+				AMenu.Menu.Style.Top = Length.Pixels(YValue);
 				var AMenuPos = AMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = AMenuPos.y + (34 * AMenu.SelectedIndex);
 				ImgPanel.Style.Left = AMenuPos.x -20 ;
@@ -140,6 +143,7 @@
 			case MenuState.Item:
 				if(!IMenu.IsValid()) return;
 				if(!IMenu.IsActive) return;
+				IMenu.Menu.Style.Top = Length.Pixels(YValue);
 				var IMenuPos = IMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = IMenuPos.y + (34 * IMenu.SelectedIndex);
 				ImgPanel.Style.Left = IMenuPos.x -20 ;
@@ -148,6 +152,7 @@
 			Log.Info("Magic Why");
 				if(!SpMenu.IsValid()) return;
 				if(!SpMenu.IsActive) return;
+				SpMenu.Menu.Style.Top = Length.Pixels(YValue);
 				var SpMenuPos = SpMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = SpMenuPos.y + (34 * SpMenu.SelectedIndex);
 				ImgPanel.Style.Left = SpMenuPos.x -20 ;
@@ -155,6 +160,7 @@
 			case MenuState.Skill:
 				if(!SkMenu.IsValid()) return;
 				if(!SkMenu.IsActive) return;
+				SkMenu.Menu.Style.Top = Length.Pixels(YValue);
 				var SkMenuPos = SkMenu.Menu.Box.Rect.Position / Panel.ScaleToScreen;
 				ImgPanel.Style.Top = SkMenuPos.y + (34 * SkMenu.SelectedIndex);
 				ImgPanel.Style.Left = SkMenuPos.x -20 ;

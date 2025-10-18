@@ -23,6 +23,6 @@ partial class BattleMachine
 		TurnQueue = GetComponent<TurnQueueController>();
 		WinCondition = GetComponent<WinController>();
 		commandHandler = GetComponent<CommandHandler>();
-
+		AT = GetComponent<ActiveTurnData>();
 	}
 }
