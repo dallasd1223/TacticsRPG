@@ -5,6 +5,7 @@
 @namespace Sandbox
 
 <root>
+	@if(!IsActive) return;
 	<div class="ContextContainer">
 		<h1 class ="Message">@ContextMessage</h1>
 	</div>
@@ -12,7 +13,7 @@
 
 @code
 {
-	public bool IsActive {get; set;} = false;
+	[Property] public bool IsActive {get; set;} = false;
 	[Property] public string ContextMessage {get; set;} = "This is the Context Panel";
 
 	[Button("Switch")]

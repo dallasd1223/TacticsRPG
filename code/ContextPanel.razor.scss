@@ -8,7 +8,8 @@ ContextPanel
 	top: 200;
 	left: 0;
 	right: 0;
-
+	transition: all 0.3s ease-in-out;
+	
 	.ContextContainer
 	{
 		height: 80px;
@@ -26,11 +27,7 @@ ContextPanel
 			transform: translateX(-30px);
 		}
 
-		&:outro
-		{
-			opacity: 0;
-			transform: translateX(30px);
-		}	
+
 	}
 
 	.Message
@@ -39,4 +36,10 @@ ContextPanel
 		font-size: 60px;
 		color: white;
 	}
+
+	&:outro
+	{
+		opacity: 0;
+		transform: translateX(30px);
+	}	
 }

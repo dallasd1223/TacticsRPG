@@ -133,6 +133,11 @@
             The current frame index of the animation playing.
             </summary>
         </member>
+        <member name="P:SpriteTools.SpriteRendererLayer.Renderer">
+            <summary>
+            The SpriteRenderer that is being used behind the scenes.
+            </summary>
+        </member>
         <member name="M:SpriteTools.SpriteRendererLayer.PlayAnimation(System.String,System.Boolean)">
             <summary>
             Plays an animation from the current Sprite by it's name.

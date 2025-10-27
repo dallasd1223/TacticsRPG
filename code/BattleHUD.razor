@@ -15,7 +15,7 @@
 	[Property] public TileData CurrentTile {get; set;}
 
 	[Property] public FocusMode? CurrentFocusMode = null;
-	private UnitStatPanel _UnitStatPanel;
+	[Property] private UnitStatPanel _UnitStatPanel;
 	private JobPanel _UJobPanel;
 	private JobPanel _EJobPanel;
 	private EUnitStatPanel _EUnitStatPanel;
@@ -77,12 +77,20 @@
 	}
 	void HandleValidSelection(SelectorState state)
 	{
+
 		if(state.Selector.IsConfirming)
 		{
+			if(!_UnitStatPanel.IsValid()) return;
 			_UnitStatPanel.IsActive = true;
+
 			_UnitStatPanel.BackdropActive = true;
-			_UnitStatPanel._Unit = CurrentUnit;
-			_UJobPanel._Unit = CurrentUnit;	
+
+			if(CurrentUnit != null)
+			{
+				_UnitStatPanel._Unit = CurrentUnit;
+				_UJobPanel._Unit = CurrentUnit;	
+				SetPositionStyle();
+			}
 			//SetPositionStyle();		
 		}
 	}

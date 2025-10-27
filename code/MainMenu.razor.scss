@@ -1,0 +1,59 @@
+MainMenu
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #00ccff;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+
+
+	.main
+	{
+		flex-direction: column;
+		gap: 100px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.title-logo
+	{
+		flex-direction: column;
+		gap: 1px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.title-text
+	{
+		font-family: "BassetRR";
+		font-size: 60px;
+		color: white;
+	}
+
+	.subtitle-text
+	{
+		font-family: "BassetRR";
+		font-size: 20px;
+		color: white;
+	}
+
+	.menu-button-container
+	{
+		flex-direction: column;
+		gap: 20px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.menu-button
+	{
+		font-family: "BassetRR";
+		font-size: 30px;
+		color: white;
+		pointer-events: all;
+	}
+}

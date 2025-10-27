@@ -99,7 +99,17 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 	/// <summary>
 	/// The playback speed of the animation.
 	/// </summary>
-	[Property] public float PlaybackSpeed { get; set; } = 1.0f;
+	[Property]
+	public float PlaybackSpeed
+	{
+		get => _playbackSpeed;
+		set
+		{
+			_playbackSpeed = value;
+			ApplyPlaybackSpeed();
+		}
+	}
+	private float _playbackSpeed = 1.0f;
 
 	/// <summary>
 	/// Whether or not the object should scale based on the resolution of the Sprite.
@@ -171,6 +181,12 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		}
 	}
 
+	[Property, Category( "Actions" )]
+	public Action<string> OnAnimationComplete { get; set; }
+
+	[Property, Category( "Actions" )]
+	public Action<string> OnBroadcastMessage { get; set; }
+
 	public BBox Bounds
 	{
 		get
@@ -197,6 +213,11 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 			}
 		}
 	}
+
+	/// <summary>
+	/// The SpriteRenderer that is being used behind the scenes.
+	/// </summary>
+	public SpriteRenderer Renderer => _spriteRenderer;
 
 	private SpriteRenderer _spriteRenderer;
 
@@ -321,10 +342,13 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		{
 			var intensity = _flashTint.a * 1000;
 			color = Color.Lerp( color, _flashTint.WithAlpha( color.a ), _flashTint.a );
-			color.r *= intensity;
-			color.g *= intensity;
-			color.b *= intensity;
-			color.a = intensity;
+			if ( _flashTint.WithAlpha( 1 ) != Color.Black )
+			{
+				color.r *= intensity;
+				color.g *= intensity;
+				color.b *= intensity;
+				color.a = intensity;
+			}
 		}
 		_spriteRenderer.Color = color;
 	}
@@ -354,6 +378,14 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		_spriteRenderer.Shadows = _castShadows != SpriteComponent.ShadowRenderType.Off;
 	}
 
+	private void ApplyPlaybackSpeed ()
+	{
+		if ( !_spriteRenderer.IsValid() )
+			return;
+
+		_spriteRenderer.PlaybackSpeed = _playbackSpeed;
+	}
+
 	private void CreateSpriteRenderer ()
 	{
 		var childObject = new GameObject();
@@ -366,12 +398,15 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		_spriteRenderer.Size = 100;
 		_spriteRenderer.IsSorted = true;
 		_spriteRenderer.Shadows = false;
+		_spriteRenderer.OnAnimationEnd += OnAnimationComplete;
+		_spriteRenderer.OnBroadcastMessage += OnBroadcastMessage;
 
 		ApplySprite();
 		ApplyColor();
 		ApplySpriteFlags();
 		ApplyRotation();
 		ApplyShadows();
+		ApplyPlaybackSpeed();
 	}
 
 	/// <summary>
@@ -385,5 +420,13 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 			return;
 
 		_spriteRenderer?.PlayAnimation( animationName );
+	}
+}
+
+public static class SpriteLayerExtensions
+{
+	public static Texture GetPreviewTexture ( this Sprite sprite )
+	{
+		return sprite?.Animations?.FirstOrDefault()?.Frames?.FirstOrDefault()?.Texture ?? Texture.Transparent;
 	}
 }

@@ -147,7 +147,7 @@ public partial class SelectorManager : StateMachine
 public class SelectorState : State
 {
 
-	public SelectorManager Selector;
+	[Property] public SelectorManager Selector;
 
 	[Property] public bool IsSelectable {get; set;} = false;
 

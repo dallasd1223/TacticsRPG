@@ -1,0 +1,29 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<div class="main">
+		<div class="title-logo">
+			<h1 class="title-text">Tactics RPG</h1>
+			<h3 class="subtitle-text">by NWR</h3>
+		</div>
+		<div class="menu-button-container">
+			<div class="menu-button">NEW GAME</div>
+			<div class="menu-button" @onclick=@(()=>LoadBattleScene())>CONTINUE</div>
+			<div class="menu-button">SETTINGS</div>
+		</div>
+	</div>
+</root>
+
+@code
+{
+
+	void LoadBattleScene()
+	{
+		Scene.LoadFromFile("scenes/battle1.scene");
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}
