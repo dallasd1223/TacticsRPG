@@ -18,7 +18,7 @@ public class SaveManager : Component
 	}
 }
 
-public interface ISaveable<T>
+public interface ISaveSystem<T>
 {
 	T SaveData();
 	void LoadData(T data);

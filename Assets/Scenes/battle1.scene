@@ -149,6 +149,51 @@
       "Children": []
     },
     {
+      "__guid": "6ed4843b-eb9e-41b0-9f8b-447d1dd966b3",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "GameManager",
+      "Position": "-355.6176,-581.7693,470.3851",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "TacticsRPG.GameManager",
+          "__guid": "ae54d1ec-b498-4854-b044-bb0de566c759",
+          "__enabled": true,
+          "CurrentState": "NA",
+          "DebugVisual": {
+            "_type": "component",
+            "component_id": "49f310a2-ef7d-4a7e-bc3f-8511d57c2380",
+            "go": "ced9da43-e903-4852-9979-68e9832e2ce6",
+            "component_type": "DebugUI"
+          },
+          "GameConfig": null,
+          "GameTime": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Save": {
+            "_type": "component",
+            "component_id": "a8b511a0-b162-4b93-a120-e87e566bccd0",
+            "go": "a077885a-5a65-4c43-b808-8fbcccc39023",
+            "component_type": "SaveManager"
+          },
+          "TimeScaleValue": 1
+        }
+      ],
+      "Children": []
+    },
+    {
       "__guid": "4bde385e-aa58-4cb1-b4e9-55337b7bce8f",
       "__version": 1,
       "Flags": 0,
@@ -12965,6 +13010,7 @@
           "__guid": "c96d6b50-fe37-494f-a3a7-56ec29e011f1",
           "__enabled": true,
           "ContextMessage": "This is the Context Panel",
+          "IsActive": false,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -12979,7 +13025,7 @@
       "__guid": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
       "__version": 1,
       "Flags": 0,
-      "Name": "ActionMenu",
+      "Name": "BattleMenu",
       "Position": "-58.50172,-226.0571,184.5299",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
@@ -12990,26 +13036,6 @@
       "NetworkOrphaned": 0,
       "OwnerTransfer": 1,
       "Components": [
-        {
-          "__type": "Sandbox.ActionMenu",
-          "__guid": "9f06951c-14fe-4429-b186-610ed82ba9d6",
-          "__enabled": true,
-          "ActiveUnit": null,
-          "BackSound": "sounds/ui-sound-18.sound",
-          "IsActive": false,
-          "LastState": null,
-          "MenuLevel": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PressSound": "sounds/ui-sound4.sound",
-          "SelectSound": "sounds/ui-sound2.sound",
-          "State": "Action",
-          "YValue": 475
-        },
         {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "726c8007-77be-47c5-9753-b922dfc6c766",
@@ -13026,6 +13052,26 @@
           "ScaleStrategy": "ConsistentHeight",
           "TargetCamera": null,
           "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.BattleMenu",
+          "__guid": "5c99f0a7-a4c3-41e1-8b86-33ddcee26542",
+          "__enabled": true,
+          "ActiveUnit": null,
+          "BackSound": null,
+          "IsActive": false,
+          "LastState": null,
+          "MenuLevel": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PressSound": null,
+          "SelectSound": null,
+          "State": "Action",
+          "YValue": 470
         }
       ],
       "Children": []
@@ -13218,12 +13264,7 @@
           "__enabled": true,
           "CurrentFocusMode": null,
           "CurrentTile": null,
-          "CurrentUnit": {
-            "_type": "component",
-            "component_id": "39968a51-ae2c-4575-91e5-a2b547660143",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "Unit"
-          },
+          "CurrentUnit": null,
           "EnemyUnit": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -13299,9 +13340,9 @@
           "LastMode": null,
           "Menu": {
             "_type": "component",
-            "component_id": "9f06951c-14fe-4429-b186-610ed82ba9d6",
+            "component_id": "5c99f0a7-a4c3-41e1-8b86-33ddcee26542",
             "go": "54a01a24-da42-4b9c-a1c0-e36df8711c68",
-            "component_type": "ActionMenu"
+            "component_type": "BattleMenu"
           },
           "Mode": "NA",
           "OnComponentDestroy": null,
@@ -13368,7 +13409,7 @@
             "component_type": "CameraManager"
           },
           "commandHandler": null,
-          "Config": "resources/configs/battle.config",
+          "Config": "resources/configs/battleconfig.bconfig",
           "Data": {},
           "EndUI": {
             "_type": "component",
@@ -13497,50 +13538,6 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "6ed4843b-eb9e-41b0-9f8b-447d1dd966b3",
-      "__version": 1,
-      "Flags": 0,
-      "Name": "GameManager",
-      "Position": "-355.6176,-581.7693,470.3851",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "NetworkOrphaned": 0,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TacticsRPG.GameManager",
-          "__guid": "ae54d1ec-b498-4854-b044-bb0de566c759",
-          "__enabled": true,
-          "CurrentState": "NA",
-          "DebugVisual": {
-            "_type": "component",
-            "component_id": "49f310a2-ef7d-4a7e-bc3f-8511d57c2380",
-            "go": "ced9da43-e903-4852-9979-68e9832e2ce6",
-            "component_type": "DebugUI"
-          },
-          "GameTime": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Save": {
-            "_type": "component",
-            "component_id": "a8b511a0-b162-4b93-a120-e87e566bccd0",
-            "go": "a077885a-5a65-4c43-b808-8fbcccc39023",
-            "component_type": "SaveManager"
-          },
-          "TimeScaleValue": 1
         }
       ],
       "Children": []
@@ -13707,7 +13704,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "UnitList": []
+          "UnitList": null
         }
       ],
       "Children": []
@@ -14003,48 +14000,30 @@
           "UsePixelScale": false
         },
         {
-          "__type": "TacticsRPG.Unit",
-          "__guid": "39968a51-ae2c-4575-91e5-a2b547660143",
+          "__type": "TacticsRPG.BattleUnit",
+          "__guid": "b80c79bf-fc56-49bd-884f-e4490a5fd845",
           "__enabled": true,
           "Ability": null,
           "AI": null,
-          "Animator": {
-            "_type": "component",
-            "component_id": "18a55ce9-17d0-4ae3-b18b-33db0a1687a1",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "UnitAnimator"
-          },
-          "Attack": {
-            "_type": "component",
-            "component_id": "7b89b69c-8c5c-4122-8e71-6178f115ee9b",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "UnitAttack"
-          },
+          "Animator": null,
+          "Attack": null,
           "AttackRange": 1,
-          "Battle": null,
+          "BattleData": {},
+          "BattleID": 0,
+          "Combat": null,
+          "Command": null,
+          "CoreData": null,
           "CurrentTileXY": "0,0",
-          "Data": {
-            "_type": "component",
-            "component_id": "cc09f4ec-e59f-4b79-ab7e-196d8e9117d4",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "UnitData"
-          },
           "Equipment": null,
           "Experience": null,
           "FaceDirection": "North",
           "FEM": null,
-          "ID": 0,
           "Interact": null,
           "isAIControlled": false,
           "IsTurn": false,
           "Job": null,
           "JumpRange": 3,
-          "Move": {
-            "_type": "component",
-            "component_id": "d9d7150a-e827-4519-a73e-342b9bb512bf",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "UnitMove"
-          },
+          "Move": null,
           "MoveRange": 6,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -14052,14 +14031,37 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "Skillset": null,
           "StartTileIndex": 1,
           "Stats": null,
           "Team": "Alpha",
           "Turn": null,
           "UAbility": null,
-          "UnitPosition": "0,0,0",
-          "USkill": null,
-          "USpell": null
+          "UnitPosition": "0,0,0"
+        },
+        {
+          "__type": "UnitCoreData",
+          "__guid": "b82feac9-71a4-4f13-ada3-3398d6b917da",
+          "__enabled": true,
+          "Name": "Player",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PortraitPath": "materials/player/marche_portrait.png"
+        },
+        {
+          "__type": "TacticsRPG.UnitAI",
+          "__guid": "4b9d3b00-edb1-4862-9118-0c3180cdc14e",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "TacticsRPG.TileInteract",
@@ -14099,19 +14101,6 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "UnitData",
-          "__guid": "cc09f4ec-e59f-4b79-ab7e-196d8e9117d4",
-          "__enabled": true,
-          "Name": "Player",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PortraitPath": "materials/player/marche_portrait.png"
-        },
-        {
           "__type": "TacticsRPG.UnitAnimator",
           "__guid": "18a55ce9-17d0-4ae3-b18b-33db0a1687a1",
           "__enabled": true,
@@ -14148,83 +14137,32 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "TacticsRPG.UnitBattle",
-          "__guid": "229bdae5-ff5f-4975-99a7-bab2d8dd5c04",
+          "__type": "TacticsRPG.UnitSkillset",
+          "__guid": "3eb881e8-0974-485d-b160-a14d53955760",
           "__enabled": true,
-          "DamageSound": null,
-          "DeathSound": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "ThisUnit": null
+          "PrimarySkillset": "resources/skillset/item.set",
+          "SecondarySkillset": "resources/skillset/magic.set"
         },
         {
           "__type": "TacticsRPG.UnitAbilities",
           "__guid": "1d71397b-cb50-4b5e-ab81-1fb500b77f30",
           "__enabled": true,
-          "Abilities": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        },
-        {
-          "__type": "TacticsRPG.UnitSkills",
-          "__guid": "e56d25d3-adb6-463c-b0b3-db19d4cbb111",
-          "__enabled": true,
+          "LearnedAbilities": [],
+          "MovementAbility": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Skills": []
-        },
-        {
-          "__type": "TacticsRPG.UnitSpells",
-          "__guid": "e6258cac-bf37-4bfa-aa4e-e37978ce67a2",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Spells": []
-        },
-        {
-          "__type": "TacticsRPG.UnitTurn",
-          "__guid": "1a16d17e-872e-43b0-a410-d1635692edfb",
-          "__enabled": true,
-          "AbilityCommands": [],
-          "CommandItems": [],
-          "HasActed": false,
-          "HasMoved": false,
-          "InitialCommands": [
-            "MOVE",
-            "ATTACK",
-            "ABILITY",
-            "WAIT",
-            "STATUS"
-          ],
-          "ItemCommands": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "SkillCommands": [],
-          "SpellCommands": [],
-          "UnitCommands": [],
-          "UnitCommandsList": [
-            "STATUS"
-          ]
+          "ReactionAbility": null,
+          "SupportAbility": null
         },
         {
           "__type": "TacticsRPG.UnitStats",
@@ -14251,6 +14189,20 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "Stats": null
+        },
+        {
+          "__type": "TacticsRPG.UnitCombat",
+          "__guid": "ecf970c0-b809-4296-9c66-df5889832e21",
+          "__enabled": true,
+          "DamageSound": "sounds/slash.sound",
+          "DeathSound": "sounds/death.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null
         },
         {
           "__type": "TacticsRPG.UnitJob",
@@ -14282,6 +14234,47 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitTurn",
+          "__guid": "1a16d17e-872e-43b0-a410-d1635692edfb",
+          "__enabled": true,
+          "HasActed": false,
+          "HasMoved": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitCommand",
+          "__guid": "d3c144b1-5485-4a50-81b4-8dcf38510880",
+          "__enabled": true,
+          "AbilityCommands": [],
+          "ActionCommands": [
+            {
+              "Text": "ATTACK"
+            }
+          ],
+          "CommandItems": [],
+          "InitialCommands": [
+            "MOVE",
+            "ACT",
+            "WAIT",
+            "STATUS"
+          ],
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "UnitCommands": [],
+          "UnitCommandsList": [
+            "STATUS"
+          ]
         }
       ],
       "Children": [
@@ -14396,6 +14389,438 @@
       ]
     },
     {
+      "__guid": "cda7d7da-5083-4c36-9fcd-5dd4bbdf431e",
+      "__version": 1,
+      "Flags": 0,
+      "Name": "Player Unit (1)",
+      "Position": "28,28,28",
+      "Rotation": "0.7071069,0,0,0.7071066",
+      "Scale": "0.9,0.9000001,0.9",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "SpriteTools.SpriteComponent",
+          "__guid": "0fadd516-3d68-4eaa-99ee-5f4f962d5906",
+          "__enabled": true,
+          "__version": 1,
+          "BroadcastEvents": {
+            "attackend": null
+          },
+          "CastShadows": "Off",
+          "CreateAttachPoints": false,
+          "FlashTint": "1,1,1,0",
+          "MaterialOverride": null,
+          "OnAnimationComplete": null,
+          "OnBroadcastEvent": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PlaybackSpeed": 1,
+          "Sprite": "materials/player/unitsprite.spr",
+          "SpriteFlags": "HorizontalFlip",
+          "StartingAnimationName": "idle",
+          "Tint": "1,1,1,1",
+          "UpDirection": "YPositive",
+          "UsePixelScale": false
+        },
+        {
+          "__type": "TacticsRPG.BattleUnit",
+          "__guid": "8d706ee4-c0db-4f39-b5f9-a7af8597ee9b",
+          "__enabled": true,
+          "Ability": null,
+          "AI": null,
+          "Animator": null,
+          "Attack": null,
+          "AttackRange": 1,
+          "BattleData": {},
+          "BattleID": 0,
+          "Combat": null,
+          "Command": null,
+          "CoreData": null,
+          "CurrentTileXY": "0,0",
+          "Equipment": null,
+          "Experience": null,
+          "FaceDirection": "North",
+          "FEM": null,
+          "Interact": null,
+          "isAIControlled": false,
+          "IsTurn": false,
+          "Job": null,
+          "JumpRange": 3,
+          "Move": null,
+          "MoveRange": 6,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Skillset": null,
+          "StartTileIndex": 17,
+          "Stats": null,
+          "Team": "Alpha",
+          "Turn": null,
+          "UAbility": null,
+          "UnitPosition": "0,0,0"
+        },
+        {
+          "__type": "UnitCoreData",
+          "__guid": "08017512-d080-4a34-9cc2-6196b2286b76",
+          "__enabled": true,
+          "Name": "Player2",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PortraitPath": "materials/player/marche_portrait.png"
+        },
+        {
+          "__type": "TacticsRPG.UnitAI",
+          "__guid": "3c28abeb-eceb-42ae-9e11-d9fbfd623c7d",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.TileInteract",
+          "__guid": "6bf85e38-e542-4cd8-998c-149f10fe97c0",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null,
+          "UnitTile": null
+        },
+        {
+          "__type": "CameraFocusNode",
+          "__guid": "02560291-6452-4253-9856-091d30a98149",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Type": "Unit"
+        },
+        {
+          "__type": "TacticsRPG.UnitMove",
+          "__guid": "6e4a6115-2d26-4e83-b606-1f43994e2108",
+          "__enabled": true,
+          "Interact": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitAnimator",
+          "__guid": "82711a04-482d-4b71-9f15-dff050b23490",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "UnitSprite": null
+        },
+        {
+          "__type": "TacticsRPG.UnitAttack",
+          "__guid": "7711ae5f-dd38-4e06-8b90-bf78392bef47",
+          "__enabled": true,
+          "Interact": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitAbility",
+          "__guid": "fccbe427-a562-45e3-87dd-2557a39b6b29",
+          "__enabled": true,
+          "Interact": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitSkillset",
+          "__guid": "713f9c48-3cae-447b-932d-ec7079dbdc75",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PrimarySkillset": "resources/skillset/item.set",
+          "SecondarySkillset": "resources/skillset/magic.set"
+        },
+        {
+          "__type": "TacticsRPG.UnitAbilities",
+          "__guid": "e38d038f-e41e-4e47-a255-0afbc4cda0af",
+          "__enabled": true,
+          "LearnedAbilities": [],
+          "MovementAbility": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ReactionAbility": null,
+          "SupportAbility": null
+        },
+        {
+          "__type": "TacticsRPG.UnitStats",
+          "__guid": "250e5215-c5ab-43d4-9e5a-b243d75dd9ba",
+          "__enabled": true,
+          "BaseData": "resources/stats/base.stat",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": {}
+        },
+        {
+          "__type": "TacticsRPG.UnitCombat",
+          "__guid": "a95b2b76-9d1f-4850-880d-2d201af89ad7",
+          "__enabled": true,
+          "DamageSound": "sounds/slash.sound",
+          "DeathSound": "sounds/death.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null
+        },
+        {
+          "__type": "TacticsRPG.UnitExperience",
+          "__guid": "cb13f6fb-8267-49e7-bc04-0c428caeb0f4",
+          "__enabled": true,
+          "HasLeveledUp": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Stats": null
+        },
+        {
+          "__type": "TacticsRPG.UnitJob",
+          "__guid": "a56bd722-4c43-4924-b56f-20af5a5f9aca",
+          "__enabled": true,
+          "CurrentJob": "resources/jobs/squire.job",
+          "JobExpDictionary": {
+            "Squire": {
+              "JobLevel": 1,
+              "CurrentJP": 0,
+              "TotalJP": 0
+            }
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitEquipment",
+          "__guid": "add47fef-e388-4161-a778-9d3a600b642e",
+          "__enabled": true,
+          "_activeEquipment": {},
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitTurn",
+          "__guid": "b52aa31d-b920-479b-9374-7c4e7bc70a78",
+          "__enabled": true,
+          "HasActed": false,
+          "HasMoved": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitCommand",
+          "__guid": "a7c97e74-93b3-48de-81f6-70e839980a8c",
+          "__enabled": true,
+          "AbilityCommands": [],
+          "ActionCommands": [
+            {
+              "Text": "ATTACK"
+            }
+          ],
+          "CommandItems": [],
+          "InitialCommands": [
+            "MOVE",
+            "ACT",
+            "WAIT",
+            "STATUS"
+          ],
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "UnitCommands": [],
+          "UnitCommandsList": [
+            "STATUS"
+          ]
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "e87f85b4-d4b7-4523-b619-7f4d84a83d73",
+          "__version": 1,
+          "Flags": 0,
+          "Name": "FEM",
+          "Position": "0,0,0",
+          "Rotation": "0,0,0,1",
+          "Scale": "1,1,1",
+          "Tags": "",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "NetworkOrphaned": 0,
+          "OwnerTransfer": 1,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "d4aa80fe-dd9c-480c-b692-43ada20997d0",
+              "__enabled": true,
+              "AutoScreenScale": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "Opacity": 1,
+              "Scale": 1,
+              "ScaleStrategy": "ConsistentHeight",
+              "TargetCamera": null,
+              "ZIndex": 100
+            },
+            {
+              "__type": "Sandbox.FloatingElementManager",
+              "__guid": "1a461d7b-ee87-45ac-8076-d2d29a5af69f",
+              "__enabled": true,
+              "AmountInQueue": 0,
+              "AmountLoopActive": 0,
+              "AmountOnceActive": 0,
+              "HasCleared": true,
+              "IsCluster": false,
+              "IsPlaying": false,
+              "JobUPSound": "sounds/lvlup2.sound",
+              "LVLUPSound": "sounds/lvlup1.sound",
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null
+            }
+          ],
+          "Children": []
+        },
+        {
+          "__guid": "e9d98395-253d-4151-8471-99d6b302602c",
+          "__version": 1,
+          "Flags": 0,
+          "Name": "HealthBar",
+          "Position": "0,123.4123,-0.00004662408",
+          "Rotation": "0,0.6996633,0,0.7144727",
+          "Scale": "1,1,1",
+          "Tags": "",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "NetworkOrphaned": 0,
+          "OwnerTransfer": 1,
+          "Components": [
+            {
+              "__type": "Sandbox.WorldPanel",
+              "__guid": "d9b18ee4-d73b-492b-9dca-dff02d0648b8",
+              "__enabled": true,
+              "HorizontalAlign": "Center",
+              "InteractionRange": 1000,
+              "LookAtCamera": true,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "PanelSize": "512,512",
+              "RenderOptions": {
+                "GameLayer": true,
+                "OverlayLayer": false,
+                "BloomLayer": false,
+                "AfterUILayer": false
+              },
+              "RenderScale": 1,
+              "VerticalAlign": "Center"
+            },
+            {
+              "__type": "Sandbox.HealthUI",
+              "__guid": "c7dadd1c-f38b-4d88-9b84-faa501485108",
+              "__enabled": false,
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "ThisUnit": null,
+              "Value": 100
+            }
+          ],
+          "Children": []
+        }
+      ]
+    },
+    {
       "__guid": "99925a2b-963c-4e53-b4a6-a094a07917f4",
       "__version": 1,
       "Flags": 0,
@@ -14439,48 +14864,30 @@
           "UsePixelScale": false
         },
         {
-          "__type": "TacticsRPG.Unit",
-          "__guid": "76ec1b6a-1d12-49a4-9f0c-5c393ea216d3",
+          "__type": "TacticsRPG.BattleUnit",
+          "__guid": "b4eb9163-e163-42ba-b1db-4975cb1f01f0",
           "__enabled": true,
           "Ability": null,
-          "AI": {
-            "_type": "component",
-            "component_id": "4630a657-1339-451d-8c0a-869d93436342",
-            "go": "99925a2b-963c-4e53-b4a6-a094a07917f4",
-            "component_type": "UnitAI"
-          },
+          "AI": null,
           "Animator": null,
-          "Attack": {
-            "_type": "component",
-            "component_id": "ed579c55-257a-4af2-9c58-f8ca6120a380",
-            "go": "99925a2b-963c-4e53-b4a6-a094a07917f4",
-            "component_type": "UnitAttack"
-          },
+          "Attack": null,
           "AttackRange": 1,
-          "Battle": null,
-          "CurrentTileXY": "5,7",
-          "Data": {
-            "_type": "component",
-            "component_id": "7e58a634-8bb5-4e8f-a5f7-71ea150698e6",
-            "go": "99925a2b-963c-4e53-b4a6-a094a07917f4",
-            "component_type": "UnitData"
-          },
+          "BattleData": {},
+          "BattleID": 0,
+          "Combat": null,
+          "Command": null,
+          "CoreData": null,
+          "CurrentTileXY": "0,0",
           "Equipment": null,
           "Experience": null,
           "FaceDirection": "North",
           "FEM": null,
-          "ID": 0,
           "Interact": null,
           "isAIControlled": true,
           "IsTurn": false,
           "Job": null,
           "JumpRange": 3,
-          "Move": {
-            "_type": "component",
-            "component_id": "41fec670-e1b1-4630-83bd-532bdb64447a",
-            "go": "99925a2b-963c-4e53-b4a6-a094a07917f4",
-            "component_type": "UnitMove"
-          },
+          "Move": null,
           "MoveRange": 6,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -14488,14 +14895,26 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "Skillset": null,
           "StartTileIndex": 97,
           "Stats": null,
           "Team": "Omega",
           "Turn": null,
           "UAbility": null,
-          "UnitPosition": "0,0,0",
-          "USkill": null,
-          "USpell": null
+          "UnitPosition": "0,0,0"
+        },
+        {
+          "__type": "UnitCoreData",
+          "__guid": "040fb1a7-a8cf-47f1-a6fd-5aa083b3ad9d",
+          "__enabled": true,
+          "Name": "Enemy",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PortraitPath": "materials/player/marche_portrait.png"
         },
         {
           "__type": "TacticsRPG.TileInteract",
@@ -14535,19 +14954,6 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "UnitData",
-          "__guid": "7e58a634-8bb5-4e8f-a5f7-71ea150698e6",
-          "__enabled": true,
-          "Name": "Enemy",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PortraitPath": "materials/player/marche_portrait.png"
-        },
-        {
           "__type": "TacticsRPG.UnitAnimator",
           "__guid": "c5409bc2-2745-4922-a02f-d78d85a51fdc",
           "__enabled": true,
@@ -14583,82 +14989,32 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "TacticsRPG.UnitBattle",
-          "__guid": "7a69aae4-d124-49b8-98d5-4afae600a154",
+          "__type": "TacticsRPG.UnitSkillset",
+          "__guid": "79eaedfa-059e-4dd6-bf98-863172d1d4d0",
           "__enabled": true,
-          "DamageSound": "sounds/slash.sound",
-          "DeathSound": "sounds/death.sound",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "ThisUnit": null
+          "PrimarySkillset": "resources/skillset/item.set",
+          "SecondarySkillset": "resources/skillset/magic.set"
         },
         {
           "__type": "TacticsRPG.UnitAbilities",
           "__guid": "453dd007-da75-4078-98e7-51a3a88bb395",
           "__enabled": true,
-          "Abilities": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null
-        },
-        {
-          "__type": "TacticsRPG.UnitSkills",
-          "__guid": "c6066b45-bb9d-45a4-bec4-e9213d9c49c2",
-          "__enabled": true,
+          "LearnedAbilities": [],
+          "MovementAbility": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Skills": []
-        },
-        {
-          "__type": "TacticsRPG.UnitSpells",
-          "__guid": "9fef23af-bcd8-4cbf-8571-07d31e5c060b",
-          "__enabled": true,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Spells": []
-        },
-        {
-          "__type": "TacticsRPG.UnitTurn",
-          "__guid": "4f790c17-55c6-4164-afa3-84c0259155fb",
-          "__enabled": true,
-          "AbilityCommands": [],
-          "CommandItems": [],
-          "HasActed": false,
-          "HasMoved": false,
-          "InitialCommands": [
-            "MOVE",
-            "ATTACK",
-            "ABILITY",
-            "WAIT"
-          ],
-          "ItemCommands": [],
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "SkillCommands": [],
-          "SpellCommands": [],
-          "UnitCommands": [],
-          "UnitCommandsList": [
-            "STATUS"
-          ]
+          "ReactionAbility": null,
+          "SupportAbility": null
         },
         {
           "__type": "TacticsRPG.UnitStats",
@@ -14672,6 +15028,20 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "Stats": {}
+        },
+        {
+          "__type": "TacticsRPG.UnitCombat",
+          "__guid": "f958c048-91cb-4a92-8ea0-82669716dacb",
+          "__enabled": true,
+          "DamageSound": "sounds/slash.sound",
+          "DeathSound": "sounds/death.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "ThisUnit": null
         },
         {
           "__type": "TacticsRPG.UnitExperience",
@@ -14716,6 +15086,47 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitTurn",
+          "__guid": "4f790c17-55c6-4164-afa3-84c0259155fb",
+          "__enabled": true,
+          "HasActed": false,
+          "HasMoved": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "TacticsRPG.UnitCommand",
+          "__guid": "d8c7d302-d75a-4537-a4fe-53f4d2225588",
+          "__enabled": true,
+          "AbilityCommands": [],
+          "ActionCommands": [
+            {
+              "Text": "ATTACK"
+            }
+          ],
+          "CommandItems": [],
+          "InitialCommands": [
+            "MOVE",
+            "ACT",
+            "WAIT",
+            "STATUS"
+          ],
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "UnitCommands": [],
+          "UnitCommandsList": [
+            "STATUS"
+          ]
         }
       ],
       "Children": [
@@ -14861,7 +15272,7 @@
           "Slide2Active": false,
           "TimeSinceLastSlide": {
             "Absolute": 0,
-            "Relative": 3058.2
+            "Relative": 13857.816
           }
         },
         {
@@ -14999,26 +15410,7 @@
       "NetworkInterpolation": true,
       "NetworkOrphaned": 0,
       "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "TestComponent",
-          "__guid": "b100b113-7510-4d8d-baa2-2f06c182d421",
-          "__enabled": true,
-          "Data": "resources/test/testok.test",
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "unit": {
-            "_type": "component",
-            "component_id": "39968a51-ae2c-4575-91e5-a2b547660143",
-            "go": "c0d89fcf-3a13-4bf4-a509-1404aaea2bac",
-            "component_type": "Unit"
-          }
-        }
-      ],
+      "Components": [],
       "Children": []
     },
     {

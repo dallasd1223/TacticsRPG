@@ -9,27 +9,27 @@
 	<div class="MainContainer">
 		<div class="AbilityHeader"><p>ABILITIES</p></div>
 		<div class="AbilityContainer">
-			@for(int i = 0; i < _Unit.UAbility.Abilities.Count(); i++)
-			{
-				<div class="AbilityDiv">
-					<h1 class="AbilityIndex">@(i+1)</h1><h1 class="Title">@(_Unit.UAbility.Abilities[i]?.Data.Name)</h1>
-				</div>
-			}
-			@if(_Unit.UAbility.Abilities.Count() < 5)
-			{
-				@for(int i = 0; i < 5 - _Unit.UAbility.Abilities.Count(); i++)
-				{
-				<div class="AbilityDiv">
-					<h1 class="AbilityIndex">@(i+1 + _Unit.UAbility.Abilities.Count())</h1><h1 class="Title"> </h1>
-				</div>
-				}	
-			}
+			<div class="AbilityDiv">
+				<h1 class="AbilityIndex">1</h1><h1 class="Title">@(_Unit.Skillset.PrimarySkillset.Name)</h1>
+			</div>
+			<div class="AbilityDiv">
+				<h1 class="AbilityIndex">2</h1><h1 class="Title">@(_Unit.Skillset.SecondarySkillset.Name)</h1>
+			</div>
+			<div class="AbilityDiv">
+				<h1 class="AbilityIndex">2</h1><h1 class="Title">@(_Unit.UAbility.SupportAbility.Data.Name)</h1>
+			</div>
+			<div class="AbilityDiv">
+				<h1 class="AbilityIndex">2</h1><h1 class="Title">@(_Unit.UAbility.ReactionAbility.Data.Name)</h1>
+			</div>
+			<div class="AbilityDiv">
+				<h1 class="AbilityIndex">2</h1><h1 class="Title">@(_Unit.UAbility.MovementAbility.Data.Name)</h1>
+			</div>
 		</div>
 </root>
 
 @code
 {
-	public Unit _Unit;
+	public BattleUnit _Unit;
 
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
 }

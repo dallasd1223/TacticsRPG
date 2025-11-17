@@ -95,7 +95,7 @@ public class CreateIntValueTextStep : IEffectStep
 	public bool Started {get; set;} = false;
 	public bool Finished {get; set;} = false;
 
-	public Unit unit;
+	public BattleUnit unit;
 
 	public int Amount;
 	public Color color;
@@ -304,7 +304,7 @@ public class PlaySoundStep : IEffectStep
 }
 public class PlayAnimationStep : IEffectStep
 {
-	public Unit unit;
+	public BattleUnit unit;
 	public string AnimationName;
 
 	public float StartTime {get; set;}

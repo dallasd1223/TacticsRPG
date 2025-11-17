@@ -49,6 +49,10 @@ public sealed class InputManager : Component
 	}
 	public void HandleInputEvents()
 	{
+		if(Input.Pressed("Menu"))
+		{
+			InputPressed?.Invoke(InputKey.DEBUG);
+		}
 		if(Input.Pressed("Score"))
 		{
 			InputPressed?.Invoke(InputKey.TAB);
@@ -190,7 +194,7 @@ public enum InputKey
 	RIGHT,
 	FORWARD,
 	BACKWARD,
-
+	DEBUG,
 }
 
 public enum InputMode

@@ -52,29 +52,29 @@ public static class InputEvents
 
 public static class PlayerEvents
 {
-	public static event Action<FocusMode?, Unit> FocusModeChange;
+	public static event Action<FocusMode?, BattleUnit> FocusModeChange;
 	public static event Action<CommandMode?> CommandModeChange;
-	public static event Action<IAbilityItem> AbilityItemSelected;
+	public static event Action<Ability> AbilitySelected;
 	public static event Action<SelectorState> ValidSelection;
-	public static event Action<Unit, TileData> TileHovered;
-	public static event Action<Unit> UnitSelected;
-	public static event Action<Unit> CancelCommand;
+	public static event Action<BattleUnit, TileData> TileHovered;
+	public static event Action<BattleUnit> UnitSelected;
+	public static event Action<BattleUnit> CancelCommand;
 	public static event Action CancelSelection;
 	public static event Action<Command> ConfirmAction;
 	public static event Action ActionConfirmed;
 
-	public static void OnUnitSelected(Unit u)
+	public static void OnUnitSelected(BattleUnit u)
 	{
 		UnitSelected?.Invoke(u);
-		Log.Info($"Unit Selected Event: {u?.Data.Name ?? "null"}" );
+		Log.Info($"Unit Selected Event: {u?.CoreData.Name ?? "null"}" );
 	}
-	public static void OnTileHovered(Unit u, TileData t)
+	public static void OnTileHovered(BattleUnit u, TileData t)
 	{
 		TileHovered?.Invoke(u, t);
-		Log.Info($"Tile Hovered Event: {u?.Data.Name ?? "null"} {t?.TileIndex.ToString() ?? "null"}" );
+		Log.Info($"Tile Hovered Event: {u?.CoreData.Name ?? "null"} {t?.TileIndex.ToString() ?? "null"}" );
 	}
 
-	public static void OnCancelCommand(Unit u)
+	public static void OnCancelCommand(BattleUnit u)
 	{
 		CancelCommand?.Invoke(u);
 	}
@@ -97,12 +97,13 @@ public static class PlayerEvents
 		Log.Info("Valid Selection Event");
 	}
 
-	public static void OnAbilitItemSelected(IAbilityItem AItem)
+	public static void OnAbilitySelected(Ability ability)
 	{
-		AbilityItemSelected?.Invoke(AItem);
+		AbilitySelected?.Invoke(ability);
+		Log.Info("Ability Selected Event: " + ability.Data.Name);
 	}
 
-	public static void OnFocusModeChange(FocusMode? mode, Unit u)
+	public static void OnFocusModeChange(FocusMode? mode, BattleUnit u)
 	{
 		FocusModeChange?.Invoke(mode, u);
 		Log.Info("Focus Mode Change Event: " + mode.ToString());
@@ -118,14 +119,14 @@ public static class BattleEvents
 {
 	public static event Action<Battlestate> StateChanged;
 
-	public static event Action<Unit> TurnStart;
+	public static event Action<BattleUnit> TurnStart;
 	public static event Action<TurnEventArgs> TurnEvent;
-	public static event Action<Unit> TurnEnd;
-	public static event Action<Unit> ActionSelectStart;
+	public static event Action<BattleUnit> TurnEnd;
+	public static event Action<BattleUnit> ActionSelectStart;
 	public static event Action CombatStart;
 	public static event Action CombatEnd;
 
-	public static void OnActionSelectStart(Unit u)
+	public static void OnActionSelectStart(BattleUnit u)
 	{
 		ActionSelectStart?.Invoke(u);
 	}
@@ -136,7 +137,7 @@ public static class BattleEvents
 		Log.Info($"State Changed Event: {state}");
 	}
 
-	public static void OnTurnStart(Unit u)
+	public static void OnTurnStart(BattleUnit u)
 	{
 		TurnStart?.Invoke(u);
 	}
@@ -146,7 +147,7 @@ public static class BattleEvents
 		Log.Info(args);
 		TurnEvent?.Invoke(args);
 	}
-	public static void OnTurnEnd(Unit u)
+	public static void OnTurnEnd(BattleUnit u)
 	{
 		TurnStart?.Invoke(u);
 	}
@@ -154,39 +155,39 @@ public static class BattleEvents
 }
 public static class UnitEvents
 {
-	public static event Action<Unit, Unit> Attacked;
-	public static event Action<Unit, TileData> Moved;
-	public static event Action<Unit> Died;
-	public static event Action<Unit, IAbilityItem> UsedAbility;
-	public static event Action<Unit, Item> UsedItem;
-	public static event Action<Unit> LeveledUp;
+	public static event Action<BattleUnit, BattleUnit> Attacked;
+	public static event Action<BattleUnit, TileData> Moved;
+	public static event Action<BattleUnit> Died;
+	public static event Action<BattleUnit, Ability> UsedAbility;
+	public static event Action<BattleUnit, Item> UsedItem;
+	public static event Action<BattleUnit> LeveledUp;
 
-	public static void UnitAttacked(Unit u, Unit t)
+	public static void UnitAttacked(BattleUnit u, BattleUnit t)
 	{
 		Attacked?.Invoke(u,t);
 	}
 
-	public static void UnitLeveledUp(Unit u)
+	public static void UnitLeveledUp(BattleUnit u)
 	{
 		LeveledUp?.Invoke(u);
 	}
 
-	public static void OnUnitMoved(Unit u, TileData t)
+	public static void OnUnitMoved(BattleUnit u, TileData t)
 	{
 		Moved?.Invoke(u, t);
 	}
 
-	public static void OnUnitDied(Unit u)
+	public static void OnUnitDied(BattleUnit u)
 	{
 		Died?.Invoke(u);
 	}
 
-	public static void OnUsedAbility(Unit u, IAbilityItem a)
+	public static void OnUsedAbility(BattleUnit u, Ability a)
 	{
 		UsedAbility?.Invoke(u, a);
 	}
 
-	public static void OnUsedItem(Unit u, Item i )
+	public static void OnUsedItem(BattleUnit u, Item i )
 	{
 		UsedItem?.Invoke(u, i);
 	}

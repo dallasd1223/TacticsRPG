@@ -3,6 +3,7 @@ using TacticsRPG;
 
 public enum MenuState
 {
+	Command,
 	Action,
 	Ability,
 	Item,

@@ -10,11 +10,11 @@
 	@if(!ActiveUnit.IsValid()) return;
 		<div class="@(IsGrey ? "menu grey-out" : "menu")" @ref="Menu">
 
-			@foreach(CommandItem com in ActiveUnit.Turn.CommandItems)
+			@foreach(CommandItem com in ActiveUnit.Command.CommandItems)
 			{
 				if(IsGrey)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+					<div class="button" style ="@(ActiveUnit.Command.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>	
 								
@@ -27,7 +27,7 @@
 				}
 				else if(com.Active)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<div class="button" style ="@(ActiveUnit.Command.CommandItems.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>
 				}
@@ -37,8 +37,8 @@
 
 @code
 {
-	public Unit ActiveUnit = null;
-	public ActionMenu RootMenu;
+	public BattleUnit ActiveUnit = null;
+	public BattleMenu RootMenu;
 	public bool IsActive {get; set;} = true;
 	[Property] public bool IsGrey {get; set;} = false;
 	public int MenuDepth = 0;
@@ -52,7 +52,7 @@
 		if(!firstTime) return;
 	}
 
-	public void Activate(Unit u)
+	public void Activate(BattleUnit u)
 	{
 		IsActive = true;
 		ActiveUnit = u;
@@ -72,7 +72,7 @@
 
 	public void IncreaseIndex()
 	{
-		if(SelectedIndex == ActiveUnit.Turn.CommandItems.Count() - 1)
+		if(SelectedIndex == ActiveUnit.Command.CommandItems.Count() - 1)
 		{
 			Log.Info("Out Of Range");
 			return;
@@ -98,9 +98,10 @@
 
 	public void SelectCommand()
 	{
-		Log.Info($"Selecting {ActiveUnit.Turn.CommandItems[SelectedIndex].Text} Command");
+		CommandItem selectedCommand = ActiveUnit.Command.CommandItems[SelectedIndex];
+		Log.Info($"Selecting {selectedCommand.Text} Command");
 		Sound.Play(PressSound);
-		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(ActiveUnit.Turn.CommandItems[SelectedIndex].Text));
+		PlayerMaster.Instance.SelectedCommand(GetCommandFromString(selectedCommand.Text), selectedCommand);
 
 	}
 
@@ -112,6 +113,8 @@
 				return "MOVE";
 			case CommandType.Attack:
 				return "ATTACK";
+			case CommandType.Action:
+				return "ACT";
 			case CommandType.Ability:
 				return "ABILITY";
 			case CommandType.Wait:
@@ -130,6 +133,8 @@
 				return CommandType.Move;
 			case "ATTACK":
 				return CommandType.Attack;
+			case "ACT":
+				return CommandType.Action;
 			case "ABILITY":
 				return CommandType.Ability;
 			case "WAIT":

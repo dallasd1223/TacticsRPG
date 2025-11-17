@@ -4,9 +4,9 @@ using SpriteTools;
 
 namespace TacticsRPG;
 
-public class Item: IUsable, IAbilityItem, IInventoryItem
+public class Item: IUsable, IInventoryItem
 {
-	public AbilityItemData Data {get; set;}
+	public ItemData Data {get; set;}
 
 	public Item(ItemData data)
 	{
@@ -36,25 +36,13 @@ public class Item: IUsable, IAbilityItem, IInventoryItem
 }
 
 [GameResource("Item", "item", "Defines Item Data")]
-public class ItemData : AbilityItemData
+public class ItemData : GameResource
 {
-	public override string Name {get; set;}
-	public override string Description {get; set;}
+	public string Name {get; set;}
+	public string Description {get; set;}
 	public SpriteResource Sprite {get; set;}
 
-	public override EffectData effectData {get; set;}
-	public int EffectID {get; set;}
-
-
-	public override bool CanUseOnSelf {get; set;}
-	public override RangeShape Shape {get; set;}
-	public override int BaseRange {get; set;}
-	public override int ActionRange {get; set;}
-
-	public override int Value {get; set;}
-
-	public Effect ItemEffect {get; set;}
-	public int MaxStack {get; set;}
+	public int Price {get; set;}
 
 	// Access these statically with Clothing.All
 	public static IReadOnlyList<ItemData> All => _all;
@@ -73,7 +61,7 @@ public class ItemData : AbilityItemData
 
 public interface IUsable
 {
-	public void Use(Unit unit)
+	public void Use(BattleUnit unit)
 	{
 
 	}
@@ -83,15 +71,3 @@ public interface IInventoryItem
 {
 
 }
-public enum Effect
-{
-	Heal,
-	Hurt,
-	Revive,
-	Cleanse,
-	Item,
-	Magic,
-	Skill,
-}
-
-

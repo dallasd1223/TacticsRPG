@@ -14,13 +14,6 @@ public class InventoryManager : Component
 		var potion = new Item(potionData);
 		AddItem(potion, 3);
 
-		var reviveData = ResourceLibrary.Get<ItemData>( "resources/Items/Revive.Item" );
-		var revive = new Item(reviveData);
-		AddItem(revive, 1);
-
-		var antidoteData = ResourceLibrary.Get<ItemData>( "resources/Items/Antidote.Item" );
-		var antidote = new Item(antidoteData);
-		AddItem(antidote, 1);
 	}
 
 	public void AddItem(Item item, int amount)

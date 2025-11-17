@@ -7,19 +7,20 @@
 <root>
 	@if(!IsActive) return;
 	@if(!IsActive) return;
+	@if(!AbilitiyCommandsFromID.Any()) return;
 		<div class="ability-menu" @ref="Menu">
 
-			@foreach(CommandItem ability in ActiveUnit.Turn.AbilityCommands)
+			@foreach(CommandItem ability in AbilitiyCommandsFromID)
 			{
 				if(IsGrey)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.AbilityCommands.IndexOf(ability) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+					<div class="button" style ="@(AbilitiyCommandsFromID.IndexOf(ability) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
 						<h1 class="button-text">@ability.Text</h1>
 					</div>						
 				}
 				else if(ability.Active)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.AbilityCommands.IndexOf(ability) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<div class="button" style ="@(AbilitiyCommandsFromID.IndexOf(ability) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@ability.Text</h1>
 					</div>
 				}
@@ -38,8 +39,10 @@
 {
 	public bool IsActive = false;
 	public bool IsGrey = false;
-	[Property] public Unit ActiveUnit {get; set;} = null;
-	public ActionMenu RootMenu;
+	[Property] public BattleUnit ActiveUnit {get; set;} = null;
+	[Property] public string SkillsetID {get; set;} = "";
+	List<CommandItem> AbilitiyCommandsFromID = new();
+	public BattleMenu RootMenu;
 	public int MenuDepth = 1;
 	public Panel Menu;
 	[Property] public int SelectedIndex {get; set;} = 0;
@@ -47,8 +50,13 @@
 	public void Activate()
 	{
 		IsActive = true;
+
 	}
 
+	public void SetAbilityCommands()
+	{
+		AbilitiyCommandsFromID = ActiveUnit.Command.GetAbilityCommandsBySkillset(SkillsetID);
+	}
 	public void Deactivate()
 	{
 		IsActive = false;
@@ -56,7 +64,7 @@
 
 	public void IncreaseIndex()
 	{
-		if(SelectedIndex == ActiveUnit.Turn.AbilityCommands.Count() - 1)
+		if(SelectedIndex == AbilitiyCommandsFromID.Count() - 1)
 		{
 			Log.Info("Out Of Range");
 			return;
@@ -94,8 +102,9 @@
 
 	public void SelectMenuItem()
 	{
-		RootMenu.AbilityMenuSelect(ActiveUnit.Turn.AbilityCommands[SelectedIndex].Text);
-		Log.Info($"{ActiveUnit.Turn.AbilityCommands[SelectedIndex].Text}");
+		CommandItem selectedCommand = AbilitiyCommandsFromID[SelectedIndex];
+		PlayerMaster.Instance.SelectedCommand(CommandType.Ability, selectedCommand);
+		Log.Info($"{selectedCommand.Text}");
 	}
 
 	public void LogTest()

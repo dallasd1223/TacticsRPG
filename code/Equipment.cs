@@ -46,6 +46,8 @@ public class WeaponData : EquipmentData
 
 	public override int Price {get; set;}
 
+	public string FormulaID {get; set;}
+
 	public WeaponType Type {get; set;}
 
 	public int WP {get; set;} //Weapon Power

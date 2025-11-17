@@ -22,13 +22,13 @@ public class TileInteract: Component
 	public int attackrange = 1;
 	public int move = 5;
 
-	[Property] public Unit ThisUnit;
+	[Property] public BattleUnit ThisUnit;
 
 	public Stack<TileData> path = new Stack<TileData>();
 
 	protected override void OnAwake()
 	{
-		ThisUnit = GetComponent<Unit>();
+		ThisUnit = GetComponent<BattleUnit>();
 		Log.Info(ThisUnit);
 	}
 

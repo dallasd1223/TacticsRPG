@@ -35,7 +35,7 @@ public partial class SelectorManager
 		Log.Info($"JustTransitioned: {JustTransitioned}");
 	}
 	
-	public void HandleFocusMode(FocusMode? f, Unit u)
+	public void HandleFocusMode(FocusMode? f, BattleUnit u)
 	{
 		if(f == FocusMode.FreeLook)
 		{
@@ -91,7 +91,7 @@ public partial class SelectorManager
 		}
 	}
 
-	public void ActivateSelector(Unit? u)
+	public void ActivateSelector(BattleUnit? u)
 	{
 		IsActive = true;
 		IsConfirming = false;

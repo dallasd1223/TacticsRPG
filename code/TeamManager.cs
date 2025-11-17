@@ -6,21 +6,21 @@ namespace TacticsRPG;
 public sealed class TeamManager : Component
 {
 	[Property] public TeamType Team {get; set;} = TeamType.Alpha;
-	[Property] public List<Unit> TeamUnits {get; set;} = new List<Unit>();
+	[Property] public List<BattleUnit> TeamUnits {get; set;} = new List<BattleUnit>();
 	[Property] public bool AllUnitsDead {get; set;} = false;
 
 	protected override void OnStart()
 	{
 		TeamUnits = GetAllTeamUnits();
 	}
-	public List<Unit> GetAllTeamUnits()
+	public List<BattleUnit> GetAllTeamUnits()
 	{
-		return Scene.GetAll<Unit>().Where(u => u.Team == Team).ToList();
+		return Scene.GetAll<BattleUnit>().Where(u => u.Team == Team).ToList();
 	}
 
 	public bool CheckAllDead()
 	{
-		return TeamUnits.All(p => p.Battle.HasDied);
+		return TeamUnits.All(p => p.Combat.HasDied);
 	}
 }
 

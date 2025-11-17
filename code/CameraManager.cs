@@ -48,7 +48,7 @@ public class CameraManager: SingletonComponent<CameraManager>
 		LastPosition = this.GameObject.LocalPosition;
 	}
 
-	public void HandleFocusMode(FocusMode? f, Unit u)
+	public void HandleFocusMode(FocusMode? f, BattleUnit u)
 	{
 		Log.Info("Camera Manager Handling Focus");
 		switch(f)
@@ -188,7 +188,7 @@ public class CameraManager: SingletonComponent<CameraManager>
 		}
 	}
 
-	public void DirectCameraFocus(Unit unit)
+	public void DirectCameraFocus(BattleUnit unit)
 	{
 		if(HasFocusNode(unit.GameObject))
 		{
@@ -216,7 +216,7 @@ public class CameraManager: SingletonComponent<CameraManager>
 		}
 	}
 
-	public void ResetToActive(Unit unit)
+	public void ResetToActive(BattleUnit unit)
 	{
 
 		GameObject obj = FocusList.Find(u => u == unit.GameObject);

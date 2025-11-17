@@ -3,6 +3,13 @@ using System;
 
 namespace TacticsRPG;
 
+public class UnitJobData
+{
+	string JobID {get; set;}
+	bool IsUnlocked {get; set;} = false;
+	JobExp JobExperience {get; set;} = new JobExp();
+}
+
 public class JobExp
 {
 	public int JobLevel {get; set;} = 1;
@@ -50,6 +57,7 @@ public class JobExp
 public class JobSaveData
 {
 	public int ID;
+	public bool IsUnlocked;
 	public int JobLevel;
 	public int CurrentJP;
 	public int TotalJP;
@@ -59,12 +67,15 @@ public class JobSaveData
 [GameResource("Job", "job", "Defines Data of A Job")]
 public class JobData : GameResource
 {
-	public int ID {get; set;}
+	public string ID {get; set;}
 	public string Name {get; set;}
 	public string Description {get; set;}
 
 	public JobEnum Type {get; set;}
 	public JobStatData Stats {get; set;}
+	public string SkillsetID {get; set;}
+
+	public Dictionary<string, int> UnlockRequirements {get; set;} = new();
 
 	public List<AbilityData> JobAbilities {get; set;} = new();
 	public List<WeaponType> WeaponRestrictions {get; set;} = new();
@@ -79,7 +90,7 @@ public class JobData : GameResource
 [GameResource("JobStat", "jstat", "Defines Data For Job Stats")]
 public class JobStatData : GameResource
 {
-	public int ID {get; set;}
+	public string ID {get; set;}
 	public JobEnum Type {get; set;}
 
 	public Dictionary<StatType, int> StatMultiplier {get; set;} = new Dictionary<StatType, int>

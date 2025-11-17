@@ -16,7 +16,7 @@ public class BounceInAnimation : ICharAnimation
 	public bool IsFinished => time >= duration;
 	public bool IsStarted {get; set;} = false;
 
-	public BounceInAnimation(float startY = -80f, float endY = 0f, float duration = 0.6f)
+	public BounceInAnimation(float startY = -80f, float endY = 0f, float duration = 0.5f)
 	{
 		this.startY = startY;
 		this.endY = endY;

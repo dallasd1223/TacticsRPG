@@ -10,14 +10,14 @@ public static partial class ActionLog
 		UnitEvents.Moved += OnUnitMoved;
 	}
 
-	private static void OnUnitLevelUp(Unit u)
+	private static void OnUnitLevelUp(BattleUnit u)
 	{
-		Add("LevelUp", u, null, $"{u.Data.Name} Has Leveled Up", null);
+		Add("LevelUp", u, null, $"{u.CoreData.Name} Has Leveled Up", null);
 	}
 	
-	private static void OnUnitMoved(Unit u, TileData t)
+	private static void OnUnitMoved(BattleUnit u, TileData t)
 	{
-		Add("Moved", u, null, $"{u.Data.Name} Has Moved To Tile {t.TileIndex} **LOG", null);
+		Add("Moved", u, null, $"{u.CoreData.Name} Has Moved To Tile {t.TileIndex} **LOG", null);
 	}
 
 	public static void DestoryEventHooks()

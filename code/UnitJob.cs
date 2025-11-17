@@ -8,7 +8,7 @@ public class UnitJob : Component
 {
 
 	[Property] public JobData CurrentJob {get; set;}
-
+	public Dictionary<string, UnitJobData> UnitJobDictionary {get; set;} = new();
 	[Property] [ReadOnly] public Dictionary<string, JobExp> JobExpDictionary = new();
 
 	public event Action<JobData, int, JobExp> OnJobExpChange;

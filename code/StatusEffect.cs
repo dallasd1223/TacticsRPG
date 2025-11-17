@@ -7,7 +7,7 @@ public class StatusEffect
 {
 	public StatusEffectData Data;
 
-	public void Apply(Unit u)
+	public void Apply(BattleUnit u)
 	{
 		foreach(Modifier mod in Data.Modifiers)
 		{

@@ -9,10 +9,10 @@
 	@if(!IsActive) return;
 	@if(_Unit is null) return;
 	<div class = "MainContainer">
-		<PortraitPanel Path=@_Unit.Data.PortraitPath />
+		<PortraitPanel Path=@_Unit.CoreData.PortraitPath />
 		<div class="SubContainer">
 			<div class="DataContainer">
-				<div class="Data">@_Unit.Data.Name</div>
+				<div class="Data">@_Unit.CoreData.Name</div>
 				<div class="Data">Lv. @_Unit.Stats.GetStat(StatType.LVL)</div>
 				<div class="Data">Exp. @_Unit.Stats.GetStat(StatType.EXP)</div>
 			</div>
@@ -29,7 +29,7 @@
 
 @code
 {
-	public Unit _Unit;
+	public BattleUnit _Unit;
 	public bool IsActive = false;
 	public bool BackdropActive = false;
 	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);

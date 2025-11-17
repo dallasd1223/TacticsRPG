@@ -7,13 +7,13 @@ namespace TacticsRPG;
 public sealed class UnitAI : Component
 {
 
-	public Unit Self;
+	public BattleUnit Self;
 	public bool HasTakenTurn = false;
 	public List<TileData> ResetMoveableTiles {get; set;} = new List<TileData>();
 	public List<TileData> ResetAttackableTiles {get; set;} = new List<TileData>();	
 	protected override void OnStart()
 	{
-		Self = GetComponent<Unit>();
+		Self = GetComponent<BattleUnit>();
 	}
 
 	public async void TakeTurn()
@@ -71,7 +71,7 @@ public sealed class UnitAI : Component
 					Target = target,
 					Attack = true,
 				};
-				Log.Info($"Action Added: Tile {action.MoveTile.TileIndex}, Unit {action.Target?.Data.Name}, Attack {action.Attack}");
+				Log.Info($"Action Added: Tile {action.MoveTile.TileIndex}, Unit {action.Target?.CoreData.Name}, Attack {action.Attack}");
 				actions.Add(action);
 			}
 			Self.Interact.ResetTilesFromList(ResetAttackableTiles);
@@ -98,8 +98,8 @@ public sealed class UnitAI : Component
 public class AIAction
 {
 	public TileData MoveTile;
-	public Unit ThisUnit;
-	public Unit Target;
+	public BattleUnit ThisUnit;
+	public BattleUnit Target;
 	public bool Attack;
 	public float Score;
 

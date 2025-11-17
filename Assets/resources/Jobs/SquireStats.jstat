@@ -1,5 +1,5 @@
 {
-  "ID": 0,
+  "ID": "001",
   "Type": "Squire",
   "StatMultiplier": {
     "MAXHP": 10,

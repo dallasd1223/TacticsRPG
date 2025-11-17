@@ -7,7 +7,7 @@ namespace TacticsRPG;
 [Category("Unit")]
 public sealed class UnitAnimator : Component
 {
-	private Unit Self {get; set;}
+	private BattleUnit Self {get; set;}
 	[Property] public SpriteComponent UnitSprite {get; set;}
 	public Vector3 StartPosition;
 	public bool hasStarted = false;
@@ -18,7 +18,7 @@ public sealed class UnitAnimator : Component
 
 	protected override void OnAwake()
 	{
-		Self = GetComponent<Unit>();
+		Self = GetComponent<BattleUnit>();
 		UnitSprite = GetComponent<SpriteComponent>();
 	}
 

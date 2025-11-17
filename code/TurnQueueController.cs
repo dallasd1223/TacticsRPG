@@ -6,11 +6,11 @@ namespace TacticsRPG;
 public sealed class TurnQueueController : Component
 {
 
-	private Queue<Unit> TurnQueue = new();
+	private Queue<BattleUnit> TurnQueue = new();
 
 	public bool BuildQueue()
 	{
-		foreach(Unit u in UnitManager.Instance.UnitList)
+		foreach(BattleUnit u in UnitManager.Instance.UnitList)
 		{
 			TurnQueue.Enqueue(u);
 	
@@ -20,11 +20,11 @@ public sealed class TurnQueueController : Component
 		return true;
 	}
 
-	public void AddToQueue(Unit u)
+	public void AddToQueue(BattleUnit u)
 	{
 		TurnQueue.Enqueue(u);
 	}
-	public Unit NextInQueue()
+	public BattleUnit NextInQueue()
 	{
 		return TurnQueue.Dequeue();
 	}

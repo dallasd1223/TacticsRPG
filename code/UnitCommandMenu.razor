@@ -10,11 +10,11 @@
 	@if(!ActiveUnit.IsValid()) return;
 		<div class="@(IsGrey ? "unit-menu grey-out" : "unit-menu")" @ref="Menu">
 
-			@foreach(CommandItem com in ActiveUnit.Turn.UnitCommands)
+			@foreach(CommandItem com in ActiveUnit.Command.UnitCommands)
 			{
 				if(IsGrey)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+					<div class="button" style ="@(ActiveUnit.Command.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>	
 								
@@ -27,7 +27,7 @@
 				}
 				else if(com.Active)
 				{
-					<div class="button" style ="@(ActiveUnit.Turn.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+					<div class="button" style ="@(ActiveUnit.Command.UnitCommands.IndexOf(com) == SelectedIndex ? "background-color: green" : "background-color: blue")">
 						<h1 class="button-text">@com.Text</h1>
 					</div>
 				}
@@ -37,7 +37,7 @@
 
 @code
 {
-	public Unit ActiveUnit = null;
+	public BattleUnit ActiveUnit = null;
 	public bool IsActive {get; set;} = true;
 	[Property] public bool IsGrey {get; set;} = false;
 	public int SelectedIndex {get; set;} = 0;
@@ -48,7 +48,7 @@
 		if(!firstTime) return;
 	}
 
-	public void Activate(Unit u)
+	public void Activate(BattleUnit u)
 	{
 		IsActive = true;
 		ActiveUnit = u;
@@ -63,7 +63,7 @@
 
 	public void IncreaseIndex()
 	{
-		if(SelectedIndex == ActiveUnit.Turn.UnitCommands.Count() - 1)
+		if(SelectedIndex == ActiveUnit.Command.UnitCommands.Count() - 1)
 		{
 			Log.Info("Out Of Range");
 			return;
@@ -88,7 +88,7 @@
 
 	public void SelectCommand()
 	{
-		Log.Info($"Selecting {ActiveUnit.Turn.UnitCommands[SelectedIndex].Text} Command");
+		Log.Info($"Selecting {ActiveUnit.Command.UnitCommands[SelectedIndex].Text} Command");
 		PlayerMaster.Instance.SelectedCommand(CommandType.Status);
 		SoundManager.Instance.PlaySound("UIPRESS1");
 	}

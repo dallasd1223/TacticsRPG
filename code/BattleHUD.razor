@@ -10,8 +10,8 @@
 
 @code
 {
-	[Property] public Unit CurrentUnit {get; set;}
-	[Property] public Unit EnemyUnit {get; set;}
+	[Property] public BattleUnit CurrentUnit {get; set;}
+	[Property] public BattleUnit EnemyUnit {get; set;}
 	[Property] public TileData CurrentTile {get; set;}
 
 	[Property] public FocusMode? CurrentFocusMode = null;
@@ -94,7 +94,7 @@
 			//SetPositionStyle();		
 		}
 	}
-	void HandleFocusModeChange(FocusMode? mode, Unit u)
+	void HandleFocusModeChange(FocusMode? mode, BattleUnit u)
 	{
 		CurrentUnit = u;
 		CurrentFocusMode = mode;
@@ -188,7 +188,7 @@
 		}
 	}
 
-	void HandleTileHover(Unit u, TileData t)
+	void HandleTileHover(BattleUnit u, TileData t)
 	{
 		if(CurrentFocusMode == FocusMode.Menu) return;
 		CurrentUnit = u;

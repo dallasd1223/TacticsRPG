@@ -6,6 +6,7 @@ namespace TacticsRPG;
 public sealed class GameManager : Component
 {
 	public static GameManager Instance;
+	[Property] public Config GameConfig {get; set;}
 	[Property] public GameState CurrentState {get; set;} = GameState.NA;
 	[Property] public SaveManager Save {get; set;}
 	[Property] public DebugUI DebugVisual {get; set;}
@@ -31,7 +32,18 @@ public sealed class GameManager : Component
 	{
 		RealStartTime = RealTime.Now;
 		CurrentState = GameState.Playing;
+		
 		JobDatabase.Initialize();
+		SkillsetDatabase.Initialize();
+		AbilityDatabase.Initialize();
+	}
+
+	protected override void OnDestroy()
+	{
+		JobDatabase.ClearDatabase();
+		SkillsetDatabase.ClearDatabase();
+		AbilityDatabase.ClearDatabase();
+		Log.Info("GameManager Destroyed, Databases Cleared");
 	}
 
 	protected override void OnUpdate()

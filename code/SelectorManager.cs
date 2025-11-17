@@ -14,17 +14,17 @@ public partial class SelectorManager : StateMachine
 	private bool JustTransitioned = false;
 	[Property] public bool IsConfirming = false;
 
-	[Property] public Unit CurrentUnit {get; set;}
+	[Property] public BattleUnit CurrentUnit {get; set;}
 
 	[Property] public Vector2 HoveredVector {get; set;} = new Vector2(0,0);
 	[Property] public TileData HoveredTile {get; set;}
-	[Property] public Unit HoveredUnit {get; set;}
+	[Property] public BattleUnit HoveredUnit {get; set;}
 	[Property] public GameObject HoveredObject {get; set;}
 
 	public event Action HoverChange;
 	public event Action<Vector2> VectorChange;
 	public event Action<TileData> TileChange;
-	public event Action<Unit> UnitChange;
+	public event Action<BattleUnit> UnitChange;
 
 	public event Action<SelectorState> ValidSelect;
 	public event Action Deactivate;
@@ -32,7 +32,7 @@ public partial class SelectorManager : StateMachine
 	//So We Can Turn Off Changes
 	public Vector2 LastVector;
 	public TileData LastTile;
-	public Unit LastUnit;
+	public BattleUnit LastUnit;
 
 	[Property] public SelectorState State {get; set;}
 
@@ -125,7 +125,7 @@ public partial class SelectorManager : StateMachine
 	public void TrySetUnit(TileData data)
 	{
 		if(data is null) return;
-		Unit unit = UnitManager.Instance.GetUnitFromTile(data);
+		BattleUnit unit = UnitManager.Instance.GetUnitFromTile(data);
 		if(unit is not null)
 		{
 			if(HoveredUnit is not null)
@@ -222,7 +222,7 @@ public class SelectorState : State
 public class FreeLookSelectState : SelectorState
 {
 	
-	[Property] Unit SelectedUnit {get; set;} = null;
+	[Property] BattleUnit SelectedUnit {get; set;} = null;
 	protected override bool CheckIfSelectable()
 	{
 		var t = Selector.HoveredTile;
@@ -231,7 +231,7 @@ public class FreeLookSelectState : SelectorState
 		if(u is not null)
 		{
 			IsSelectable = true;
-			Log.Info($"-Free Look- Unit {u.Data.Name} On Tile {t.TileIndex} Is Selectable");
+			Log.Info($"-Free Look- Unit {u.CoreData.Name} On Tile {t.TileIndex} Is Selectable");
 			return true;
 		}
 		IsSelectable = false;
@@ -244,7 +244,7 @@ public class FreeLookSelectState : SelectorState
 		if(IsSelectable)
 		{
 			SelectedUnit = UnitManager.Instance.GetUnitFromTile(Selector.HoveredTile);
-			Log.Info($"-Free Look- Selected Unit: {SelectedUnit.Data.Name}");
+			Log.Info($"-Free Look- Selected Unit: {SelectedUnit.CoreData.Name}");
 			PlayerEvents.OnUnitSelected(SelectedUnit);
 			SoundManager.Instance.PlaySound("UIPRESS1");
 			OnDeactivate();
@@ -307,7 +307,7 @@ public class MoveSelectState : SelectorState
 public class AttackSelectState : SelectorState
 {
 	[Property] TileData SelectedTile {get; set;}
-	[Property] Unit SelectedUnit {get; set;}
+	[Property] BattleUnit SelectedUnit {get; set;}
 
 	protected override bool CheckIfSelectable()
 	{
@@ -317,7 +317,7 @@ public class AttackSelectState : SelectorState
 		if(!t.current && t.IsOccupied && t.selectable && u is not null)
 		{
 			IsSelectable = true;
-			Log.Info($"Unit {u.Data.Name} On Tile {t.TileIndex} Is Selectable");
+			Log.Info($"Unit {u.CoreData.Name} On Tile {t.TileIndex} Is Selectable");
 			return true;
 		}
 		Log.Info("Unit or Tile Not Selectalbe");
@@ -350,37 +350,37 @@ public class AttackSelectState : SelectorState
 
 public class AbilitySelectState : SelectorState
 {
-	[Property] public IAbilityItem CurrentAbilityItem {get; set;}
+	[Property] public Ability CurrentAbility {get; set;}
 	[Property] public TileData SelectedTile {get; set;}
 	[Property] public List<TileData> SelectedTiles {get; set;} = new();
-	[Property] public Unit SelectedUnit {get; set;}
+	[Property] public BattleUnit SelectedUnit {get; set;}
 
-	public void SetAbilityItem(IAbilityItem AItem)
+	public void SetCurrentAbility(Ability ability)
 	{
-		CurrentAbilityItem = AItem;
+		CurrentAbility = ability;
 		CheckIfSelectable();
 	} 
 
-	public void RemoveAbilityItem()
+	public void RemoveCurrentAbility()
 	{
-		CurrentAbilityItem = null;
+		CurrentAbility = null;
 	}
 
 	protected override void AddListeners()
 	{
 		base.AddListeners();
-		PlayerEvents.AbilityItemSelected += SetAbilityItem;
+		PlayerEvents.AbilitySelected += SetCurrentAbility;
 	}
 
 	protected override void RemoveListeners()
 	{
 		base.RemoveListeners();
-		PlayerEvents.AbilityItemSelected -= SetAbilityItem;		
+		PlayerEvents.AbilitySelected -= SetCurrentAbility;		
 	}
 
 	public override void Exit()
 	{
-		RemoveAbilityItem();
+		RemoveCurrentAbility();
 		base.Exit();
 	}
 	public override void OnSelect()
@@ -413,9 +413,9 @@ public class AbilitySelectState : SelectorState
 	{
 		var t = Selector.HoveredTile;
 		var u = UnitManager.Instance.GetUnitFromTile(t);
-		var a = CurrentAbilityItem;
+		var a = CurrentAbility;
 
-		var item = CurrentAbilityItem;
+		var ability = CurrentAbility;
 
 		if(a is not null)
 		{
@@ -423,7 +423,7 @@ public class AbilitySelectState : SelectorState
 			Selector.CurrentUnit.Ability.ForceLastTileHighlight();
 			if(t.selectable && u is not null)
 			{
-				Selector.CurrentUnit.Ability.SetTempFinalTiles(t, new AOEData(item.Data.Shape, item.Data.ActionRange, item.Data.CanUseOnSelf));
+				Selector.CurrentUnit.Ability.SetTempFinalTiles(t, new AOEData(ability.Data.Shape, ability.Data.ActionRange, ability.Data.CanUseOnSelf));
 				IsSelectable = true;
 				return true;
 			}
@@ -445,7 +445,7 @@ public class AbilitySelectState : SelectorState
 	public override void ConfirmSelection()
 	{
 		Selector.CurrentUnit.Ability.EndAbilitySelect();	
-		Command command = new AbilityCommand(CurrentAbilityItem, Selector.CurrentUnit, SelectedUnit, SelectedTiles);
+		Command command = new AbilityCommand(CurrentAbility, Selector.CurrentUnit, SelectedUnit, SelectedTiles);
 		PlayerEvents.OnConfirmAction(command);
 		Selector.CurrentUnit.Ability.ResetRemoveFinalTiles();
 		OnDeactivate();
@@ -570,7 +570,7 @@ public class SelectCursor : Component
 	}
 	private void SetBorderPosition(Vector2 vec)
 	{
-		TileData tile = TileMapManager.Instance.GetTileData(vec);
+	TileData tile = TileMapManager.Instance.GetTileData(vec);
 		if(tile.IsValid())
 		{
 			BorderObject.WorldPosition = tile.GameObject.WorldPosition + new Vector3(0,0,1);

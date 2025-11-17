@@ -158,13 +158,10 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 	[JsonIgnore]
 	public Sprite.Animation CurrentAnimation
 	{
-		get => _spriteRenderer?.CurrentAnimation;
+		get => _spriteRenderer?.CurrentAnimation ?? Sprite?.GetAnimation( _queuedAnimationName );
 		set
 		{
-			if ( _spriteRenderer.IsValid() )
-			{
-				PlayAnimation( value.Name );
-			}
+			PlayAnimation( value.Name );
 		}
 	}
 
@@ -176,10 +173,15 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		{
 			if ( Sprite == null ) return;
 			var animation = Sprite.Animations.Find( a => a.Name.ToLowerInvariant() == value.ToLowerInvariant() );
-			if ( animation == null ) return;
+			if ( animation == null )
+			{
+				_queuedAnimationName = value;
+				return;
+			}
 			PlayAnimation( animation.Name );
 		}
 	}
+	private string _queuedAnimationName = "";
 
 	[Property, Category( "Actions" )]
 	public Action<string> OnAnimationComplete { get; set; }
@@ -330,6 +332,12 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 			return;
 
 		_spriteRenderer.Sprite = _sprite;
+
+		if ( !string.IsNullOrEmpty( _queuedAnimationName ) )
+		{
+			_spriteRenderer.StartingAnimationName = _queuedAnimationName;
+			_queuedAnimationName = null;
+		}
 	}
 
 	private void ApplyColor ()
@@ -337,20 +345,8 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		if ( !_spriteRenderer.IsValid() )
 			return;
 
-		var color = _tint;
-		if ( _flashTint.a > 0 )
-		{
-			var intensity = _flashTint.a * 1000;
-			color = Color.Lerp( color, _flashTint.WithAlpha( color.a ), _flashTint.a );
-			if ( _flashTint.WithAlpha( 1 ) != Color.Black )
-			{
-				color.r *= intensity;
-				color.g *= intensity;
-				color.b *= intensity;
-				color.a = intensity;
-			}
-		}
-		_spriteRenderer.Color = color;
+		_spriteRenderer.Color = _tint;
+		_spriteRenderer.OverlayColor = _flashTint;
 	}
 
 	private void ApplySpriteFlags ()
@@ -419,7 +415,14 @@ public sealed class SpriteRendererLayer : Component, Component.ExecuteInEditor
 		if ( _spriteRenderer?.CurrentAnimation?.Name == animationName )
 			return;
 
-		_spriteRenderer?.PlayAnimation( animationName );
+		if ( _spriteRenderer.IsValid() )
+		{
+			_spriteRenderer?.PlayAnimation( animationName );
+		}
+		else
+		{
+			_queuedAnimationName = animationName;
+		}
 	}
 }
 

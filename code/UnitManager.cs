@@ -6,7 +6,7 @@ namespace TacticsRPG;
 public sealed class UnitManager : Component
 {
 	public static UnitManager Instance {get; set;}
-	[Property] public List<Unit> UnitList {get; set;}
+	[Property] public List<BattleUnit> UnitList {get; set;}
 
 	protected override void OnAwake()
 	{
@@ -20,7 +20,7 @@ public sealed class UnitManager : Component
 
 	public bool TileHasUnit(TileData tile)
 	{
-		foreach(Unit unit in UnitList)
+		foreach(BattleUnit unit in UnitList)
 		{
 			if(!unit.Interact.IsValid()) break;
 			if(unit.Interact.UnitTile == tile)
@@ -33,18 +33,18 @@ public sealed class UnitManager : Component
 		return false;
 	}
 
-	public List<Unit> GetAllUnits()
+	public List<BattleUnit> GetAllUnits()
 	{
-		return Scene.GetAll<Unit>().ToList();
+		return Scene.GetAll<BattleUnit>().ToList();
 	}
 
-	public Unit GetUnitFromTile(TileData data)
+	public BattleUnit GetUnitFromTile(TileData data)
 	{
-		foreach(Unit unit in UnitList)
+		foreach(BattleUnit unit in UnitList)
 		{
 			if(unit.Interact.UnitTile == data)
 			{
-				Log.Info($"{unit.Data.Name} Found At Tile {data.TileIndex}");
+				Log.Info($"{unit.CoreData.Name} Found At Tile {data.TileIndex}");
 				return unit;
 			}
 		}

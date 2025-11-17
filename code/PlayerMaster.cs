@@ -5,8 +5,8 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 {
 	//URGENT REFACTOR --MISSION ACCOMPLISHED--
 
-	[Property] public Unit CurrentUnit {get; set;} = null;
-	[Property] public Unit SelectedUnit {get; set;} = null;
+	[Property] public BattleUnit CurrentUnit {get; set;} = null;
+	[Property] public BattleUnit SelectedUnit {get; set;} = null;
 
 	[Property] public FocusMode? LastMode {get; set;} = null;
 	[Property] public FocusMode? Mode {get; set;} = FocusMode.NA;
@@ -17,9 +17,9 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 	[Property] public CommandMode? cMode {get; set;} = CommandMode.NA;
 	[Property] public CommandType? CurrentSelectedCommand {get; set;} = null;
 
-	[Property] public IAbilityItem CurrentCommandAbility {get; set;} = null;
+	[Property] public Ability CurrentCommandAbility {get; set;} = null;
 
-	[Property] public ActionMenu Menu {get; set;}
+	[Property] public BattleMenu Menu {get; set;}
 	[Property] public FreeLookScreen FreeLookScreen {get; set;}
 	[Property] public ConfirmManager Confirm {get; set;}
 
@@ -52,12 +52,12 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		PlayerEvents.UnitSelected += OnUnitSelected;
 	}
 
-	public void OnActionSelectStart(Unit u)
+	public void OnActionSelectStart(BattleUnit u)
 	{
 		InitiatePlayerMaster(u);
 	}
 	
-	public void OnUnitSelected(Unit u)
+	public void OnUnitSelected(BattleUnit u)
 	{
 		SelectedUnit = u;
 		if(Mode == FocusMode.FreeLook)
@@ -67,7 +67,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		}
 	}
 
-	public void InitiatePlayerMaster(Unit u)
+	public void InitiatePlayerMaster(BattleUnit u)
 	{
 		CurrentUnit = u;
 		Mode = FocusMode.Menu;
@@ -111,7 +111,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 		switch(command)
 		{
 			case CommandType.Move:
-				if(CurrentUnit.Turn.CommandIsActive("MOVE"))
+				if(CurrentUnit.Command.CommandIsActive(cItem))
 				{
 					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.MoveSelect;
@@ -127,7 +127,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				}
 				break;
 			case CommandType.Attack:
-				if(CurrentUnit.Turn.CommandIsActive("ATTACK"))
+				if(CurrentUnit.Command.CommandIsActive(cItem))
 				{
 					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.AttackSelect;
@@ -142,13 +142,34 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 					Sound.Play(Error);
 				}
 				break;
-			case CommandType.Ability:
-				if(CurrentUnit.Turn.CommandIsActive("ABILITY"))
+			case CommandType.Action:
+				if(CurrentUnit.Command.CommandIsActive(cItem))
 				{
-					Menu.ChangeMenuState(MenuState.Ability);
+					Menu.ChangeMenuState(MenuState.Action);
 				}				
 				break;
-			case CommandType.Item:
+			case CommandType.Ability:
+				if(CurrentUnit.Command.CommandIsActive(cItem))
+				{
+					Mode = FocusMode.CommandSelectLook;
+					cMode = CommandMode.AbilitySelect;
+
+					PlayerEvents.OnFocusModeChange(Mode, CurrentUnit);
+					PlayerEvents.OnCommandModeChange(cMode);
+
+					CurrentUnit.Interact.IsAbilitySelecting = true;
+
+					var ability = cItem.AbilityIns;
+					CurrentUnit.Interact.FindAbilityTilesFromRange(ability.Data.BaseRange, ability.Data.CanUseOnSelf);
+
+					CurrentSelectedCommand = command;
+					CurrentCommandAbility = ability;
+
+					PlayerEvents.OnAbilitySelected(CurrentCommandAbility);
+
+				}				
+				break;
+/*		case CommandType.Item:
 				if(cItem is null) return;
 				Mode = FocusMode.CommandSelectLook;
 				cMode = CommandMode.AbilitySelect;
@@ -170,7 +191,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 					Log.Info("Bad Data");
 					break;
 				}
-	
+*/
 			case CommandType.Magic:
 				if(cItem is null) return;
 				Mode = FocusMode.CommandSelectLook;
@@ -186,7 +207,7 @@ public partial class PlayerMaster : SingletonComponent<PlayerMaster>
 				PlayerEvents.OnCommandModeChange(cMode);	
 				break;
 			case CommandType.Wait:
-				if(CurrentUnit.Turn.CommandIsActive("WAIT"))
+				if(CurrentUnit.Command.CommandIsActive(cItem))
 				{
 					Mode = FocusMode.CommandSelectLook;
 					cMode = CommandMode.WaitSelect;

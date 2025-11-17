@@ -3,6 +3,26 @@ using System;
 
 namespace TacticsRPG;
 
+public static class EffectFactory
+{
+	private static Dictionary<string, Func<CombatObject, EffectData, EffectEvent>> _effectDictionary = new()
+	{
+		{"001:potion", (co, ed) => new PotionEffect(co, ed)},
+		// Add more effect types here as needed
+	};
+
+	public static EffectEvent CreateEffect(string effectID, CombatObject co, EffectData ed)
+	{
+		if (_effectDictionary.TryGetValue(effectID, out var factoryFunc))
+		{
+			return factoryFunc(co, ed);
+		}
+		else
+		{
+			throw new ArgumentException($"Effect type '{effectID}' is not recognized.");
+		}
+	}
+}
 public class EffectSequenceBuilder
 {
 	private EffectSequence _sequence = new EffectSequence();
@@ -85,10 +105,6 @@ public class EffectEvent
 
 public class PotionEffect: EffectEvent
 {
-	public override CombatObject CObject {get; set;}
-	public override EffectData Data {get; set;}
-	public override Action OnCompleteAll {get; set;}
-	public override List<EffectSequence> Sequences {get; set;}
 
 	public PotionEffect(CombatObject co, EffectData e)
 	{
@@ -165,7 +181,7 @@ public class PotionEffect: EffectEvent
 						StartTime = Data.stepData[8].StartTime,
 						Duration = Data.stepData[8].Duration,
 						unit = CObject.AffectedUnit,
-						Amount = CObject.AbilityItem.Data.Value,
+						Amount = CObject.SelectedAbility.Data.Value,
 						color = Data.stepData[8].Color,	
 						size = 60,
 					}

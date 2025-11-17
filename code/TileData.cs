@@ -71,7 +71,7 @@ public class TileData : Component
 		}
 		else
 		{
-			Log.Info($"Tile {TileIndex} No Neighbor found at {direction.x}, {direction.y}");
+			//Log.Info($"Tile {TileIndex} No Neighbor found at {direction.x}, {direction.y}");
 		}
 	}
 	public void ApplyHighlightMat(HighlightType? type)

@@ -59,7 +59,7 @@
 	}
 	public void CreateIntValueText(int amount, Color col)
 	{
-		CreateFloatingText(amount.ToString(), col, 60, "ThaleahFat", FloatingTextMode.Normal, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f)));
+		CreateFloatingText(amount.ToString(), col, 60, "ThaleahFat", FloatingTextMode.Normal, () => new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.2f)));
 	}
 	public void CreateEXPText(int amount)
 	{
@@ -71,13 +71,13 @@
 	}
 	public void CreateLVLUPText()
 	{
-		CreateFloatingText($"LVL UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1.5f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
+		CreateFloatingText($"LVL UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
 		Sound.Play(LVLUPSound);	
 	}
 
 	public void CreateJobUpText()
 	{
-		CreateFloatingText($"Job UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1.5f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
+		CreateFloatingText($"Job UP", new Color(1.00f, 0.93f, 0.00f, 1.00f), 40,"ThaleahFat", FloatingTextMode.Typewriter, () => new ParallelAnimation(new RainbowColorAnimation(1f), new CharAnimationSequence(new BounceInAnimation(), new FadeOutAnimation(0.5f))));
 		Sound.Play(JobUPSound);	
 	}
 

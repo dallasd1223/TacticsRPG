@@ -8,8 +8,8 @@ public class CombatMachine : StateMachine
 	public Queue<CombatObject> CombatObjectList {get; set;} = new Queue<CombatObject>();
 	public List<EffectSequence> ActiveSequences {get; set;} = new List<EffectSequence>();
 
-	public CombatObject CurrentObject;
-	public bool IsProcessing = false;
+	[Property] public CombatObject CurrentObject;
+	[Property] public bool IsProcessing = false;
 	
 
 	public event Action ProcessFinished;
@@ -68,46 +68,44 @@ public class CombatMachine : StateMachine
 			{
 				case AffectType.Self:
 					//InCombat Turns On Unit HealthBars
-					CurrentObject.ActingUnit.Battle.InCombat = true;
+					CurrentObject.ActingUnit.Combat.InCombat = true;
 					Log.Info("Inside CombatController Self");
 					await Task.DelayRealtimeSeconds(0.5f);
-					if(CurrentObject.AbilityItem is Item)
-					{
-						var item = CurrentObject.AbilityItem;
-						EffectEvent COeffect = new PotionEffect(CurrentObject, item.Data.effectData);
-						EffectManager.Instance.PlayEffect(COeffect);
-						await Task.DelayRealtimeSeconds(item.Data.effectData.TotalDuration);
-					}
-					CurrentObject.ActingUnit.Turn.HasActed = true;
-					CurrentObject.ActingUnit.Battle.InCombat = false;
-					ProcessFinished?.Invoke();
-					CurrentObjectFinished();
+
+					//Create Some Ability Handler Here
+					var ability = CurrentObject.SelectedAbility;
+					EffectEvent COEffect = EffectFactory.CreateEffect(ability.Data.EffectID, CurrentObject, ability.Data.effectData);
+					EffectManager.Instance.PlayEffect(COEffect);
+					await Task.DelayRealtimeSeconds(ability.Data.effectData.TotalDuration);
+					//ASAP
+
+					CurrentObject.ActingUnit.Combat.InCombat = false;
+					ChangeState<ReactionCombatState>();
 					break;
 				case AffectType.Single:
-					CurrentObject.ActingUnit.Battle.InCombat = true;
-					CurrentObject.AffectedUnit.Battle.InCombat = true;
+					CurrentObject.ActingUnit.Combat.InCombat = true;
+					CurrentObject.AffectedUnit.Combat.InCombat = true;
 					await Task.DelayRealtimeSeconds(0.5f);
-					CurrentObject.ActingUnit.Battle.StartAttack();
-					CurrentObject.ActingUnit.Animator.PlayAnimation("attack", (string n) => Sound.Play(CurrentObject.AffectedUnit.Battle.DamageSound));
+					CurrentObject.ActingUnit.Combat.StartAttack();
+					CurrentObject.ActingUnit.Animator.PlayAnimation("attack", (string n) => Sound.Play(CurrentObject.AffectedUnit.Combat.DamageSound));
 					CurrentObject.AffectedUnit.Animator.PlayAnimation("hit");
 					CurrentObject.AffectedUnit.Animator.jitter = true;
-					Log.Info($"{CurrentObject.ActingUnit.Data.Name} Attacks {CurrentObject.AffectedUnit.Data.Name}");
+					Log.Info($"{CurrentObject.ActingUnit.CoreData.Name} Attacks {CurrentObject.AffectedUnit.CoreData.Name}");
 					var result = CombatResolver.ResolveAttack(CurrentObject.ActingUnit, CurrentObject.AffectedUnit);
 					Log.Info($"{result.DamageAmount} Damage Of Type {result.Type}");
 					UnitEvents.UnitAttacked(CurrentObject.ActingUnit, CurrentObject.AffectedUnit);
-					CurrentObject.AffectedUnit.Battle.TakeDamage(result.DamageAmount);
+					CurrentObject.AffectedUnit.Combat.TakeDamage(result.DamageAmount);
 					CurrentObject.AffectedUnit.FEM.CreateIntValueText(result.DamageAmount, new Color(1.00f, 1.00f, 1.00f, 1.00f));
 					SpriteEffect.Instance.DamageNum.Clone(CurrentObject.AffectedUnit.GameObject.WorldPosition + new Vector3(0,0,10));
 					await Task.DelayRealtimeSeconds(1.5f);
-					bool dead = CurrentObject.AffectedUnit.Battle.CheckIfDead();
+					bool dead = CurrentObject.AffectedUnit.Combat.CheckIfDead();
 					if(dead) await Task.DelayRealtimeSeconds(1.5f);
-					CurrentObject.ActingUnit.Turn.HasActed = true;
 
-					CurrentObject.ActingUnit.Battle.EndAttack();
+					CurrentObject.ActingUnit.Combat.EndAttack();
 					CurrentObject.AffectedUnit.Animator.AssignAnimation();
 					CurrentObject.AffectedUnit.Animator.EndJitter();
-					CurrentObject.ActingUnit.Battle.InCombat = false;
-					CurrentObject.AffectedUnit.Battle.InCombat = false;
+					CurrentObject.ActingUnit.Combat.InCombat = false;
+					CurrentObject.AffectedUnit.Combat.InCombat = false;
 	
 					ChangeState<ReactionCombatState>();
 					break;
@@ -140,22 +138,22 @@ public class CombatMachine : StateMachine
 
 public class CombatObject
 {
-	public Unit ActingUnit;
-	public Unit AffectedUnit;
+	public BattleUnit ActingUnit;
+	public BattleUnit AffectedUnit;
 	public AffectType Affect = AffectType.Single;
-	public List<Unit> AffectedUnits;
+	public List<BattleUnit> AffectedUnits;
 	public ActionType Type = ActionType.BasicAttack;
 	public bool BasicAttack = false;
-	public IAbilityItem AbilityItem;
+	public Ability SelectedAbility;
 
-	public CombatObject(Unit au1, Unit au2, AffectType at, bool b, List<Unit> ul = null, IAbilityItem ai = null)
+	public CombatObject(BattleUnit au1, BattleUnit au2, AffectType at, bool b, List<BattleUnit> ul = null, Ability sa = null)
 	{
 		ActingUnit = au1;
 		AffectedUnit = au2;
 		Affect = at;
 		AffectedUnits = ul;
 		BasicAttack = b;
-		AbilityItem = ai;
+		SelectedAbility= sa;
 	}
 }
 

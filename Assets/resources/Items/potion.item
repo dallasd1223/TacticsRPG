@@ -2,16 +2,7 @@
   "Name": "Potion",
   "Description": "Heals Unit 10 Points",
   "Sprite": "sprites/potion.spr",
-  "effectData": "resources/effects/potioneffect.effect",
-  "EffectID": 0,
-  "CanUseOnSelf": true,
-  "Shape": "Line",
-  "BaseRange": 1,
-  "ActionRange": 0,
-  "Value": 15,
-  "ItemEffect": "Heal",
-  "MaxStack": 0,
-  "IconPath": null,
+  "Price": 30,
   "__references": [],
   "__version": 0
 }

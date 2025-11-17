@@ -5,6 +5,7 @@ namespace TacticsRPG;
 public enum CommandType
 {
 	Move,
+	Action,
 	Attack,
 	Ability,
 	Item,

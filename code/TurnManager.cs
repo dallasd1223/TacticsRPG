@@ -5,8 +5,8 @@ namespace TacticsRPG;
 
 public sealed class TurnManager : Component
 {
-	public Unit LastUnit;
-	[Property] public Unit ActiveUnit {get; set;}
+	public BattleUnit LastUnit;
+	[Property] public BattleUnit ActiveUnit {get; set;}
 	[Property] public TeamType CurrentTeam {get; set;}
 
 	public bool HasMoved = false;
@@ -18,7 +18,7 @@ public sealed class TurnManager : Component
 
 	public event Action<TurnEventArgs> TurnEvent;
 
-	public void StartTurn(Unit unit)
+	public void StartTurn(BattleUnit unit)
 	{
 		if(!unit.IsValid()) return;
 
@@ -83,11 +83,11 @@ public sealed class TurnManager : Component
 
 public class TurnEventArgs : EventArgs
 {
-	public Unit unit;
+	public BattleUnit unit;
 	public TeamType team;
 	public TurnState state;
 
-	public TurnEventArgs(Unit u, TeamType t, TurnState s)
+	public TurnEventArgs(BattleUnit u, TeamType t, TurnState s)
 	{
 		unit = u;
 		team = t;

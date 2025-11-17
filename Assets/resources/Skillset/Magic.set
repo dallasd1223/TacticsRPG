@@ -1,0 +1,11 @@
+{
+  "ID": "002",
+  "Name": "MAGIC",
+  "Description": "Ability To Use Spells",
+  "JobID": null,
+  "AbilityIDs": [
+    "002"
+  ],
+  "__references": [],
+  "__version": 0
+}

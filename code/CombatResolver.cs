@@ -4,7 +4,7 @@ namespace TacticsRPG;
 
 public static class CombatResolver
 {
-	public static CombatResult ResolveAttack(Unit Attacker, Unit Target)
+	public static CombatResult ResolveAttack(BattleUnit Attacker, BattleUnit Target)
 	{
 		bool didhit = RollHitChance(Attacker.Stats.GetStat(StatType.ACC), Target.Stats.GetStat(StatType.EV));
 		bool crit = RollCritChance();

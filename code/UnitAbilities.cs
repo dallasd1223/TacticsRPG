@@ -6,36 +6,86 @@ namespace TacticsRPG;
 [Category("Unit")]
 public class UnitAbilities : Component
 {
+	public Dictionary<string, UnitAbilityData> UnitAbilityDictionary = new();
+	[Property]	public List<Ability> LearnedAbilities = new();
 
-	private List<Ability> _abilities = new();
-	[Property] public IReadOnlyList<Ability> Abilities => _abilities;
+	[Property] public Ability SupportAbility {get; set;}
+	[Property] public Ability ReactionAbility {get; set;}
+	[Property] public Ability MovementAbility {get; set;}
 
 	public event Action<Ability> OnAbilityAdded;
 
-	public void AddAbility(Ability ability)
+	public void LearnAbility(string ID)
 	{
-		var ab = _abilities.FirstOrDefault(a => a == ability);
-		if(ab != null)
+		UnitAbilityDictionary.TryGetValue(ID, out var abilityData);
+		if(abilityData != null && abilityData.IsLearned == false)
 		{
-			return;
-		}
-		else
-		{
-			_abilities.Add(ability);
+			abilityData.IsLearned = true;
+			var ability = new Ability(AbilityDatabase.Get(ID));
+			LearnedAbilities.Add(ability);
 			OnAbilityAdded?.Invoke(ability);
 		}
 	}
 
+	void FillAbilityDictionary()
+	{
+		foreach(AbilityData data in AbilityDatabase.GetAll())
+		{
+			if(!UnitAbilityDictionary.ContainsKey(data.ID))
+			{
+				UnitAbilityDictionary[data.ID] = new UnitAbilityData
+				{
+					AbilityID = data.ID,
+					IsLearned = false
+				};
+
+				Log.Info($"Ability {data.Name} Added To UnitAbilityDictionary");
+			}
+		}
+	}
+	void AddLearnedAbilities()
+	{
+		var skillsets = GetComponent<UnitSkillset>();
+		var prim = skillsets.PrimarySkillset;
+		var sec = skillsets.SecondarySkillset;
+		if(!UnitAbilityDictionary.Any()) return;
+		if(prim == null && sec == null) return;
+
+		Log.Info("Starting Ability Loop");
+		foreach(string abilityID in prim.AbilityIDs)
+		{
+			if(UnitAbilityDictionary.ContainsKey(abilityID))
+			{
+				UnitAbilityDictionary[abilityID].IsLearned = true;
+				LearnedAbilities.Add(new Ability(AbilityDatabase.Get(abilityID)));
+				Log.Info($"Primary Skillset Ability Learned: {abilityID} {AbilityDatabase.Get(abilityID).Name}");
+			}
+		}
+		foreach(string abilityID in sec.AbilityIDs)
+		{
+			if(UnitAbilityDictionary.ContainsKey(abilityID))
+			{
+				UnitAbilityDictionary[abilityID].IsLearned = true;
+				LearnedAbilities.Add(new Ability(AbilityDatabase.Get(abilityID)));
+				Log.Info($"Secondary Skillset Ability Learned: {abilityID} {AbilityDatabase.Get(abilityID).Name}");
+			}
+		}
+
+	}
+
+	void LoadOtherAbilities()
+	{
+		SupportAbility = new Ability(AbilityDatabase.Get("006"));
+		Log.Info($"Support Ability Loaded: {SupportAbility.Data.Name}");
+		ReactionAbility = new Ability(AbilityDatabase.Get("005"));
+		Log.Info($"Reaction Ability Loaded: {ReactionAbility.Data.Name}");
+		MovementAbility = new Ability(AbilityDatabase.Get("004"));
+		Log.Info($"Movement Ability Loaded: {MovementAbility.Data.Name}");
+	}
 	protected override void OnStart()
 	{
-		var ab = ResourceLibrary.Get<AbilityData>("resources/Abilities/ItemAbility.Ability");
-		var abi = new Ability(ab);
-		var ma = ResourceLibrary.Get<AbilityData>("resources/Abilities/MagicAbility.Ability");
-		var mag = new Ability(ma);
-		var sk = ResourceLibrary.Get<AbilityData>("resources/Abilities/SkillAbility.Ability");
-		var skl = new Ability(sk);
-		AddAbility(abi);
-		AddAbility(mag);
-		AddAbility(skl);
+		FillAbilityDictionary();
+		AddLearnedAbilities();
+		LoadOtherAbilities();
 	}
 }

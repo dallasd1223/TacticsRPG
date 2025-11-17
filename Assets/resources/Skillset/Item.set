@@ -1,0 +1,11 @@
+{
+  "ID": "001",
+  "Name": "ITEM",
+  "Description": "Gives Access To Inventory Items",
+  "JobID": null,
+  "AbilityIDs": [
+    "001"
+  ],
+  "__references": [],
+  "__version": 0
+}

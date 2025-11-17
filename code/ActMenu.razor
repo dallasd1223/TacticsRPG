@@ -1,0 +1,110 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using TacticsRPG;
+@inherits Panel
+@namespace Sandbox
+
+<root>
+	@if(!IsActive) return;
+	@if(!IsActive) return;
+		<div class="act-menu" @ref="Menu">
+
+			@foreach(CommandItem action in ActiveUnit.Command.ActionCommands)
+			{
+				if(IsGrey)
+				{
+					<div class="button" style ="@(ActiveUnit.Command.ActionCommands.IndexOf(action) == SelectedIndex ? "background-color: blue" : "background-color: rgb(39, 39, 39)")">
+						<h1 class="button-text">@action.Text</h1>
+					</div>						
+				}
+				else if(action.Active)
+				{
+					<div class="button" style ="@(ActiveUnit.Command.ActionCommands.IndexOf(action) == SelectedIndex ? "background-color: green" : "background-color: blue")">
+						<h1 class="button-text">@action.Text</h1>
+					</div>
+				}
+				else if(!action.Active)
+				{
+					<div class="button" style ="background-color: gray">
+						<h1 class="button-text">@action.Text</h1>
+					</div>					
+				}
+
+			}
+		</div>
+</root>
+
+@code
+{
+	public bool IsActive = false;
+	public bool IsGrey = false;
+	[Property] public BattleUnit ActiveUnit {get; set;} = null;
+	public BattleMenu RootMenu;
+	public int MenuDepth = 1;
+	public Panel Menu;
+	[Property] public int SelectedIndex {get; set;} = 0;
+
+	public void Activate()
+	{
+		IsActive = true;
+	}
+
+	public void Deactivate()
+	{
+		IsActive = false;
+	}
+
+	public void IncreaseIndex()
+	{
+		if(SelectedIndex == ActiveUnit.Command.ActionCommands.Count() - 1)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}
+		SelectedIndex += 1;
+
+		StateHasChanged();
+		Log.Info($"ActionMenu Index Set To {SelectedIndex}");
+	}
+
+	public void DecreaseIndex()
+	{
+		if(SelectedIndex == 0)
+		{
+			Log.Info("Out Of Range");
+			return;
+		}		
+		SelectedIndex -= 1;
+		StateHasChanged();
+		Log.Info($"ActionMenu Index Set To {SelectedIndex}");
+	}
+	public void SetTransform(int Level)
+	{
+		var transform = new PanelTransform();
+		transform.AddTranslateX(Length.Pixels(-130*(Level - 1)));
+		Menu.Style.Transform = transform;
+	}
+
+	public void ZeroTransform()
+	{
+		var transform = new PanelTransform();
+		transform.AddTranslateX(Length.Pixels(0));
+		Menu.Style.Transform = transform;		
+	}
+
+	public void SelectMenuItem()
+	{
+		CommandItem selectedCommand = ActiveUnit.Command.ActionCommands[SelectedIndex];
+		RootMenu.ActionMenuSelect(selectedCommand.Text, selectedCommand.SkillsetID);
+		Log.Info($"{selectedCommand.Text}");
+	}
+
+	public void LogTest()
+	{
+		Log.Info("Testing Action Menu Log");
+	}
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine(RealTime.Now);
+}

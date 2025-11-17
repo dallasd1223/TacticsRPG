@@ -125,7 +125,7 @@ public class TileMapManager : Component
 		return this.GameObject.WorldPosition;		
 	}
 
-	public TileData GetTileFromUnit(Unit u)
+	public TileData GetTileFromUnit(BattleUnit u)
 	{
 		foreach(TileData tile in TileList)
 		{

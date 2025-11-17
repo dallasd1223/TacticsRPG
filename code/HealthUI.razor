@@ -5,7 +5,7 @@
 @namespace Sandbox
 
 <root>
-	@if(ThisUnit.Battle.InCombat)
+	@if(ThisUnit.Combat.InCombat)
 	{
 		<div class="health">
 			<div class="inner" @ref="HealthFill" />
@@ -16,13 +16,13 @@
 
 @code
 {
-	[Property] Unit ThisUnit {get; set;}
+	[Property] BattleUnit ThisUnit {get; set;}
 	[Property] float Value {get; set;} = 100f;
 	Panel HealthFill {get; set;}
 
 	protected override void OnAwake()
 	{
-		ThisUnit = this.GameObject.Parent.GetComponent<Unit>();
+		ThisUnit = this.GameObject.Parent.GetComponent<BattleUnit>();
 		this.GameObject.LocalPosition = new Vector3(0,110,0);
 
 	}

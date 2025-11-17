@@ -348,7 +348,7 @@ public class TurnEndState : Battlestate
 	public async void EndTurnAndContinue()
 	{
 		HasBegunEndTurn = true;
-		await Task.DelayRealtimeSeconds(1.5f);
+		await Task.DelayRealtimeSeconds(1.0f);
 		Machine.Turn.EndTurn();
 		Machine.TurnQueue.AddToQueue(Machine.Turn.LastUnit);
 		Machine.ChangeState<TurnStartState>();

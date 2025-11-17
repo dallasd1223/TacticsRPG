@@ -8,7 +8,7 @@ public static partial class ActionLog
 
 	public static void Clear(){}
 
-	public static void Add(string type, Unit source, Unit target, string desc, object metadata = null)
+	public static void Add(string type, BattleUnit source, BattleUnit target, string desc, object metadata = null)
 	{
 		_entries.Add(new ActionLogEntry
 		{
@@ -36,8 +36,8 @@ public static partial class ActionLog
 public class ActionLogEntry
 {
 	public string ActionType;
-	public Unit Source;
-	public Unit Target;
+	public BattleUnit Source;
+	public BattleUnit Target;
 	public string Description;
 	public float Timestamp;
 	public object Metadata;
